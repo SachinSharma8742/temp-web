@@ -28,6 +28,7 @@ const WhyChooseUs = () => {
   const carouselRef = useRef(null);
   const rafRef = useRef(null);
   const resumeTimerRef = useRef(null);
+  const loopWidthRef = useRef(0);
   const isInteractingRef = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -75,6 +76,12 @@ const WhyChooseUs = () => {
   useEffect(() => {
     const container = carouselRef.current;
     if (!container || !isMobile) return undefined;
+    let virtualScrollLeft = container.scrollLeft;
+
+    const syncLoopWidth = () => {
+      loopWidthRef.current = container.scrollWidth / 3;
+      virtualScrollLeft = container.scrollLeft;
+    };
 
     const updateCenterFocus = (time = 0) => {
       const cards = container.querySelectorAll('.feature-card');
@@ -99,33 +106,59 @@ const WhyChooseUs = () => {
 
     const pauseAutoScroll = () => {
       isInteractingRef.current = true;
+      virtualScrollLeft = container.scrollLeft;
       if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
       resumeTimerRef.current = window.setTimeout(() => {
         isInteractingRef.current = false;
       }, 1800);
     };
 
+    const handleScroll = () => {
+      const loopWidth = loopWidthRef.current;
+
+      if (loopWidth > 0 && container.scrollLeft < loopWidth) {
+        container.scrollLeft += loopWidth;
+      }
+
+      if (loopWidth > 0 && container.scrollLeft >= loopWidth * 2) {
+        container.scrollLeft -= loopWidth;
+      }
+
+      virtualScrollLeft = container.scrollLeft;
+      updateCenterFocus(performance.now());
+    };
+
     const step = (time = 0) => {
-      const loopWidth = container.scrollWidth / 2;
+      const loopWidth = loopWidthRef.current || container.scrollWidth / 3;
       if (!isInteractingRef.current && loopWidth > 0) {
         // Smooth, slower drift with gentle pulse for a subtle bounce-like rhythm.
         const drift = 0.36;
         const pulse = 1 + Math.sin(time * 0.004) * 0.18;
-        container.scrollLeft += drift * pulse;
+        virtualScrollLeft += drift * pulse;
 
-        if (container.scrollLeft >= loopWidth) {
-          container.scrollLeft -= loopWidth;
+        if (virtualScrollLeft >= loopWidth * 2) {
+          virtualScrollLeft -= loopWidth;
         }
 
-        if (container.scrollLeft < 0) {
-          container.scrollLeft += loopWidth;
+        if (virtualScrollLeft < loopWidth) {
+          virtualScrollLeft += loopWidth;
         }
+
+        container.scrollLeft = virtualScrollLeft;
       }
 
       updateCenterFocus(time);
 
       rafRef.current = window.requestAnimationFrame(step);
     };
+
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            syncLoopWidth();
+            updateCenterFocus(performance.now());
+          })
+        : null;
 
     const events = [
       ['pointerdown', pauseAutoScroll],
@@ -139,14 +172,15 @@ const WhyChooseUs = () => {
     events.forEach(([eventName, handler]) => {
       container.addEventListener(eventName, handler, { passive: true });
     });
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    resizeObserver?.observe(container);
 
-    // Start from the first set, so the wrap to the duplicated set is seamless.
-    container.scrollLeft = 0;
+    // Start from the middle set so interaction can resume without jumping back to the start.
+    syncLoopWidth();
+    container.scrollLeft = loopWidthRef.current;
+    virtualScrollLeft = loopWidthRef.current;
     updateCenterFocus(0);
-    const hasHorizontalOverflow = container.scrollWidth > container.clientWidth;
-    if (hasHorizontalOverflow) {
-      rafRef.current = window.requestAnimationFrame(step);
-    }
+    rafRef.current = window.requestAnimationFrame(step);
 
     return () => {
       if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
@@ -155,6 +189,8 @@ const WhyChooseUs = () => {
       events.forEach(([eventName, handler]) => {
         container.removeEventListener(eventName, handler);
       });
+      container.removeEventListener('scroll', handleScroll);
+      resizeObserver?.disconnect();
 
       const cards = container.querySelectorAll('.feature-card');
       cards.forEach((card) => {
@@ -165,12 +201,12 @@ const WhyChooseUs = () => {
     };
   }, [isMobile]);
 
-  const visibleFeatures = isMobile ? [...features, ...features] : features;
+  const visibleFeatures = isMobile ? [...features, ...features, ...features] : features;
 
   return (
-    <section ref={sectionRef} className="py-section px-5 md:px-16 lg:px-24 transition-colors duration-400" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-body)' }}>
+    <section ref={sectionRef} className="overflow-visible py-section transition-colors duration-400" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-body)' }}>
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-9 md:mb-14 feature-item">
+        <div className="text-center mb-9 md:mb-14 feature-item px-9 md:px-16 lg:px-24">
           <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-5" style={{ color: 'var(--text-heading)' }}>The Art of Travel</h2>
           <div className="w-12 h-px bg-gold mx-auto mb-4 md:mb-6" />
           <p className="font-body font-light tracking-wide max-w-2xl mx-auto" style={{ color: 'color-mix(in srgb, var(--text-body) 72%, transparent)' }}>
@@ -178,9 +214,9 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div ref={carouselRef} className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 no-scrollbar md:snap-x md:snap-mandatory">
+        <div ref={carouselRef} className="flex gap-10 md:gap-6 lg:gap-8 overflow-x-auto pt-8 pb-10 md:pt-7 md:pb-9 no-scrollbar md:snap-x md:snap-mandatory">
           {visibleFeatures.map((feature, idx) => (
-            <div key={`${feature.title}-${idx}`} className="feature-item feature-card w-[72vw] max-w-[250px] shrink-0 snap-center rounded-2xl border p-5 min-h-[230px] flex flex-col items-center text-center group transition-transform duration-300 will-change-transform md:w-[34vw] md:max-w-[330px] md:min-h-[250px] lg:w-[26vw]" style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'color-mix(in srgb, var(--bg-base) 90%, transparent)' }}>
+            <div key={`${feature.title}-${idx}`} className="feature-item feature-card my-3 md:my-2 w-[72vw] max-w-[250px] shrink-0 snap-center rounded-2xl border p-5 min-h-[230px] flex flex-col items-center text-center group transition-transform duration-300 will-change-transform md:w-[34vw] md:max-w-[330px] md:min-h-[250px] lg:w-[26vw]" style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'color-mix(in srgb, var(--bg-base) 90%, transparent)' }}>
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border flex items-center justify-center mb-5 md:mb-7 group-hover:border-gold/50 transition-colors duration-500" style={{ borderColor: 'var(--border-subtle)' }}>
                 <feature.icon strokeWidth={1} size={28} className="text-primary group-hover:text-gold transition-colors duration-500" />
               </div>

@@ -190,8 +190,8 @@ const Destinations = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/18 to-black/88 pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-[35%] bg-gradient-to-b from-black/25 to-transparent pointer-events-none" />
             
-            <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-7 pb-10 md:pb-13 z-10">
-              <span className="text-gold tracking-[0.24em] uppercase text-xs md:text-sm mb-3 transform translate-y-4 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100" style={{ opacity: activeIndex === index ? 1 : undefined, transform: activeIndex === index ? 'translateY(0)' : undefined }}>
+            <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-7 pb-10 md:pb-13 z-10 gap-4 md:gap-5">
+              <span className="text-gold tracking-[0.24em] uppercase text-xs md:text-sm transform translate-y-4 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100" style={{ opacity: activeIndex === index ? 1 : undefined, transform: activeIndex === index ? 'translateY(0)' : undefined }}>
                 {dest.subtitle}
               </span>
               <h3 className="text-white text-xl md:text-2xl font-light transform transition-transform duration-500 ease-out group-hover:-translate-y-2" style={{ transform: activeIndex === index ? 'translateY(-4px)' : undefined }}>

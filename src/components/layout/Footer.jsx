@@ -889,7 +889,7 @@ const Footer = () => {
 
     const jeepImg = new Image();
     // THE EXACT IMAGE YOU PROVIDED
-    jeepImg.src = '/jeep-svgrepo-com.svg';
+    jeepImg.src = `${import.meta.env.BASE_URL}jeep-svgrepo-com.svg`;
 
     const dustParticles = [];
 
@@ -904,7 +904,7 @@ const Footer = () => {
 
     function emitDust(jx, jy, angle, dustWeight) {
       const s = H * 0.15;
-      const rear = jeepPoint(jx, jy, angle, -s * 0.65, -s * 0.07);
+      const rear = jeepPoint(jx, jy, angle, -s * 0.70, -s * 0.20);
       const dirX = Math.cos(angle);
       const dirY = Math.sin(angle);
       const upX = Math.sin(angle);
@@ -965,7 +965,7 @@ const Footer = () => {
       const nx = -dirY;
       const ny = dirX;
 
-      const front = jeepPoint(jx, jy, angle, s * 0.75, -s * 0.33);
+      const front = jeepPoint(jx, jy, angle, s * 0.78, -s * 0.43);
       const sx = front.x;
       const sy = front.y;
       const len = s * 1.8;
@@ -1032,7 +1032,7 @@ const Footer = () => {
         const imgW = s * 1.6;
         const ratio = jeepImg.naturalHeight / jeepImg.naturalWidth;
         const imgH = imgW * ratio;
-        cx.drawImage(jeepImg, -imgW * 0.5, -imgH * 0.76, imgW, imgH);
+        cx.drawImage(jeepImg, -imgW * 0.5, -imgH * 0.84, imgW, imgH);
       }
 
       cx.restore();
