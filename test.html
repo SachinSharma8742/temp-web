@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Discover India</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --gold:#D4A843;
+  --gold2:#F5D080;
+  --cream:#FAF6EE;
+  --bg:#070503;
+}
+
+html,body{
+  width:100%;height:100%;
+  background:var(--bg);
+  overflow:hidden;
+  font-family:'DM Sans',sans-serif;
+  color: var(--cream);
+}
+
+/* ────── AMBIENT ────── */
+.amb{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 22% 38%, rgba(200,120,20,0.14) 0%,transparent 70%),
+    radial-gradient(ellipse 45% 55% at 78% 65%, rgba(20,70,140,0.10) 0%,transparent 70%),
+    radial-gradient(ellipse 90% 40% at 50% 100%, rgba(140,55,10,0.18) 0%,transparent 55%);
+}
+
+.grain{
+  position:fixed;inset:0;z-index:998;pointer-events:none;
+  opacity:0.38;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+.scene{
+  position:relative;z-index:1;
+  width:100vw;height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+
+/* ────── HEADER ────── */
+.hdr{
+  position:absolute;top:0;left:0;right:0;
+  padding:26px 42px 0;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:300;
+}
+
+.logo{display:flex;flex-direction:column;gap:1px}
+.logo-eye{font:500 8.5px/1 'DM Sans',sans-serif;letter-spacing:0.48em;color:var(--gold);text-transform:uppercase;}
+.logo-nm{font:700 22px/1 'Playfair Display',serif;color:rgba(250,246,238,0.92);letter-spacing:0.03em;}
+
+.hdr-mid{position:absolute;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;}
+.hdr-lbl{font:400 10px/1 'DM Sans',sans-serif;letter-spacing:0.38em;color:rgba(250,246,238,0.28);text-transform:uppercase;}
+.hdr-rule{width:36px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+
+.hdr-cta{
+  background:none; border:1px solid rgba(212,168,67,0.28); color:rgba(212,168,67,0.6);
+  font:500 9px/1 'DM Sans',sans-serif; letter-spacing:0.3em; text-transform:uppercase;
+  padding:8px 20px; border-radius:2px; cursor:pointer; transition:all .35s;
+}
+.hdr-cta:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,0.06)}
+
+/* ────── STAGE ────── */
+.stage{ position:relative; width:1160px; height:620px; flex-shrink:0; }
+
+.card{
+  position:absolute; border-radius:5px; overflow:hidden; cursor:pointer;
+  will-change:left,top,width,height,opacity;
+}
+
+.card-img{
+  position:absolute;inset:0; width:100%;height:100%; object-fit:cover;
+  transform:scale(1.1);
+}
+
+.card-grad{
+  position:absolute;inset:0;
+  background: linear-gradient(to top, rgba(5,3,2,0.9) 0%, rgba(5,3,2,0) 60%);
+}
+
+.card-rim{
+  position:absolute;inset:0;border-radius:5px; border:1px solid transparent;
+  pointer-events:none; transition:border-color .7s;
+}
+.card.is-hero .card-rim{ border-color:rgba(212,168,67,0.3); }
+
+.card-meta{ position:absolute; bottom:0; left:0; right:0; padding:20px; pointer-events:none; }
+.card-region{ display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+.region-dot{ width:4px; height:4px; border-radius:50%; background:var(--gold); opacity:0; }
+.region-txt{ font:500 8px/1 'DM Sans',sans-serif; letter-spacing:0.44em; color:var(--gold); text-transform:uppercase; opacity:0; }
+.card-title{ font-family:'Playfair Display',serif; font-weight:700; color:var(--cream); line-height:1.1; transition: font-size 0.4s; }
+.card-tagline{ font:'400 italic' 12px/1.4 'Playfair Display',serif; color:rgba(250,246,238,0.5); margin-top:5px; opacity:0; }
+
+.card.is-hero .region-dot, .card.is-hero .region-txt, .card.is-hero .card-tagline { opacity:1; }
+
+/* Dynamic Font Sizes */
+.ft-hero{font-size:42px}
+.ft-med {font-size:20px}
+.ft-sm  {font-size:15px}
+
+/* ────── FOOTER ────── */
+.ftr{
+  position:absolute;bottom:0;left:0;right:0; padding:0 42px 20px;
+  display:flex;align-items:flex-end;justify-content:space-between; z-index:300;
+}
+.ftr-hero{ font:700 13px/1 'Playfair Display',serif; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); }
+.pips{display:flex;gap:5px;}
+.pip{ height:2px; width:12px; background:rgba(255,255,255,0.1); transition: 0.5s; }
+.pip.on{ width:30px; background:var(--gold); }
+
+#loader{
+  position:fixed;inset:0; background:#070503; z-index:9999;
+  display:flex;flex-direction:column; align-items:center;justify-content:center; gap:18px;
+}
+.ld-fill{height:100%;width:0;background:var(--gold);}
+.ld-track{width:120px;height:1px;background:rgba(255,255,255,0.1)}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div style="font:900 italic 40px 'Playfair Display'; color:white; opacity:0.1">India</div>
+  <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
+</div>
+
+<div class="amb"></div>
+<div class="grain"></div>
+
+<div class="scene">
+  <header class="hdr">
+    <div class="logo">
+      <span class="logo-eye">Curated by</span>
+      <span class="logo-nm">Wanderlust</span>
+    </div>
+    <div class="hdr-mid">
+      <span class="hdr-lbl">Discover India</span>
+      <div class="hdr-rule"></div>
+    </div>
+    <button class="hdr-cta">Explore All</button>
+  </header>
+
+  <div class="stage" id="stage"></div>
+
+  <footer class="ftr">
+    <div class="ftr-l">
+      <div class="ftr-hero" id="heroName">Varanasi</div>
+    </div>
+    <div class="pips" id="pips"></div>
+  </footer>
+</div>
+
+<script>
+const DEST=[
+  {title:"Varanasi",region:"Uttar Pradesh",tagline:"Where eternity meets the Ganges",img:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=1200&q=90&fit=crop"},
+  {title:"Jaisalmer",region:"Rajasthan",tagline:"A golden fortress in the desert",img:"https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=90&fit=crop"},
+  {title:"Alleppey",region:"Kerala",tagline:"Backwaters and monsoon silence",img:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=90&fit=crop"},
+  {title:"Ladakh",region:"Kashmir",tagline:"Sky kingdoms above the clouds",img:"https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1200&q=90&fit=crop"},
+  {title:"Hampi",region:"Karnataka",tagline:"Ruins of forgotten empires",img:"https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=90&fit=crop"},
+  {title:"Udaipur",region:"Rajasthan",tagline:"The city of lakes and longing",img:"https://images.unsplash.com/photo-1568168361784-22e428b8a9c3?w=1200&q=90&fit=crop"},
+  {title:"Darjeeling",region:"West Bengal",tagline:"Tea gardens veiled in mist",img:"https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200&q=90&fit=crop"}
+];
+
+// Layout Constants
+const W=1160, H=620, G=10;
+const LC=640, TR=392;
+const RC=W-LC-G, BR=H-TR-G;
+const RR=(TR-G)/2;
+const BC=(W-3*G)/4;
+
+const SLOTS=[
+  {x:0, y:0, w:LC, h:TR, f:'ft-hero', op:1, z:10}, // Hero
+  {x:LC+G, y:0, w:RC, h:RR, f:'ft-med', op:0.9, z:5},
+  {x:LC+G, y:RR+G, w:RC, h:RR, f:'ft-med', op:0.9, z:5},
+  {x:0, y:TR+G, w:BC, h:BR, f:'ft-sm', op:0.7, z:2},
+  {x:BC+G, y:TR+G, w:BC, h:BR, f:'ft-sm', op:0.7, z:2},
+  {x:(BC+G)*2, y:TR+G, w:BC, h:BR, f:'ft-sm', op:0.7, z:2},
+  {x:(BC+G)*3, y:TR+G, w:BC, h:BR, f:'ft-sm', op:0.7, z:2}
+];
+
+const stage = document.getElementById('stage');
+const pipsContainer = document.getElementById('pips');
+const heroName = document.getElementById('heroName');
+
+// Each card object will track its current slot index
+let cardObjects = [];
+let isHovered = false;
+
+// Initialize
+DEST.forEach((d, i) => {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <img class="card-img" src="${d.img}" />
+    <div class="card-grad"></div>
+    <div class="card-rim"></div>
+    <div class="card-meta">
+      <div class="card-region"><div class="region-dot"></div><div class="region-txt">${d.region}</div></div>
+      <div class="card-title">${d.title}</div>
+      <div class="card-tagline">${d.tagline}</div>
+    </div>
+  `;
+  stage.appendChild(el);
+
+  const pip = document.createElement('div');
+  pip.className = 'pip';
+  pipsContainer.appendChild(pip);
+
+  cardObjects.push({
+    el: el,
+    data: d,
+    slotIndex: i,
+    pip: pip
+  });
+
+  // Initial Position
+  updateCardVisuals(cardObjects[i], i, false);
+});
+
+function updateCardVisuals(obj, slotIdx, animate = true) {
+  const s = SLOTS[slotIdx];
+  const dur = animate ? 1.8 : 0;
+
+  if (slotIdx === 0) {
+    obj.el.classList.add('is-hero');
+    heroName.textContent = obj.data.title;
+    obj.pip.classList.add('on');
+  } else {
+    obj.el.classList.remove('is-hero');
+    obj.pip.classList.remove('on');
+  }
+
+  gsap.to(obj.el, {
+    left: s.x, top: s.y, width: s.w, height: s.h,
+    opacity: s.op, zIndex: s.z,
+    duration: dur,
+    ease: "expo.inOut",
+    overwrite: true
+  });
+
+  const title = obj.el.querySelector('.card-title');
+  title.className = `card-title ${s.f}`;
+}
+
+// The core loop: Everyone moves to the next slot
+function flow() {
+  if (isHovered) return;
+
+  cardObjects.forEach(obj => {
+    // Increment slot (0 becomes 6, 1 becomes 0, etc for forward motion)
+    // Or simpler: (i + 1) % 7
+    obj.slotIndex = (obj.slotIndex + 1) % 7;
+    updateCardVisuals(obj, obj.slotIndex);
+  });
+}
+
+// Start Auto-Cycle
+let cycle = setInterval(flow, 5000);
+
+// Hover interaction
+stage.addEventListener('mouseenter', () => {
+  isHovered = true;
+  gsap.to('.card', { opacity: 0.3, scale: 0.95, duration: 0.6 });
+});
+
+stage.addEventListener('mouseleave', () => {
+  isHovered = false;
+  cardObjects.forEach(obj => {
+    const s = SLOTS[obj.slotIndex];
+    gsap.to(obj.el, { opacity: s.op, scale: 1, duration: 0.6 });
+  });
+});
+
+// Individual card hover
+cardObjects.forEach(obj => {
+  obj.el.addEventListener('mouseenter', (e) => {
+    gsap.to(obj.el, { opacity: 1, scale: 1.02, zIndex: 20, duration: 0.4 });
+  });
+  obj.el.addEventListener('mouseleave', (e) => {
+    const s = SLOTS[obj.slotIndex];
+    gsap.to(obj.el, { opacity: 0.3, scale: 0.95, zIndex: s.z, duration: 0.4 });
+  });
+});
+
+// Ken Burns effect (Subtle)
+cardObjects.forEach((obj, i) => {
+  gsap.to(obj.el.querySelector('.card-img'), {
+    scale: 1.25,
+    x: i % 2 === 0 ? -20 : 20,
+    duration: 20,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+});
+
+// Responsive
+function resize() {
+  const scale = Math.min(window.innerWidth / (W + 100), window.innerHeight / (H + 200), 1);
+  gsap.set(stage, { scale: scale, transformOrigin: 'center center' });
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Loader
+const lf = document.getElementById('lf');
+let p = 0;
+const interval = setInterval(() => {
+  p += 10;
+  lf.style.width = p + '%';
+  if (p >= 100) {
+    clearInterval(interval);
+    gsap.to('#loader', { opacity: 0, duration: 0.8, onComplete: () => document.getElementById('loader').remove() });
+  }
+}, 100);
+
+</script>
+</body>
+</html>

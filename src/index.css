@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #E8DCCB;
+  --color-secondary: #F7F4EF;
+  --color-black: #0B0B0B;
+  --color-gold: #C6A96B;
+  --color-accent: #8A6F4D;
+
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+
+  --spacing-section: clamp(56px, 8vw, 84px);
+}
+
+/* ─── Default / Dark Theme ─── */
+:root {
+  --bg-base: #0B0B0B;
+  --bg-surface: #111111;
+  --text-heading: #E8DCCB;
+  --text-body: #F7F4EF;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Smart Theme (System Level Sync) ─── */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-base: #E8DCCB;
+    --bg-surface: #F7F4EF;
+    --text-heading: #0B0B0B;
+    --text-body: #1A1A1A;
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    /* Override Tailwind tokens so text-primary / text-secondary classes swap */
+    --color-primary: #1A1A1A;
+    --color-secondary: #0B0B0B;
+  }
+}
+
+/* Explicit Dark Override (Ensures Dark Mode defaults correctly) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base: #0B0B0B;
+    --bg-surface: #111111;
+    --text-heading: #E8DCCB;
+    --text-body: #F7F4EF;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+  }
+}
+
+@layer base {
+  html {
+    font-size: 14px;
+    scroll-behavior: smooth;
+  }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 13.5px;
+    }
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-body);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-heading);
+    transition: color 0.4s ease;
+  }
+}
+
+@keyframes moodboard-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Custom Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
