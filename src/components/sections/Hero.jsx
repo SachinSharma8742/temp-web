@@ -115,7 +115,7 @@ const Hero = ({ isReady = false }) => {
   return (
     <section 
       ref={heroRef} 
-      className="fixed top-0 left-0 w-full h-screen flex items-center justify-center overflow-hidden z-0"
+      className="relative w-full h-dvh flex items-center justify-center overflow-hidden z-0"
       style={{ backgroundColor: 'var(--bg-base)' }}
     >
       {/* Background Slides with Parallax Layer */}
@@ -139,7 +139,7 @@ const Hero = ({ isReady = false }) => {
 
       <div ref={contentRef} className="relative z-20 text-center px-4 max-w-2xl">
         <h1 className="hero-text font-heading text-2xl md:text-4xl lg:text-5xl text-primary mb-3 md:mb-4 leading-tight">
-          Travel, Tailored <br className="hidden md:block" /> to You.
+          Travel, Tailored <br className="hidden md:block" /> for You.
         </h1>
         
         <div className="h-8 md:h-9 mb-5 md:mb-8 flex items-center justify-center">

@@ -22,7 +22,7 @@ const Header = () => {
         scrolled ? scrolledBg : 'bg-transparent'
       }`}
     >
-      <div className="font-heading text-xl md:text-2xl tracking-widest" style={{ color: 'var(--text-heading)' }}>
+      <div className="logo text-2xl md:text-3xl" style={{ color: 'var(--text-heading)' }}>
         DYI
       </div>
       <nav className="hidden md:flex gap-8 text-sm uppercase tracking-widest" style={{ color: 'var(--text-body)', opacity: 0.8 }}>

@@ -110,7 +110,7 @@ function AppShell() {
       {showLoader && <IntroLoader isExiting={loaderExiting} />}
 
       <div
-        className={`min-h-screen font-body selection:bg-gold selection:text-black transition-opacity duration-700 ${
+        className={`min-h-dvh font-body selection:bg-gold selection:text-black transition-opacity duration-700 ${
           heroReady ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-body)' }}
@@ -119,7 +119,7 @@ function AppShell() {
         <main className="relative">
           <Hero isReady={heroReady} />
 
-          <div className="relative z-10 mt-[100vh]" style={{ backgroundColor: 'var(--bg-surface)' }}>
+          <div className="relative z-10" style={{ backgroundColor: 'var(--bg-surface)' }}>
             {/* Scrolling Fog Layer - Matches WhyChooseUs exactly */}
             <div
               className="absolute top-0 left-0 w-full h-[35vh] -translate-y-full pointer-events-none"
@@ -132,7 +132,7 @@ function AppShell() {
             <JourneyMoodboard />
           </div>
         </main>
-        <Footer />
+        <Footer/>
       </div>
     </>
   );

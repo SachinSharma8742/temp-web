@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../../App';
 
+const FOOTER_LINKS = [
+  { label: 'Refund Policy', href: '#' },
+  { label: 'Terms and Conditions', href: '#' },
+  { label: 'Contact us', href: '#' },
+];
 
 const Footer = () => {
   const canvasRef = useRef(null);
@@ -45,16 +50,25 @@ const Footer = () => {
       return a + (b - a) * m;
     }
 
+    function mixColorChannels(c1, c2, m) {
+      return [
+        Math.round(lerp(c1[0], c2[0], m)),
+        Math.round(lerp(c1[1], c2[1], m)),
+        Math.round(lerp(c1[2], c2[2], m)),
+      ];
+    }
+
+    function toRgb(color) {
+      return `rgb(${color[0]},${color[1]},${color[2]})`;
+    }
+
     function smoothstep(edge0, edge1, x) {
       const u = clamp01((x - edge0) / (edge1 - edge0));
       return u * u * (3 - 2 * u);
     }
 
     function mixColor(c1, c2, m) {
-      const r = Math.round(lerp(c1[0], c2[0], m));
-      const g = Math.round(lerp(c1[1], c2[1], m));
-      const b = Math.round(lerp(c1[2], c2[2], m));
-      return `rgb(${r},${g},${b})`;
+      return toRgb(mixColorChannels(c1, c2, m));
     }
 
     const placeThemes = [
@@ -294,11 +308,51 @@ const Footer = () => {
       cx.restore();
     }
 
-    function activeBiome(themeA, themeB, blend) {
-      return blend < 0.5 ? themeA.id : themeB.id;
+    const WORLD_W = 2200;
+    const MIDGROUND_LAYER = 3;
+    const ROAD_LAYER = 4;
+    const FOREGROUND_EDGE_ZONE = 0.22;
+
+    function projectLoopingProp(wx, layerIndex, themeA, themeB, blend, padding = 60, yOffset = 1) {
+      const layerOff = off[layerIndex];
+      const offMod = layerOff % WORLD_W;
+      let sx = wx - offMod;
+      if (sx < -padding) sx += WORLD_W;
+      if (sx > W + padding) return null;
+
+      const worldX = sx + offMod;
+      return {
+        sx,
+        worldX,
+        y: blendedLayerY(layerIndex, worldX, themeA, themeB, blend) + yOffset,
+      };
     }
 
-    const WORLD_W = 2200;
+    function roadSurfaceYAtScreenX(screenX, themeA, themeB, blend) {
+      const worldX = screenX + off[ROAD_LAYER];
+      return blendedLayerY(ROAD_LAYER, worldX, themeA, themeB, blend) - H * 0.016;
+    }
+
+    function withRoadBackdropClip(themeA, themeB, blend, drawFn) {
+      cx.save();
+      cx.beginPath();
+      cx.moveTo(0, 0);
+      cx.lineTo(W, 0);
+      cx.lineTo(W, roadSurfaceYAtScreenX(W, themeA, themeB, blend) + H * 0.008);
+      for (let x = W; x >= 0; x -= 4) {
+        cx.lineTo(x, roadSurfaceYAtScreenX(x, themeA, themeB, blend) + H * 0.008);
+      }
+      cx.lineTo(0, roadSurfaceYAtScreenX(0, themeA, themeB, blend) + H * 0.008);
+      cx.closePath();
+      cx.clip();
+      drawFn();
+      cx.restore();
+    }
+
+    function isForegroundEdgeX(screenX) {
+      return screenX <= W * FOREGROUND_EDGE_ZONE || screenX >= W * (1 - FOREGROUND_EDGE_ZONE);
+    }
+
     const treeBands = {
       mountains: [
         { wx: 180, sc: 1.8, a: 0.72 },
@@ -343,37 +397,42 @@ const Footer = () => {
         { wx: 1710, sc: 2.6, a: 0.93 },
       ],
     };
-    function drawTrees(frontOff, themeA, themeB, blend) {
-      const biome = activeBiome(themeA, themeB, blend);
-      const band = treeBands[biome] || treeBands.mountains;
-      band.forEach(({ wx, sc, a }) => {
-        const adjSc = sc * (H / 240);
-        let sx = wx - (frontOff % WORLD_W);
-        if (sx < -adjSc * 25) sx += WORLD_W;
-        if (sx > W + adjSc * 25) return;
-        const sy = blendedLayerY(4, sx + frontOff, themeA, themeB, blend);
-        if (biome === 'coastal') drawPalmTree(sx, sy + 1, adjSc, a);
-        else if (biome === 'jungle') drawJungleTree(sx, sy + 1, adjSc, a);
-        else if (biome === 'mountains') drawPineTree(sx, sy + 1, adjSc, a);
-        else drawTree(sx, sy + 1, adjSc, a, '#444');
+    function drawBiomeTree(biome, sx, sy, sc, a) {
+      if (a <= 0.01) return;
+      if (biome === 'coastal') drawPalmTree(sx, sy, sc, a);
+      else if (biome === 'jungle') drawJungleTree(sx, sy, sc, a);
+      else if (biome === 'mountains') drawPineTree(sx, sy, sc, a);
+      else drawTree(sx, sy, sc, a, '#444');
+    }
+
+    function drawTreeBandSet(bands, layerIndex, themeA, themeB, blend, edgePad) {
+      const depthScale = layerIndex === ROAD_LAYER ? 1 : 0.88;
+
+      Object.entries(bands).forEach(([biome, band]) => {
+        const biomeWeight = themeWeight(themeA, themeB, blend, biome);
+        if (biomeWeight < 0.015) return;
+
+        const fade = smoothstep(0, 1, biomeWeight);
+
+        band.forEach(({ wx, sc, a }) => {
+          const adjSc = sc * (H / 240) * depthScale;
+          const point = projectLoopingProp(wx, layerIndex, themeA, themeB, blend, adjSc * edgePad);
+          if (!point) return;
+
+          if (layerIndex === ROAD_LAYER && !isForegroundEdgeX(point.sx)) return;
+
+          const baseY = layerIndex === ROAD_LAYER ? point.y + H * 0.018 : point.y;
+          drawBiomeTree(biome, point.sx, baseY, adjSc, a * fade);
+        });
       });
     }
 
-    function drawForegroundTrees(frontOff, themeA, themeB, blend) {
-      const biome = activeBiome(themeA, themeB, blend);
-      const band = foregroundTreeBands[biome] || foregroundTreeBands.mountains;
-      const fgOff = frontOff % WORLD_W;
-      band.forEach(({ wx, sc, a }) => {
-        const adjSc = sc * (H / 240);
-        let sx = wx - fgOff;
-        if (sx < -adjSc * 30) sx += WORLD_W;
-        if (sx > W + adjSc * 30) return;
-        const sy = blendedLayerY(4, sx + fgOff, themeA, themeB, blend);
-        if (biome === 'coastal') drawPalmTree(sx, sy + 1, adjSc, a);
-        else if (biome === 'jungle') drawJungleTree(sx, sy + 1, adjSc, a);
-        else if (biome === 'mountains') drawPineTree(sx, sy + 1, adjSc, a);
-        else drawTree(sx, sy + 1, adjSc, a, '#444');
-      });
+    function drawTrees(themeA, themeB, blend) {
+      drawTreeBandSet(treeBands, MIDGROUND_LAYER, themeA, themeB, blend, 25);
+    }
+
+    function drawForegroundTrees(themeA, themeB, blend) {
+      drawTreeBandSet(foregroundTreeBands, ROAD_LAYER, themeA, themeB, blend, 30);
     }
 
     const cabinLights = [
@@ -385,14 +444,13 @@ const Footer = () => {
       { wx: 2070, li: 2, tw: 1.9 },
     ];
 
-    function drawCabinLights(backOff, themeA, themeB, blend) {
-      const offMod = backOff % WORLD_W;
+    function drawCabinLights(themeA, themeB, blend) {
       cabinLights.forEach(({ wx, li, tw }) => {
-        let sx = wx - offMod;
-        if (sx < -20) sx += WORLD_W;
-        if (sx > W + 20) return;
+        const point = projectLoopingProp(wx, li, themeA, themeB, blend, 20, -H * 0.008);
+        if (!point) return;
 
-        const sy = blendedLayerY(li, sx + backOff, themeA, themeB, blend) - H * 0.008;
+        const sx = point.sx;
+        const sy = point.y;
         const flicker = 0.15 + 0.1 * Math.sin(t * 4 + tw);
 
         cx.save();
@@ -414,21 +472,21 @@ const Footer = () => {
 
     const fencePosts = [190, 360, 540, 860, 1110, 1450, 1760, 2010];
 
-    function drawFencePosts(frontOff, themeA, themeB, blend) {
+    function drawFencePosts(themeA, themeB, blend) {
       const dryW = clamp01(themeWeight(themeA, themeB, blend, 'desert') + themeWeight(themeA, themeB, blend, 'mountains') * 0.75);
       if (dryW < 0.08) return;
 
-      const offMod = frontOff % WORLD_W;
       fencePosts.forEach((wx, i) => {
-        let sx = wx - offMod;
-        if (sx < -30) sx += WORLD_W;
-        if (sx > W + 30) return;
+        const point = projectLoopingProp(wx, ROAD_LAYER, themeA, themeB, blend, 30);
+        if (!point) return;
 
-        const baseY = blendedLayerY(4, sx + frontOff, themeA, themeB, blend) + 1;
+        const sx = point.sx;
+        const baseY = point.y;
         const h = (8 + (i % 3) * 4) * (H / 240);
 
         cx.save();
-        cx.strokeStyle = `rgba(55,55,60,${0.72 * dryW})`;
+        cx.globalAlpha = dryW;
+        cx.strokeStyle = 'rgb(55,55,60)';
         cx.lineWidth = 1;
         cx.lineCap = 'round';
         cx.beginPath();
@@ -487,23 +545,24 @@ const Footer = () => {
       { wx: 2020, s: 0.92 },
     ];
 
-    function drawForegroundProps(frontOff, themeA, themeB, blend) {
+    function drawForegroundProps(themeA, themeB, blend) {
       const dryW = clamp01(themeWeight(themeA, themeB, blend, 'desert') + themeWeight(themeA, themeB, blend, 'mountains') * 0.65);
       if (dryW < 0.05) return;
 
-      const offMod = (frontOff * 1.08) % WORLD_W;
-
       foregroundRocks.forEach(({ wx, s, a }) => {
         const adjS = s * (H / 240);
-        let sx = wx - offMod;
-        if (sx < -40) sx += WORLD_W;
-        if (sx > W + 40) return;
+        const point = projectLoopingProp(wx, ROAD_LAYER, themeA, themeB, blend, 40);
+        if (!point) return;
+        if (!isForegroundEdgeX(point.sx)) return;
 
-        const y = blendedLayerY(4, sx + offMod, themeA, themeB, blend) + 1;
+        const sx = point.sx;
+        const y = point.y + H * 0.018;
         const rw = 10 * adjS;
         const rh = 4 * adjS;
+        const rockTone = Math.round(lerp(24, 34, a));
         cx.save();
-        cx.fillStyle = `rgba(20,20,24,${a * dryW})`;
+        cx.globalAlpha = dryW;
+        cx.fillStyle = `rgb(${rockTone},${rockTone},${rockTone + 4})`;
         cx.beginPath();
         cx.ellipse(sx, y - rh * 0.5, rw, rh, 0, 0, Math.PI * 2);
         cx.fill();
@@ -512,13 +571,16 @@ const Footer = () => {
 
       foregroundShrubs.forEach(({ wx, s, a }) => {
         const adjS = s * (H / 240);
-        let sx = wx - offMod;
-        if (sx < -40) sx += WORLD_W;
-        if (sx > W + 40) return;
+        const point = projectLoopingProp(wx, ROAD_LAYER, themeA, themeB, blend, 40);
+        if (!point) return;
+        if (!isForegroundEdgeX(point.sx)) return;
 
-        const y = blendedLayerY(4, sx + offMod, themeA, themeB, blend) + 1;
+        const sx = point.sx;
+        const y = point.y + H * 0.018;
+        const shrubTone = Math.round(lerp(42, 56, a));
         cx.save();
-        cx.strokeStyle = `rgba(42,42,47,${a * dryW})`;
+        cx.globalAlpha = dryW;
+        cx.strokeStyle = `rgb(${shrubTone},${shrubTone},${shrubTone + 5})`;
         cx.lineWidth = Math.max(1, adjS * 1.1);
         cx.lineCap = 'round';
         cx.beginPath();
@@ -533,24 +595,23 @@ const Footer = () => {
       });
     }
 
-    function drawCoastalProps(frontOff, themeA, themeB, blend) {
+    function drawCoastalProps(themeA, themeB, blend) {
       const coastalW = themeWeight(themeA, themeB, blend, 'coastal');
       if (coastalW < 0.05) return;
 
-      const offMod = (frontOff * 0.94) % WORLD_W;
-
       coastalPalms.forEach(({ wx, s }) => {
-        const adjS = s * (H / 240);
-        let sx = wx - offMod;
-        if (sx < -60) sx += WORLD_W;
-        if (sx > W + 60) return;
+        const adjS = s * (H / 240) * 0.9;
+        const point = projectLoopingProp(wx, MIDGROUND_LAYER, themeA, themeB, blend, 60);
+        if (!point) return;
 
-        const baseY = blendedLayerY(4, sx + offMod, themeA, themeB, blend) + 1;
+        const sx = point.sx;
+        const baseY = point.y;
         const h = 26 * adjS;
         const lean = Math.sin((sx + t * 25) * 0.012) * (3.5 * adjS);
 
         cx.save();
-        cx.strokeStyle = `rgba(34,44,40,${0.75 * coastalW})`;
+        cx.globalAlpha = coastalW;
+        cx.strokeStyle = 'rgb(34,44,40)';
         cx.lineWidth = Math.max(1.4, 2.2 * adjS);
         cx.lineCap = 'round';
         cx.beginPath();
@@ -560,7 +621,7 @@ const Footer = () => {
 
         const tx = sx + lean;
         const ty = baseY - h;
-        cx.strokeStyle = `rgba(40,62,52,${0.7 * coastalW})`;
+        cx.strokeStyle = 'rgb(40,62,52)';
         cx.lineWidth = 1.2;
         cx.beginPath();
         cx.moveTo(tx, ty);
@@ -575,87 +636,90 @@ const Footer = () => {
         cx.restore();
       });
 
-      let lx = 1680 - offMod;
-      if (lx < -40) lx += WORLD_W;
-      if (lx >= -40 && lx <= W + 40) {
-        const ly = blendedLayerY(2, lx + offMod, themeA, themeB, blend) - H * 0.06;
+      const lighthouse = projectLoopingProp(1680, 2, themeA, themeB, blend, 40, -H * 0.06);
+      if (lighthouse) {
+        const lighthouseScale = H / 240;
+        const lx = lighthouse.sx;
+        const ly = lighthouse.y;
         const beamA = 0.08 * coastalW;
         const sweep = Math.sin(t * 0.9) * 20;
 
         cx.save();
-        cx.fillStyle = `rgba(42,46,54,${0.7 * coastalW})`;
-        cx.fillRect(lx - 3, ly, 6, 24);
-        cx.fillStyle = `rgba(188,206,214,${0.85 * coastalW})`;
-        cx.fillRect(lx - 1.5, ly + 2, 3, 3);
+        cx.globalAlpha = coastalW;
+        cx.fillStyle = 'rgb(42,46,54)';
+        cx.fillRect(lx - 3 * lighthouseScale, ly, 6 * lighthouseScale, 24 * lighthouseScale);
+        cx.fillStyle = 'rgb(188,206,214)';
+        cx.fillRect(lx - 1.5 * lighthouseScale, ly + 2 * lighthouseScale, 3 * lighthouseScale, 3 * lighthouseScale);
 
+        cx.globalAlpha = 1;
         cx.fillStyle = `rgba(206,226,232,${beamA})`;
         cx.beginPath();
-        cx.moveTo(lx, ly + 3);
-        cx.lineTo(lx + 65, ly - 10 + sweep * 0.05);
-        cx.lineTo(lx + 58, ly + 16 + sweep * 0.05);
+        cx.moveTo(lx, ly + 3 * lighthouseScale);
+        cx.lineTo(lx + 65 * lighthouseScale, ly - 10 * lighthouseScale + sweep * 0.05);
+        cx.lineTo(lx + 58 * lighthouseScale, ly + 16 * lighthouseScale + sweep * 0.05);
         cx.closePath();
         cx.fill();
         cx.restore();
       }
     }
 
-    function drawJungleProps(frontOff, themeA, themeB, blend) {
+    function drawJungleProps(themeA, themeB, blend) {
       const jungleW = themeWeight(themeA, themeB, blend, 'jungle');
       if (jungleW < 0.05) return;
 
-      const offMod = (frontOff * 1.02) % WORLD_W;
-
       jungleClusters.forEach(({ wx, s }) => {
-        let sx = wx - offMod;
-        if (sx < -70) sx += WORLD_W;
-        if (sx > W + 70) return;
+        const adjS = s * (H / 240) * 0.92;
+        const point = projectLoopingProp(wx, MIDGROUND_LAYER, themeA, themeB, blend, 70);
+        if (!point) return;
 
-        const baseY = blendedLayerY(4, sx + offMod, themeA, themeB, blend) + 1;
-        const trunkH = 22 * s;
+        const sx = point.sx;
+        const baseY = point.y;
+        const trunkH = 22 * adjS;
 
         cx.save();
-        cx.strokeStyle = `rgba(34,39,30,${0.72 * jungleW})`;
-        cx.lineWidth = Math.max(1.5, 2.3 * s);
+        cx.globalAlpha = jungleW;
+        cx.strokeStyle = 'rgb(34,39,30)';
+        cx.lineWidth = Math.max(1.5, 2.3 * adjS);
         cx.lineCap = 'round';
         cx.beginPath();
         cx.moveTo(sx, baseY);
         cx.lineTo(sx, baseY - trunkH);
         cx.stroke();
 
-        cx.fillStyle = `rgba(26,60,34,${0.38 * jungleW})`;
+        cx.fillStyle = 'rgb(26,60,34)';
         cx.beginPath();
-        cx.arc(sx - 6 * s, baseY - trunkH, 8 * s, 0, Math.PI * 2);
-        cx.arc(sx + 6 * s, baseY - trunkH - 1, 8.5 * s, 0, Math.PI * 2);
-        cx.arc(sx, baseY - trunkH - 5, 9 * s, 0, Math.PI * 2);
+        cx.arc(sx - 6 * adjS, baseY - trunkH, 8 * adjS, 0, Math.PI * 2);
+        cx.arc(sx + 6 * adjS, baseY - trunkH - 1 * adjS, 8.5 * adjS, 0, Math.PI * 2);
+        cx.arc(sx, baseY - trunkH - 5 * adjS, 9 * adjS, 0, Math.PI * 2);
         cx.fill();
 
-        cx.strokeStyle = `rgba(44,74,42,${0.46 * jungleW})`;
+        cx.strokeStyle = 'rgb(44,74,42)';
         cx.lineWidth = 1;
         cx.beginPath();
-        cx.moveTo(sx + 4 * s, baseY - trunkH + 3);
-        cx.lineTo(sx + 7 * s, baseY - trunkH + 10);
-        cx.moveTo(sx - 5 * s, baseY - trunkH + 1);
-        cx.lineTo(sx - 8 * s, baseY - trunkH + 8);
+        cx.moveTo(sx + 4 * adjS, baseY - trunkH + 3 * adjS);
+        cx.lineTo(sx + 7 * adjS, baseY - trunkH + 10 * adjS);
+        cx.moveTo(sx - 5 * adjS, baseY - trunkH + 1 * adjS);
+        cx.lineTo(sx - 8 * adjS, baseY - trunkH + 8 * adjS);
         cx.stroke();
         cx.restore();
       });
     }
 
-    function drawDesertProps(frontOff, themeA, themeB, blend) {
+    function drawDesertProps(themeA, themeB, blend) {
       const desertW = themeWeight(themeA, themeB, blend, 'desert');
       if (desertW < 0.06) return;
 
-      const offMod = (frontOff * 0.98) % WORLD_W;
       desertCacti.forEach(({ wx, s }) => {
-        const adjS = s * (H / 240);
-        let sx = wx - offMod;
-        if (sx < -60) sx += WORLD_W;
-        if (sx > W + 60) return;
+        const adjS = s * (H / 240) * 0.92;
+        const point = projectLoopingProp(wx, MIDGROUND_LAYER, themeA, themeB, blend, 60);
+        if (!point) return;
 
-        const baseY = blendedLayerY(4, sx + offMod, themeA, themeB, blend) + 1;
+        const sx = point.sx;
+        const baseY = point.y;
         const h = 18 * adjS;
         cx.save();
-        cx.strokeStyle = `rgba(60,74,52,${0.72 * desertW})`;
+        cx.globalAlpha = desertW;
+        cx.strokeStyle = 'rgb(60,74,52)';
         cx.lineWidth = Math.max(1.4, 2 * adjS);
         cx.lineCap = 'round';
         cx.beginPath();
@@ -991,32 +1055,6 @@ const Footer = () => {
       cx.restore();
     }
 
-    function drawEdgeBranches() {
-      const sway = Math.sin(t * 0.5) * 2.5;
-      cx.save();
-      cx.strokeStyle = 'rgba(32,32,38,0.7)';
-      cx.lineWidth = 2.1;
-      cx.lineCap = 'round';
-
-      cx.beginPath();
-      cx.moveTo(-8, H * 0.5);
-      cx.lineTo(W * 0.07 + sway, H * 0.44);
-      cx.moveTo(W * 0.04 + sway, H * 0.47);
-      cx.lineTo(W * 0.08 + sway, H * 0.39);
-      cx.moveTo(W * 0.055 + sway, H * 0.45);
-      cx.lineTo(W * 0.11 + sway, H * 0.42);
-
-      cx.moveTo(W + 8, H * 0.56);
-      cx.lineTo(W * 0.92 - sway, H * 0.49);
-      cx.moveTo(W * 0.95 - sway, H * 0.52);
-      cx.lineTo(W * 0.9 - sway, H * 0.43);
-      cx.moveTo(W * 0.93 - sway, H * 0.5);
-      cx.lineTo(W * 0.87 - sway, H * 0.47);
-      cx.stroke();
-
-      cx.restore();
-    }
-
     function drawJeep(jx, jy, angle) {
       const s = H * 0.15; // Size relative to footer height
       cx.save();
@@ -1080,30 +1118,31 @@ const Footer = () => {
 
       for (let i = 0; i < 5; i++) off[i] += speeds[i];
       for (let i = 0; i < 5; i++) {
-        const col = mixColor(themeA.layers[i].col, themeB.layers[i].col, blend);
+        const layerColor = mixColorChannels(themeA.layers[i].col, themeB.layers[i].col, blend);
+        const col = toRgb(layerColor);
         drawHill(
           x => blendedLayerY(i, x + off[i], themeA, themeB, blend),
           col
         );
-        // Option A: Update footer text bar color to match the land (foreground layer i=4)
         if (i === 4 && footerBarRef.current) {
-          footerBarRef.current.style.backgroundColor = col;
+          footerBarRef.current.style.setProperty('--footer-land-rgb', layerColor.join(', '));
         }
       }
 
       // Jeep Position (calculate before drawRoad so road aligns with earth)
       const jx = JEEP_X_FRAC * W;
       const jeepWorldX = jx + off[4];
+
+      withRoadBackdropClip(themeA, themeB, blend, () => {
+        drawCabinLights(themeA, themeB, blend);
+        drawDesertProps(themeA, themeB, blend);
+        drawCoastalProps(themeA, themeB, blend);
+        drawTrees(themeA, themeB, blend);
+        drawJungleProps(themeA, themeB, blend);
+        drawFencePosts(themeA, themeB, blend);
+      });
       drawRoad(jeepWorldX, off[4], themeA, themeB, blend);
-
       drawFogBands();
-      drawCabinLights(off[2], themeA, themeB, blend);
-      drawDesertProps(off[4], themeA, themeB, blend);
-      drawCoastalProps(off[4], themeA, themeB, blend);
-
-      drawTrees(off[4], themeA, themeB, blend);
-      drawJungleProps(off[4], themeA, themeB, blend);
-      drawFencePosts(off[4], themeA, themeB, blend);
       const spread = 45;
       const frontFn = x => blendedLayerY(4, x + off[4], themeA, themeB, blend);
       const y1 = frontFn(jx - spread);
@@ -1121,9 +1160,8 @@ const Footer = () => {
       updateAndDrawDust();
       drawHeadlights(jx, jeepY, jeepAngle);
       drawJeep(jx, jeepY, jeepAngle);
-      drawForegroundProps(off[4], themeA, themeB, blend);
-      drawForegroundTrees(off[4], themeA, themeB, blend);
-      drawEdgeBranches();
+      drawForegroundProps(themeA, themeB, blend);
+      drawForegroundTrees(themeA, themeB, blend);
       animationFrameId = requestAnimationFrame(loop);
     }
 
@@ -1136,6 +1174,12 @@ const Footer = () => {
     };
   }, []);
 
+  const footerBarStyle = {
+    background:
+      'linear-gradient(180deg, rgba(var(--footer-land-rgb, 44, 44, 48), 0.08) 0%, rgba(var(--footer-land-rgb, 44, 44, 48), 0.82) 34%, rgba(var(--footer-land-rgb, 44, 44, 48), 0.98) 100%)',
+    color: 'rgba(247,244,239,0.5)',
+  };
+
   return (
     <footer className="relative transition-colors duration-400" style={{ backgroundColor: 'var(--bg-base)' }}>
       {/* Ensure Playfair Display is loaded for the Typography */}
@@ -1144,32 +1188,43 @@ const Footer = () => {
       `}</style>
 
       <div
-        className="w-full h-[320px] md:h-[400px] overflow-hidden relative"
-
+        className="relative h-[220px] w-full overflow-hidden sm:h-[240px] md:h-[280px] lg:h-[300px]"
       >
         <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full block" />
         {/* Sky-top fade: blends canvas sky into the section above */}
         <div
-          className="absolute top-0 left-0 right-0 h-28 z-10 pointer-events-none"
+          className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-20 sm:h-24"
           style={{ background: 'linear-gradient(to bottom, var(--bg-base), transparent)' }}
         />
-      </div>
+        <div className="absolute inset-x-0 bottom-0 z-20">
+          <div
+            ref={footerBarRef}
+            className="w-full px-5 pb-4 pt-3 transition-colors duration-400 sm:px-6 sm:pb-5 sm:pt-3.5 md:px-12 md:py-6"
+            style={footerBarStyle}
+          >
+            <div className="flex flex-col items-center gap-2.5 md:flex-row md:justify-between md:gap-6">
+              <nav
+                aria-label="Footer"
+                className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-center sm:gap-x-5 md:w-auto md:justify-start md:gap-x-8 md:gap-y-2 md:text-left"
+              >
+                {FOOTER_LINKS.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] transition-colors hover:text-[#c6a96b] sm:text-[9px] sm:tracking-[0.16em] md:text-[10px] md:tracking-[0.3em]"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
 
-      <div
-        ref={footerBarRef}
-        className="relative z-10 w-full px-8 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center font-body text-[10px] tracking-[0.3em] uppercase transition-colors duration-400"
-        style={{ color: 'rgba(255,255,255,0.4)' }}
-      >
-        <div className="flex gap-8 mb-6 md:mb-0">
-          <a href="#" className="hover:text-[#c6a96b] transition-colors">Refund Policy</a>
-          <a href="#" className="hover:text-[#c6a96b] transition-colors">Terms and Conditions</a>
-          <a href="#" className="hover:text-[#c6a96b] transition-colors">Contact us</a>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <span>&copy; {new Date().getFullYear()} Design Your India</span>
-          
-          
+              <div className="flex items-center gap-4">
+                <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] md:tracking-[0.3em]">
+                  &copy; {new Date().getFullYear()} Design Your India
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
