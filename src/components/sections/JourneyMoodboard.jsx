@@ -375,14 +375,52 @@ const CoolMoodboardComponent = () => {
     const theStageBox = bigDivRef.current;
     if (!theStageBox) return;
     const chkDesk = () => window.matchMedia('(min-width: 1024px)').matches;
+    let rafScrollId = null;
+
+    const getVisibleCards = () =>
+      Array.from(theStageBox.querySelectorAll('[data-mood-card-index]')).filter(
+        (el) => el.offsetParent !== null
+      );
+
+    const syncNowShowing = () => {
+      if (chkDesk()) return;
+
+      const cards = getVisibleCards();
+      if (!cards.length) return;
+
+      const viewCenter = theStageBox.scrollLeft + theStageBox.clientWidth / 2;
+      let nearestIdx = 0;
+      let nearestDist = Number.POSITIVE_INFINITY;
+
+      cards.forEach((cardEl) => {
+        const idxAttr = Number(cardEl.getAttribute('data-mood-card-index'));
+        if (Number.isNaN(idxAttr)) return;
+
+        const cardCenter = cardEl.offsetLeft + cardEl.offsetWidth / 2;
+        const dist = Math.abs(cardCenter - viewCenter);
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestIdx = idxAttr;
+        }
+      });
+
+      setBigOneIdx((prevIdx) => (prevIdx === nearestIdx ? prevIdx : nearestIdx));
+    };
+
+    const onScrollSync = () => {
+      if (rafScrollId) window.cancelAnimationFrame(rafScrollId);
+      rafScrollId = window.requestAnimationFrame(syncNowShowing);
+    };
 
     const doNextScroll = () => {
       clearTimeout(mobTimerA.current);
       if (chkDesk() || mobPauseRef.current) return;
       mobTimerA.current = setTimeout(() => {
         if (mobPauseRef.current || chkDesk()) return;
-        const randNum = Math.floor(Math.random() * placesData.length);
-        const childEl = theStageBox.children[randNum];
+        const cards = getVisibleCards();
+        if (!cards.length) return;
+        const randNum = Math.floor(Math.random() * cards.length);
+        const childEl = cards[randNum];
         if (childEl) theStageBox.scrollTo({ left: childEl.offsetLeft - 16, behavior: 'smooth' });
         doNextScroll();
       }, 5000 + Math.random() * 2000);
@@ -399,12 +437,21 @@ const CoolMoodboardComponent = () => {
     };
 
     const mobQuery = window.matchMedia('(max-width: 1023px)');
-    if (mobQuery.matches) doNextScroll();
+    if (mobQuery.matches) {
+      syncNowShowing();
+      doNextScroll();
+    }
     const fixChange = (evObj) => {
       clearTimeout(mobTimerA.current);
-      if (evObj.matches) { mobPauseRef.current = false; doNextScroll(); }
+      if (evObj.matches) {
+        mobPauseRef.current = false;
+        syncNowShowing();
+        doNextScroll();
+      }
     };
 
+    theStageBox.addEventListener('scroll', onScrollSync, { passive: true });
+    window.addEventListener('resize', onScrollSync);
     theStageBox.addEventListener('touchstart', stopScrollThing, { passive: true });
     theStageBox.addEventListener('touchend',   stopScrollThing, { passive: true });
     theStageBox.addEventListener('mouseenter', stopScrollThing, { passive: true });
@@ -414,6 +461,9 @@ const CoolMoodboardComponent = () => {
     return () => {
       clearTimeout(mobTimerA.current);
       clearTimeout(mobTimerB.current);
+      if (rafScrollId) window.cancelAnimationFrame(rafScrollId);
+      theStageBox.removeEventListener('scroll', onScrollSync);
+      window.removeEventListener('resize', onScrollSync);
       theStageBox.removeEventListener('touchstart', stopScrollThing);
       theStageBox.removeEventListener('touchend',   stopScrollThing);
       theStageBox.removeEventListener('mouseenter', stopScrollThing);
@@ -431,13 +481,15 @@ const CoolMoodboardComponent = () => {
   return (
     <section
       id="journey-moodboard"
-      className="relative overflow-hidden px-4 py-16 md:px-8 md:py-24 lg:px-12"
+      className="relative -mt-px overflow-hidden px-4 py-16 md:px-8 md:py-24 lg:px-12"
       style={{ backgroundColor: 'var(--bg-base, #0e0e0e)', color: 'var(--text-body, #e8e0d0)' }}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          WebkitMaskImage: 'linear-gradient(180deg, transparent 0%, black 14%, black 100%)',
+          maskImage: 'linear-gradient(180deg, transparent 0%, black 14%, black 100%)',
         }}
       />
 
@@ -515,6 +567,7 @@ const CoolMoodboardComponent = () => {
             return (
               <article
                 key={dItem2.title}
+                data-mood-card-index={idxNum}
                 ref={(theNode) => { cardItemsRef.current[idxNum] = theNode; }}
                 className={[
                   'group relative shrink-0 snap-center overflow-hidden rounded-2xl',

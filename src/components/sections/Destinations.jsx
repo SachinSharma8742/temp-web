@@ -117,8 +117,15 @@ const Destinations = () => {
   return (
     <section
       id="destinations"
-      className="scroll-mt-24 pt-24 pb-16 md:scroll-mt-28 md:pt-32 md:pb-24 flex flex-col justify-center transition-colors duration-400"
-      style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-body)' }}
+      className="relative overflow-hidden scroll-mt-24 pt-24 pb-16 md:scroll-mt-28 md:pt-32 md:pb-24 flex flex-col justify-center transition-colors duration-400"
+      style={{
+        background: `
+          radial-gradient(120% 42% at 50% 0%, color-mix(in srgb, var(--bg-surface) 14%, transparent) 0%, transparent 70%),
+          radial-gradient(120% 48% at 50% 100%, color-mix(in srgb, var(--bg-surface) 24%, transparent) 0%, transparent 72%),
+          linear-gradient(180deg, color-mix(in srgb, var(--bg-surface) 82%, var(--bg-base)) 0%, var(--bg-base) 22%, var(--bg-base) 68%, var(--bg-surface) 100%)
+        `,
+        color: 'var(--text-body)',
+      }}
     >
       <svg
         width="0"
@@ -248,6 +255,14 @@ const Destinations = () => {
           <ArrowRight size={16} />
         </button>
       </div>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20"
+        style={{
+          background: 'linear-gradient(180deg, transparent 0%, var(--bg-surface) 100%)',
+        }}
+      />
     </section>
   );
 };

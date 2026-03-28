@@ -107,15 +107,13 @@ const Experience = () => {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative overflow-hidden px-5 py-section md:px-10 lg:px-14 transition-colors duration-400"
+      className="relative -mt-px overflow-hidden px-5 py-section md:px-10 lg:px-14 transition-colors duration-400"
       style={{
         background:
-          'linear-gradient(180deg, var(--bg-surface) 0%, color-mix(in srgb, var(--bg-surface) 96%, black) 100%)',
+          'linear-gradient(180deg, var(--bg-surface) 0%, color-mix(in srgb, var(--bg-surface) 74%, var(--bg-base)) 62%, var(--bg-base) 100%)',
         color: 'var(--text-body)',
       }}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[linear-gradient(180deg,rgba(198,169,107,0.06),transparent_76%)]" />
-
       <div className="relative mx-auto max-w-[1220px]">
         <div className="grid gap-10 lg:grid-cols-[minmax(260px,0.78fr)_minmax(0,1.22fr)] lg:items-center lg:gap-12 xl:gap-16">
           <div data-experience-intro className="max-w-xl">
@@ -190,6 +188,14 @@ const Experience = () => {
           ))}
         </div>
       </div>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+        style={{
+          background: 'linear-gradient(180deg, transparent 0%, var(--bg-base) 100%)',
+        }}
+      />
     </section>
   );
 };

@@ -122,7 +122,7 @@ function AppShell() {
           <div className="relative z-10" style={{ backgroundColor: 'var(--bg-surface)' }}>
             {/* Scrolling Fog Layer - Matches WhyChooseUs exactly */}
             <div
-              className="absolute top-0 left-0 w-full h-[35vh] -translate-y-full pointer-events-none"
+              className="absolute left-0 top-[-35vh] w-full h-[35vh] pointer-events-none"
               style={{ background: 'linear-gradient(to bottom, transparent, var(--bg-surface))' }}
             />
 

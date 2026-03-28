@@ -1182,11 +1182,6 @@ const Footer = () => {
 
   return (
     <footer className="relative transition-colors duration-400" style={{ backgroundColor: 'var(--bg-base)' }}>
-      {/* Ensure Playfair Display is loaded for the Typography */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&display=swap');
-      `}</style>
-
       <div
         className="relative h-[220px] w-full overflow-hidden sm:h-[240px] md:h-[280px] lg:h-[300px]"
       >

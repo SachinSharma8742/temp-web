@@ -204,7 +204,7 @@ const WhyChooseUs = () => {
   const visibleFeatures = isMobile ? [...features, ...features, ...features] : features;
 
   return (
-    <section ref={sectionRef} className="overflow-visible py-section transition-colors duration-400" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-body)' }}>
+    <section ref={sectionRef} className="relative overflow-visible py-section transition-colors duration-400" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-body)' }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-9 md:mb-14 feature-item px-9 md:px-16 lg:px-24">
           <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-5" style={{ color: 'var(--text-heading)' }}>The Art of Travel</h2>
@@ -228,6 +228,15 @@ const WhyChooseUs = () => {
           ))}
         </div>
       </div>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+        style={{
+          background:
+            'linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg-surface) 82%, var(--bg-base)) 100%)',
+        }}
+      />
     </section>
   );
 };
