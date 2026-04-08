@@ -72,6 +72,7 @@ function AppShell() {
   const [heroReady, setHeroReady] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [loaderExiting, setLoaderExiting] = useState(false);
+  const fogBlend = 'var(--bg-surface)';
 
   useEffect(() => {
     let isMounted = true;
@@ -116,16 +117,13 @@ function AppShell() {
         style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-body)' }}
       >
         <Header />
-        <main className="relative">
+        <main className="relative" style={{ '--fog-blend': fogBlend }}>
           <Hero isReady={heroReady} />
 
-          <div className="relative z-10" style={{ backgroundColor: 'var(--bg-surface)' }}>
-            {/* Scrolling Fog Layer - Matches WhyChooseUs exactly */}
-            <div
-              className="absolute left-0 top-[-35vh] w-full h-[35vh] pointer-events-none"
-              style={{ background: 'linear-gradient(to bottom, transparent, var(--bg-surface))' }}
-            />
-
+          <div
+            className="relative z-10"
+            style={{ backgroundColor: 'var(--bg-surface)', '--fog-blend': fogBlend }}
+          >
             <WhyChooseUs />
             <Destinations />
             <Experience />

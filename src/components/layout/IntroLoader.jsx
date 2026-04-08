@@ -1,19 +1,25 @@
 import React from 'react';
+import tracedLogoSvg from '../../assets/logo-mark-traced.svg?raw';
 
-const LETTER_PATHS = [
-  {
-    d: 'M22 23V137.8M22 23H53C65.5 23 75.8 25.4 83.8 30.3C91.8 35.3 97.8 42.1 101.7 50.8C105.6 59.6 107.5 69.4 107.5 80.4C107.5 91.3 105.6 101.1 101.7 109.9C97.8 118.6 91.8 125.4 83.8 130.4C75.8 135.3 65.5 137.8 53 137.8H22',
-    delay: '0.15s',
-  },
-  {
-    d: 'M150 23L181 74.5L212 23M181 74.5V137.8',
-    delay: '0.55s',
-  },
-  {
-    d: 'M250 23V137.8',
-    delay: '0.95s',
-  },
-];
+function buildInlineLogo(rawSvg) {
+  let pathIndex = 0;
+
+  const withSvgAttrs = rawSvg.replace(
+    /<svg\b/,
+    '<svg class="logo-trace-svg" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYMid meet"'
+  );
+
+  return withSvgAttrs.replace(/<path\b/g, () => {
+    pathIndex += 1;
+
+    if (pathIndex === 1) return '<path class="pin-segment"';
+    if (pathIndex === 2) return '<path class="skip-segment"';
+
+    return '<path class="trace-segment"';
+  });
+}
+
+const INLINE_TRACED_LOGO = buildInlineLogo(tracedLogoSvg);
 
 function IntroLoader({ isExiting }) {
   return (
@@ -24,93 +30,150 @@ function IntroLoader({ isExiting }) {
       style={{ backgroundColor: 'var(--bg-base)' }}
       aria-hidden="true"
     >
-      <div className="absolute inset-0 opacity-90">
+      <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(circle at 50% 40%, rgba(198,169,107,0.18), transparent 42%), linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0))',
-          }}
+          className="logo-trace-wrap relative w-[320px] max-w-[82vw] md:w-[520px]"
+          aria-label="Design Your India"
+          dangerouslySetInnerHTML={{ __html: INLINE_TRACED_LOGO }}
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center">
-        <div className="relative">
-          <div
-            className="absolute inset-0 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(198,169,107,0.28), transparent 62%)',
-              transform: 'scale(1.1)',
-            }}
-          />
-
-          <svg
-            viewBox="0 0 272 161"
-            className="relative w-[220px] md:w-[300px] overflow-visible"
-            fill="none"
-          >
-            {LETTER_PATHS.map((path) => (
-              <path
-                key={path.d}
-                d={path.d}
-                pathLength="1"
-                className="loader-trace"
-                style={{ animationDelay: path.delay }}
-              />
-            ))}
-          </svg>
-        </div>
-
-        <div className="space-y-3">
-          <p className="text-[10px] md:text-xs uppercase tracking-[0.42em] text-gold/80">
-            Design Your India
-          </p>
-          <div className="mx-auto h-px w-40 overflow-hidden rounded-full bg-white/10">
-            <div className="loader-progress h-full w-1/2 rounded-full bg-gold" />
-          </div>
-        </div>
-      </div>
-
       <style>{`
-        .loader-trace {
-          stroke: #c6a96b;
-          stroke-width: 12;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          filter: drop-shadow(0 0 18px rgba(198, 169, 107, 0.18));
-          animation: traceDYI 1.25s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        .logo-trace-wrap svg {
+          width: 100%;
+          height: auto;
+          display: block;
         }
 
-        .loader-progress {
-          transform: translateX(-120%);
-          animation: loaderSweep 1.85s ease-in-out infinite;
+        /* Hide the traced solid divider path: we replace it with animated road dashes. */
+        .logo-trace-wrap .skip-segment {
+          opacity: 0;
         }
 
-        @keyframes traceDYI {
+        .logo-trace-wrap .pin-segment {
+          fill: #ff1414 !important;
+          stroke: #ff1414 !important;
+          opacity: 0;
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: pinDrop 0.56s cubic-bezier(0.22, 0.9, 0.26, 1) 1.65s forwards;
+        }
+
+        .logo-trace-wrap path.trace-segment {
+          stroke: none !important;
+          stroke-width: 0 !important;
+          fill-opacity: 0;
+          animation: fillLogo 0.28s ease 0.95s forwards;
+        }
+
+        .logo-trace-wrap path.trace-segment:nth-of-type(3) { animation-delay: 0.92s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(4) { animation-delay: 0.97s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(5) { animation-delay: 1.02s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(6) { animation-delay: 1.07s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(7) { animation-delay: 1.12s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(8) { animation-delay: 1.17s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(9) { animation-delay: 1.22s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(10) { animation-delay: 1.27s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(11) { animation-delay: 1.32s; }
+        .logo-trace-wrap path.trace-segment:nth-of-type(12) { animation-delay: 1.37s; }
+
+        /* Road body + dashed center line completing the missing i-stems. */
+        .logo-trace-wrap::before {
+          content: '';
+          position: absolute;
+          left: 45.9%;
+          top: 36.5%;
+          width: 3.6%;
+          height: 36.1%;
+          border-radius: 4px;
+          background: #0d1016;
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+          transform-origin: bottom;
+          transform: translateX(-50%) scaleY(0);
+          animation: roadBodyGrow 0.42s cubic-bezier(0.37, 0, 0.2, 1) 1.22s forwards;
+        }
+
+        .logo-trace-wrap::after {
+          content: '';
+          position: absolute;
+          left: 45.9%;
+          top: 36.5%;
+          width: 0.66%;
+          height: 36.1%;
+          border-radius: 2px;
+          background: repeating-linear-gradient(
+            to bottom,
+            #f1f1f1 0 10%,
+            transparent 10% 17%
+          );
+          opacity: 1;
+          transform-origin: bottom;
+          transform: translateX(-50%) scaleY(0);
+          animation: roadGrow 0.42s cubic-bezier(0.37, 0, 0.2, 1) 1.22s forwards;
+        }
+
+        @keyframes fillLogo {
           0% {
-            stroke-dashoffset: 1;
-            opacity: 0.35;
+            fill-opacity: 0;
           }
-          65% {
-            stroke-dashoffset: 0;
+          100% {
+            fill-opacity: 1;
+          }
+        }
+
+        @keyframes roadGrow {
+          0% {
+            transform: translateX(-50%) scaleY(0);
+          }
+          100% {
+            transform: translateX(-50%) scaleY(1);
+          }
+        }
+
+        @keyframes roadBodyGrow {
+          0% {
+            transform: translateX(-50%) scaleY(0);
+          }
+          100% {
+            transform: translateX(-50%) scaleY(1);
+          }
+        }
+
+        @keyframes pinDrop {
+          0% {
+            opacity: 0;
+            transform: translateY(-90px) scale(0.96);
+          }
+          72% {
+            opacity: 1;
+            transform: translateY(4px) scale(1);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .logo-trace-wrap path.trace-segment,
+          .logo-trace-wrap .pin-segment,
+          .logo-trace-wrap::before,
+          .logo-trace-wrap::after {
+            animation: none;
+          }
+
+          .logo-trace-wrap path.trace-segment {
+            fill-opacity: 1;
+            stroke: none !important;
+          }
+
+          .logo-trace-wrap .pin-segment {
             opacity: 1;
           }
-          100% {
-            stroke-dashoffset: 0;
-            opacity: 0.92;
-          }
-        }
 
-        @keyframes loaderSweep {
-          0% {
-            transform: translateX(-120%);
-          }
-          60% {
-            transform: translateX(200%);
-          }
-          100% {
-            transform: translateX(200%);
+          .logo-trace-wrap::before,
+          .logo-trace-wrap::after {
+            transform: translateX(-50%) scaleY(1);
           }
         }
       `}</style>

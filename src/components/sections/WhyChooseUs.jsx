@@ -204,24 +204,41 @@ const WhyChooseUs = () => {
   const visibleFeatures = isMobile ? [...features, ...features, ...features] : features;
 
   return (
-    <section ref={sectionRef} className="relative overflow-visible py-section transition-colors duration-400" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-body)' }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-9 md:mb-14 feature-item px-9 md:px-16 lg:px-24">
-          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-5" style={{ color: 'var(--text-heading)' }}>The Art of Travel</h2>
+    <section
+      ref={sectionRef}
+      className="relative overflow-visible py-section transition-colors duration-400"
+      style={{
+        color: 'var(--text-body)',
+        background:
+          'linear-gradient(180deg, var(--fog-blend, var(--bg-surface)) 0%, color-mix(in srgb, var(--bg-surface) 85%, var(--bg-base)) 100%)',
+      }}
+    >
+      <div className="max-w-[1320px] mx-auto px-0 md:px-[clamp(20px,3.2vw,44px)]">
+        <div className="text-center mb-9 md:mb-12 feature-item px-4 md:px-[clamp(20px,4.5vw,88px)]">
+          <h2 className="font-heading text-[clamp(1.8rem,2.4vw,2.6rem)] mb-4 md:mb-5" style={{ color: 'var(--text-heading)' }}>The Art of Travel</h2>
           <div className="w-12 h-px bg-gold mx-auto mb-4 md:mb-6" />
-          <p className="font-body font-light tracking-wide max-w-2xl mx-auto" style={{ color: 'color-mix(in srgb, var(--text-body) 72%, transparent)' }}>
+          <p className="font-body font-normal tracking-wide max-w-[clamp(560px,66vw,820px)] mx-auto text-[clamp(1rem,0.9vw,1.2rem)] leading-[1.55]" style={{ color: 'color-mix(in srgb, var(--text-body) 72%, transparent)' }}>
             We don't sell packages. We design experiences. For those who seek the extraordinary, we craft journeys that are as unique as you are.
           </p>
         </div>
 
-        <div ref={carouselRef} className="flex gap-10 md:gap-6 lg:gap-8 overflow-x-auto pt-8 pb-10 md:pt-7 md:pb-9 no-scrollbar md:snap-x md:snap-mandatory">
+        <div ref={carouselRef} className="flex gap-6 md:gap-0 overflow-x-auto pt-8 pb-10 md:pt-6 md:pb-8 no-scrollbar md:grid md:grid-cols-3 md:[column-gap:clamp(14px,1.8vw,24px)] md:[row-gap:clamp(14px,1.8vw,24px)] md:overflow-visible">
           {visibleFeatures.map((feature, idx) => (
-            <div key={`${feature.title}-${idx}`} className="feature-item feature-card my-3 md:my-2 w-[72vw] max-w-[250px] shrink-0 snap-center rounded-2xl border p-5 min-h-[230px] flex flex-col items-center text-center group transition-transform duration-300 will-change-transform md:w-[34vw] md:max-w-[330px] md:min-h-[250px] lg:w-[26vw]" style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'color-mix(in srgb, var(--bg-base) 90%, transparent)' }}>
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border flex items-center justify-center mb-5 md:mb-7 group-hover:border-gold/50 transition-colors duration-500" style={{ borderColor: 'var(--border-subtle)' }}>
+            <div
+              key={`${feature.title}-${idx}`}
+              className="feature-item feature-card my-3 md:my-0 w-[clamp(230px,74vw,320px)] max-w-none shrink-0 snap-center rounded-2xl border p-[clamp(18px,2vw,26px)] min-h-[clamp(220px,42vw,320px)] flex flex-col items-center justify-center text-center group transition-transform duration-300 will-change-transform md:w-auto md:min-h-[clamp(240px,20vw,300px)]"
+              style={{
+                borderColor: 'var(--border-subtle)',
+                backgroundColor: 'color-mix(in srgb, var(--bg-surface) 95%, transparent)',
+                boxShadow: '0 14px 34px color-mix(in srgb, var(--color-black) 10%, transparent)',
+                backdropFilter: 'blur(6px)',
+              }}
+            >
+              <div className="w-12 h-12 md:w-[clamp(50px,3.2vw,60px)] md:h-[clamp(50px,3.2vw,60px)] rounded-full border flex items-center justify-center mb-5 md:mb-6 group-hover:border-gold/50 transition-colors duration-500" style={{ borderColor: 'var(--border-subtle)' }}>
                 <feature.icon strokeWidth={1} size={28} className="text-primary group-hover:text-gold transition-colors duration-500" />
               </div>
-              <h3 className="font-heading text-base md:text-lg mb-3 md:mb-4 tracking-wide" style={{ color: 'var(--text-heading)' }}>{feature.title}</h3>
-              <p className="font-body font-light text-sm leading-relaxed" style={{ color: 'color-mix(in srgb, var(--text-body) 66%, transparent)' }}>
+              <h3 className="font-heading text-[clamp(1.35rem,1.35vw,1.7rem)] mb-3 md:mb-4 tracking-wide" style={{ color: 'var(--text-heading)' }}>{feature.title}</h3>
+              <p className="font-body font-normal text-[clamp(0.95rem,0.86vw,1.08rem)] leading-relaxed max-w-[40ch]" style={{ color: 'color-mix(in srgb, var(--text-body) 66%, transparent)' }}>
                 {feature.desc}
               </p>
             </div>

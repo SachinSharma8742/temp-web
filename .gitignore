@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Copilot/session artifacts
+.agent/
+
+# Local design scratch area (not part of runtime app)
+design-system/
+
+# Duplicate favicon export folder at repo root (use public/favicon_io instead)
+favicon_io/

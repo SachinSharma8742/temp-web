@@ -142,10 +142,10 @@ const ParallaxStory = () => {
                   style={{ objectPosition: moment.objectPosition }}
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.18)_30%,rgba(5,5,5,0.9)_100%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(198,169,107,0.14),transparent_40%)] opacity-75 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(79, 127, 240,0.14),transparent_40%)] opacity-75 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
 
-              <div className="pointer-events-none absolute inset-[1px] rounded-[23px] border border-white/10 group-hover:border-[color:rgba(198,169,107,0.36)] transition-colors duration-500" />
+              <div className="pointer-events-none absolute inset-[1px] rounded-[23px] border border-white/10 group-hover:border-[color:rgba(79, 127, 240,0.36)] transition-colors duration-500" />
 
               <div className="relative z-10 flex h-full items-end p-6 md:p-7 lg:p-8">
                 <div className="max-w-[30rem]">
@@ -167,3 +167,4 @@ const ParallaxStory = () => {
 };
 
 export default ParallaxStory;
+

@@ -146,7 +146,7 @@ const Destinations = () => {
           <span className="text-gold tracking-[0.22em] text-xs md:text-sm uppercase block mb-4">
             Northern Signatures
           </span>
-          <h2 className="text-2xl md:text-4xl font-light tracking-tight text-primary">Discover India</h2>
+          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-primary">Discover India</h2>
         </div>
 
         <div className="hidden md:flex items-center gap-2">
@@ -201,7 +201,7 @@ const Destinations = () => {
               <span className="text-gold tracking-[0.24em] uppercase text-xs md:text-sm transform translate-y-4 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100" style={{ opacity: activeIndex === index ? 1 : undefined, transform: activeIndex === index ? 'translateY(0)' : undefined }}>
                 {dest.subtitle}
               </span>
-              <h3 className="text-white text-xl md:text-2xl font-light transform transition-transform duration-500 ease-out group-hover:-translate-y-2" style={{ transform: activeIndex === index ? 'translateY(-4px)' : undefined }}>
+              <h3 className="text-white text-xl md:text-2xl font-semibold transform transition-transform duration-500 ease-out group-hover:-translate-y-2" style={{ transform: activeIndex === index ? 'translateY(-4px)' : undefined }}>
                 {dest.name}
               </h3>
             </div>

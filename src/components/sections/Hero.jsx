@@ -118,6 +118,15 @@ const Hero = ({ isReady = false }) => {
       className="relative w-full h-dvh flex items-center justify-center overflow-hidden z-0"
       style={{ backgroundColor: 'var(--bg-base)' }}
     >
+      {/* Bottom fog blend into next section */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 md:h-52 z-10"
+        style={{
+          background:
+            'linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--fog-blend, var(--bg-surface)) 52%, transparent) 56%, var(--fog-blend, var(--bg-surface)) 100%)',
+        }}
+      />
+
       {/* Background Slides with Parallax Layer */}
       <div className="absolute inset-0 z-0 parallax-container">
         {HERO_SLIDES.map((slide, index) => (
@@ -132,36 +141,35 @@ const Hero = ({ isReady = false }) => {
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover opacity-0 transition-none scale-105"
             />
-            <div className={`absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`} />
+            <div className={`absolute inset-0 bg-gradient-to-b from-black/38 via-black/14 to-transparent transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`} />
           </div>
         ))}
       </div>
 
-      <div ref={contentRef} className="relative z-20 text-center px-4 max-w-2xl">
-        <h1 className="hero-text font-heading text-2xl md:text-4xl lg:text-5xl text-primary mb-3 md:mb-4 leading-tight">
-          Travel, Tailored <br className="hidden md:block" /> for You.
+      <div ref={contentRef} className="relative z-20 text-center px-4 max-w-2xl" style={{ color: '#FFFFFF' }}>
+        <h1 className="hero-text font-heading text-3xl md:text-5xl lg:text-6xl text-white mb-3 md:mb-4 leading-[1.06] drop-shadow-[0_8px_28px_rgba(0,0,0,0.35)]">
+          Tailor-Made Journeys <br className="hidden md:block" /> Across India.
         </h1>
         
         <div className="h-8 md:h-9 mb-5 md:mb-8 flex items-center justify-center">
-          <p ref={subtextRef} className="hero-text font-body text-secondary text-sm md:text-base tracking-wide font-light italic opacity-0">
+          <p
+            ref={subtextRef}
+            className="hero-text font-body text-white/90 text-sm md:text-base tracking-wide font-medium opacity-0 drop-shadow-[0_4px_14px_rgba(0,0,0,0.28)]"
+            style={{ mixBlendMode: 'screen' }}
+          >
             {HERO_SLIDES[currentIndex].subtext}
           </p>
         </div>
         
-        <div className="hero-text flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+        <div className="hero-text flex items-center justify-center gap-4 md:gap-6">
           <button 
-            className="group relative px-7 py-2.5 md:px-9 md:py-3 border border-current transition-all duration-500 overflow-hidden w-full sm:w-auto backdrop-blur-sm"
-            style={{ color: 'var(--text-primary)' }}
+            className="group relative min-w-[13rem] px-8 py-3 md:px-10 md:py-3.5 border border-white/70 rounded-full shadow-[0_12px_28px_rgba(0,0,0,0.22)] transition-all duration-500 overflow-hidden backdrop-blur-md hover:border-white"
+            style={{ color: '#FFFFFF' }}
           >
-            <span className="relative z-10 tracking-[0.2em] uppercase text-xs font-semibold">Plan My Trip</span>
-            <div className="absolute inset-0 bg-current translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out opacity-10" />
-            <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-75" />
+            <span className="relative z-10 tracking-[0.18em] uppercase text-xs md:text-[13px] font-semibold">Plan My Trip</span>
+            <div className="absolute inset-0 bg-white/12 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out" />
+            <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/28 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </button>
-          
-          <a href="#destinations" className="group flex items-center gap-3 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300" style={{ color: 'var(--text-secondary)' }}>
-            <span className="opacity-80 group-hover:opacity-100 group-hover:text-gold transition-all">Explore Destinations</span>
-            <span className="text-gold transform group-hover:translate-x-2 transition-transform duration-300">→</span>
-          </a>
         </div>
       </div>
 

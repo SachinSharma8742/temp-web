@@ -167,7 +167,7 @@ const Footer = () => {
       const isLight = themeRef.current === 'light';
       const fontSize = H * 0.52;
       cx.save();
-      cx.font = `italic 900 ${fontSize}px "Playfair Display", serif`;
+      cx.font = `800 ${fontSize}px "Nunito Sans", "Segoe UI", sans-serif`;
       cx.textBaseline = "middle";
 
       const txt = "DESIGN YOUR INDIA  •  ";
@@ -942,7 +942,7 @@ const Footer = () => {
       if (themeRef.current === 'light') return; // Hide stars in light mode for a 'daylight' feel
       stars.forEach(s => {
         const a = 0.15 + 0.1 * Math.sin(t * 1.1 + s.p);
-        cx.fillStyle = `rgba(198,169,107,${a})`;
+        cx.fillStyle = `rgba(79, 127, 240,${a})`;
         cx.beginPath(); cx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); cx.fill();
       });
     }
@@ -1206,7 +1206,7 @@ const Footer = () => {
                   <a
                     key={link.label}
                     href={link.href}
-                    className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] transition-colors hover:text-[#c6a96b] sm:text-[9px] sm:tracking-[0.16em] md:text-[10px] md:tracking-[0.3em]"
+                    className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] transition-colors hover:text-[#4F7FF0] sm:text-[9px] sm:tracking-[0.16em] md:text-[10px] md:tracking-[0.3em]"
                   >
                     {link.label}
                   </a>
@@ -1227,3 +1227,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

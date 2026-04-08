@@ -92,12 +92,12 @@ const placesData = [
 
 const boxSizes = [
   { left: '0%',    top: '0%',  width: '55%', height: '62%', opacity: 1,    zIndex: 20, size: 'hero'   },
-  { left: '56%',   top: '0%',  width: '44%', height: '30%', opacity: 0.9,  zIndex: 10, size: 'medium' },
-  { left: '56%',   top: '32%', width: '44%', height: '30%', opacity: 0.9,  zIndex: 10, size: 'medium' },
-  { left: '0%',    top: '64%', width: '24%', height: '36%', opacity: 0.72, zIndex: 6,  size: 'small'  },
-  { left: '25.5%', top: '64%', width: '24%', height: '36%', opacity: 0.72, zIndex: 6,  size: 'small'  },
-  { left: '51%',   top: '64%', width: '24%', height: '36%', opacity: 0.72, zIndex: 6,  size: 'small'  },
-  { left: '76%',   top: '64%', width: '24%', height: '36%', opacity: 0.72, zIndex: 6,  size: 'small'  },
+  { left: '56%',   top: '0%',  width: '44%', height: '30%', opacity: 1,    zIndex: 10, size: 'medium' },
+  { left: '56%',   top: '32%', width: '44%', height: '30%', opacity: 1,    zIndex: 10, size: 'medium' },
+  { left: '0%',    top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
+  { left: '25.5%', top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
+  { left: '51%',   top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
+  { left: '76%',   top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
 ];
 
 const boxCount = boxSizes.length;
@@ -499,7 +499,7 @@ const CoolMoodboardComponent = () => {
             <span
               className="mb-4 block text-[10px] uppercase tracking-[0.3em] md:text-xs font-bold"
               style={{
-                backgroundImage: 'linear-gradient(90deg, var(--accent-primary, #C6A96B) 0%, #f0d99a 45%, var(--accent-primary, #C6A96B) 100%)',
+                backgroundImage: 'linear-gradient(90deg, var(--accent-primary, #4F7FF0) 0%, #8FB3FF 45%, var(--accent-primary, #4F7FF0) 100%)',
                 backgroundSize: '200% auto',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -528,7 +528,7 @@ const CoolMoodboardComponent = () => {
               </p>
               <p
                 className="mt-0.5 text-[9px] uppercase tracking-[0.3em]"
-                style={{ color: 'var(--accent-primary, #C6A96B)', opacity: 0.8 }}
+                style={{ color: 'var(--accent-primary, #4F7FF0)', opacity: 0.8 }}
               >
                 {theRegTxt}
               </p>
@@ -543,10 +543,10 @@ const CoolMoodboardComponent = () => {
                     height: iNum === bigOneIdx ? '22px' : '5px',
                     backgroundColor:
                       iNum === bigOneIdx
-                        ? 'var(--accent-primary, #C6A96B)'
+                        ? 'var(--accent-primary, #4F7FF0)'
                         : 'rgba(255,255,255,0.12)',
                     boxShadow: iNum === bigOneIdx
-                      ? '0 0 6px rgba(198,169,107,0.6)'
+                      ? '0 0 6px rgba(79, 127, 240,0.6)'
                       : 'none',
                   }}
                 />
@@ -571,16 +571,16 @@ const CoolMoodboardComponent = () => {
                 ref={(theNode) => { cardItemsRef.current[idxNum] = theNode; }}
                 className={[
                   'group relative shrink-0 snap-center overflow-hidden rounded-2xl',
-                  'border bg-black/50',
+                  'border bg-transparent',
                   'h-[200px] w-[80vw] max-w-[280px]',
                   'md:h-[240px] md:w-[320px] md:max-w-[320px]',
                   'lg:mb-4 lg:h-auto lg:w-auto lg:max-w-none',
-                  'backdrop-blur-sm',
+                  'backdrop-blur-[1px]',
                   'transition-[border-color,box-shadow] duration-500',
                   isBigOne
-                    ? 'border-[rgba(198,169,107,0.3)] lg:hover:border-[rgba(198,169,107,0.5)]'
-                    : 'border-white/[0.07] lg:hover:border-white/20',
-                  'lg:hover:shadow-[0_12px_50px_rgba(0,0,0,0.7)]',
+                    ? 'border-[rgba(79,127,240,0.42)] lg:hover:border-[rgba(79,127,240,0.7)]'
+                    : 'border-white/[0.14] lg:hover:border-white/35',
+                  'lg:hover:shadow-[0_18px_50px_rgba(8,15,34,0.45)]',
                   idxNum > 4 ? 'hidden md:block lg:block' : '',
                 ].join(' ')}
                 style={{ willChange: 'transform, opacity, left, top, width, height' }}
@@ -595,7 +595,15 @@ const CoolMoodboardComponent = () => {
                   />
                 </div>
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/15 to-transparent group-hover:via-black/5 transition-all duration-500" />
+                <div
+                  className="pointer-events-none absolute inset-0 transition-all duration-500"
+                  style={{
+                    background:
+                      sizeStr === 'small'
+                        ? 'linear-gradient(to top, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.16) 42%, rgba(0,0,0,0) 78%)'
+                        : 'linear-gradient(to top, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0) 78%)',
+                  }}
+                />
 
                 <div
                   className="pointer-events-none absolute inset-0 rounded-2xl"
@@ -627,7 +635,7 @@ const CoolMoodboardComponent = () => {
                         width:  imgN === 0 ? '14px' : '4px',
                         backgroundColor:
                           imgN === 0
-                            ? 'var(--accent-primary, #C6A96B)'
+                            ? 'var(--accent-primary, #4F7FF0)'
                             : 'rgba(255,255,255,0.18)',
                       }}
                     />
@@ -638,16 +646,22 @@ const CoolMoodboardComponent = () => {
                   className="pointer-events-none absolute inset-x-0 bottom-0 z-10
                     p-4 md:p-5
                     group-hover:-translate-y-1 transition-transform duration-400
-                    bg-gradient-to-t from-black/98 via-black/70 to-transparent"
+                    bg-gradient-to-t to-transparent"
+                  style={{
+                    backgroundImage:
+                      sizeStr === 'small'
+                        ? 'linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0) 100%)'
+                        : 'linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0.42) 48%, rgba(0,0,0,0) 100%)',
+                  }}
                 >
                   <div className="mb-1 flex items-center gap-2">
                     <span
                       className="h-[4px] w-[4px] rounded-full shrink-0"
-                      style={{ backgroundColor: 'var(--accent-primary, #C6A96B)' }}
+                      style={{ backgroundColor: 'var(--accent-primary, #4F7FF0)' }}
                     />
                     <span
                       className="text-[8px] uppercase tracking-[0.45em] font-bold"
-                      style={{ color: 'var(--accent-primary, #C6A96B)', opacity: 0.85 }}
+                      style={{ color: 'var(--accent-primary, #4F7FF0)', opacity: 0.85 }}
                     >
                       {dItem2.region}
                     </span>
@@ -660,7 +674,7 @@ const CoolMoodboardComponent = () => {
                     {dItem2.title}
                   </h3>
 
-                  <p className="mt-1 text-[11px] md:text-xs leading-relaxed text-white/40 italic group-hover:text-white/60 transition-colors duration-300">
+                  <p className="mt-1 text-[11px] md:text-xs leading-relaxed text-white/65 group-hover:text-white/80 transition-colors duration-300">
                     {dItem2.tagline}
                   </p>
                 </div>
@@ -674,7 +688,7 @@ const CoolMoodboardComponent = () => {
           style={{ opacity: 0.3, fontSize: '10px', letterSpacing: '0.25em', textTransform: 'uppercase' }}
         >
           <span>{placesData.length} destinations</span>
-          <span style={{ color: 'var(--accent-primary, #C6A96B)' }}>India</span>
+          <span style={{ color: 'var(--accent-primary, #4F7FF0)' }}>India</span>
         </div>
       </div>
     </section>
@@ -682,3 +696,4 @@ const CoolMoodboardComponent = () => {
 };
 
 export default CoolMoodboardComponent;
+
