@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
-  // Disable SPA fallback so unknown paths (e.g., /temp-web) return 404 in dev/preview.
+  // Treat dev server as a multi‑page app so unknown paths (e.g. /temp-web) 404 instead of falling back to index.html.
   appType: 'mpa',
   plugins: [react(), tailwindcss()],
 })

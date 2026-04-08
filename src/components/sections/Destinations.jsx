@@ -42,18 +42,15 @@ const Destinations = () => {
     const container = trackRef.current;
     if (!container) return;
 
-    const firstCard = container.querySelector('[data-destination-card="true"]');
-    if (!firstCard) return;
+    const cards = container.querySelectorAll('[data-destination-card="true"]');
+    if (!cards.length) return;
 
-    const styles = window.getComputedStyle(container);
-    const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
-    const cardStep = firstCard.getBoundingClientRect().width + gap;
+    const nextIndex = Math.max(0, Math.min(cardCount - 1, activeIndex + direction));
+    const nextCard = cards[nextIndex];
+    if (!nextCard) return;
 
-    container.scrollBy({
-      left: direction * cardStep,
-      behavior: 'smooth',
-    });
-  }, []);
+    container.scrollTo({ left: nextCard.offsetLeft - 20, behavior: 'smooth' });
+  }, [activeIndex, cardCount]);
 
   const scrollToCard = useCallback((index) => {
     const container = trackRef.current;
@@ -64,30 +61,6 @@ const Destinations = () => {
     if (!card) return;
 
     container.scrollTo({ left: card.offsetLeft - 20, behavior: 'smooth' });
-  }, []);
-
-  const syncActiveCard = useCallback(() => {
-    const container = trackRef.current;
-    if (!container) return;
-
-    const cards = Array.from(container.querySelectorAll('[data-destination-card="true"]'));
-    if (!cards.length) return;
-
-    const center = container.scrollLeft + container.clientWidth / 2;
-    let nearestIndex = 0;
-    let nearestDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.clientWidth / 2;
-      const distance = Math.abs(cardCenter - center);
-
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestIndex = index;
-      }
-    });
-
-    setActiveIndex(nearestIndex);
   }, []);
 
   const updatePathMarkers = useCallback(() => {
@@ -115,9 +88,6 @@ const Destinations = () => {
     };
 
     const cards = container.querySelectorAll('[data-destination-card="true"]');
-    const viewportCenter = container.scrollLeft + container.clientWidth / 2;
-
-    pathViewport.scrollLeft = container.scrollLeft;
 
     for (let i = 0; i < cards.length; i += 1) {
       const stop = pathStopRefs.current[i];
@@ -126,35 +96,64 @@ const Destinations = () => {
 
       const x = card.offsetLeft + card.clientWidth / 2;
       const y = getPathYForContentX(x);
-      const distance = Math.abs(x - viewportCenter);
-      const focus = Math.max(0, 1 - distance / 420);
 
       stop.style.left = `${x.toFixed(2)}px`;
       stop.style.top = `${y.toFixed(2)}px`;
-      stop.style.setProperty('--focus', focus.toFixed(3));
       stop.style.setProperty('--dot-scale', activeIndex === i ? '1.55' : '1');
     }
   }, [activeIndex]);
 
   useEffect(() => {
-    syncActiveCard();
     const container = trackRef.current;
     const pathViewport = pathViewportRef.current;
     if (!container) return undefined;
+
+    const cards = Array.from(container.querySelectorAll('[data-destination-card="true"]'));
+    if (!cards.length) return undefined;
 
     let rafId = null;
     const onScroll = () => {
       if (rafId) window.cancelAnimationFrame(rafId);
       rafId = window.requestAnimationFrame(() => {
-        syncActiveCard();
-        updatePathMarkers();
+        if (pathViewport) pathViewport.scrollLeft = container.scrollLeft;
       });
     };
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let bestIndex = -1;
+        let bestRatio = 0;
+
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          if (entry.intersectionRatio <= bestRatio) return;
+
+          const rawIndex = Number(entry.target.getAttribute('data-card-index'));
+          if (Number.isNaN(rawIndex)) return;
+
+          bestRatio = entry.intersectionRatio;
+          bestIndex = rawIndex;
+        });
+
+        if (bestIndex >= 0) {
+          setActiveIndex((prev) => (prev === bestIndex ? prev : bestIndex));
+        }
+      },
+      {
+        root: container,
+        threshold: [0.5, 0.65, 0.8],
+      }
+    );
+
+    cards.forEach((card, index) => {
+      card.setAttribute('data-card-index', String(index));
+      observer.observe(card);
+    });
+
     const onResize = () => {
-      syncActiveCard();
       setRailWidth(Math.max(container.scrollWidth, container.clientWidth));
       updatePathMarkers();
+      if (pathViewport) pathViewport.scrollLeft = container.scrollLeft;
     };
 
     container.addEventListener('scroll', onScroll, { passive: true });
@@ -162,13 +161,15 @@ const Destinations = () => {
 
     setRailWidth(Math.max(container.scrollWidth, container.clientWidth));
     updatePathMarkers();
+    onScroll();
 
     return () => {
       container.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
+      observer.disconnect();
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [syncActiveCard, updatePathMarkers]);
+  }, [updatePathMarkers]);
 
   useEffect(() => {
     updatePathMarkers();
@@ -243,16 +244,12 @@ const Destinations = () => {
 
       </div>
 
-      <div ref={trackRef} className="flex gap-4 md:gap-6 px-5 md:px-12 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pt-4 md:pt-5 pb-6 md:pb-8 w-full">
+      <div ref={trackRef} className="flex gap-4 md:gap-6 px-5 md:px-12 overflow-x-auto snap-x snap-mandatory scroll-smooth [scroll-padding-inline:1.25rem] md:[scroll-padding-inline:3rem] [overscroll-behavior-x:contain] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pt-4 md:pt-5 pb-6 md:pb-8 w-full">
         {DESTINATIONS.map((dest, index) => (
           <article
             key={dest.name}
             data-destination-card="true"
-            className={`group relative mt-1 md:mt-0.5 h-[320px] md:h-[450px] shrink-0 cursor-pointer overflow-hidden snap-center transition-[width,max-width,transform,box-shadow] duration-500 ${
-              activeIndex === index
-                ? 'w-[82vw] min-w-[82vw] max-w-[340px] md:w-[380px] md:min-w-[380px] md:max-w-[380px]'
-                : 'w-[74vw] min-w-[74vw] max-w-[280px] md:w-[320px] md:min-w-[320px] md:max-w-[320px]'
-            }`}
+            className="group relative mt-1 md:mt-0.5 h-[320px] md:h-[450px] w-[74vw] min-w-[74vw] max-w-[280px] md:w-[320px] md:min-w-[320px] md:max-w-[320px] shrink-0 cursor-pointer overflow-hidden snap-center transition-[transform,box-shadow] duration-500"
             onClick={() => scrollToCard(index)}
             role="button"
             tabIndex={0}
@@ -275,6 +272,8 @@ const Destinations = () => {
             <img
               src={dest.image}
               alt={dest.name}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
             />
             
@@ -293,7 +292,7 @@ const Destinations = () => {
         ))}
       </div>
 
-      <div className="w-full mt-0 md:mt-1 overflow-hidden">
+      <div className="w-full mt-0 md:mt-1 overflow-hidden md:hidden">
         <div ref={pathViewportRef} className="relative h-24 overflow-hidden px-0 py-0 md:h-40 md:py-2">
           <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-[var(--path-dim)] to-transparent opacity-80" />
           <div className="pointer-events-none absolute left-0 right-0 top-[56%] h-20 -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(79,127,240,0.16)_0%,transparent_55%)] opacity-70 blur-2xl" />
