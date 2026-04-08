@@ -186,17 +186,10 @@ const Hero = ({ isReady = false }) => {
           ))}
         </div>
         
-        <div className="w-[1px] h-10 bg-black/10 dark:bg-white/10 relative overflow-hidden">
-          <div className="w-full h-1/2 bg-gold absolute top-0 -translate-y-full animate-[scrollDown_2.5s_ease-in-out_infinite]" />
-        </div>
+       
       </div>
       
-      <style>{`
-        @keyframes scrollDown {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(200%); }
-        }
-      `}</style>
+      
     </section>
   );
 };

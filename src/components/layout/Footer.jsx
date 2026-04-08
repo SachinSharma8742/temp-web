@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useTheme } from '../../App';
 
 const FOOTER_LINKS = [
@@ -10,6 +10,7 @@ const FOOTER_LINKS = [
 const Footer = () => {
   const canvasRef = useRef(null);
   const footerBarRef = useRef(null);
+  const footerRef = useRef(null);
   const { theme } = useTheme();
 
   const themeRef = useRef(theme);
@@ -24,10 +25,32 @@ const Footer = () => {
     const cx = cv.getContext('2d');
     let W, H;
     let animationFrameId;
+    let visibilityObserver;
+    let lastFooterLandRgb = '';
+    let isPageVisible = document.visibilityState !== 'hidden';
+    let isFooterInView = false;
+    let lastFrameTime = 0;
+
+    const TARGET_FPS = 30;
+    const FRAME_MS = 1000 / TARGET_FPS;
+
+    let hillStep = 4;
+    let roadStep = 4;
+    let clipStep = 5;
+
+    function shouldAnimate() {
+      return isPageVisible && isFooterInView;
+    }
 
     function resize() {
       W = cv.width = cv.offsetWidth;
       H = cv.height = cv.offsetHeight;
+
+      // Scale sampling with canvas size to keep frame cost stable on large screens.
+      const widthScale = W > 1400 ? 1 : 0;
+      hillStep = 4 + widthScale;
+      roadStep = 4 + widthScale;
+      clipStep = 5 + widthScale;
     }
     resize();
     window.addEventListener('resize', resize);
@@ -195,7 +218,7 @@ const Footer = () => {
       cx.fillStyle = col;
       cx.beginPath();
       cx.moveTo(0, fn(0));
-      for (let x = 0; x <= W + 4; x += 3) cx.lineTo(x, fn(x));
+      for (let x = 0; x <= W + hillStep; x += hillStep) cx.lineTo(x, fn(x));
       cx.lineTo(W, H); cx.lineTo(0, H);
       cx.closePath(); cx.fill();
     }
@@ -339,7 +362,7 @@ const Footer = () => {
       cx.moveTo(0, 0);
       cx.lineTo(W, 0);
       cx.lineTo(W, roadSurfaceYAtScreenX(W, themeA, themeB, blend) + H * 0.008);
-      for (let x = W; x >= 0; x -= 4) {
+      for (let x = W; x >= 0; x -= clipStep) {
         cx.lineTo(x, roadSurfaceYAtScreenX(x, themeA, themeB, blend) + H * 0.008);
       }
       cx.lineTo(0, roadSurfaceYAtScreenX(0, themeA, themeB, blend) + H * 0.008);
@@ -433,41 +456,6 @@ const Footer = () => {
 
     function drawForegroundTrees(themeA, themeB, blend) {
       drawTreeBandSet(foregroundTreeBands, ROAD_LAYER, themeA, themeB, blend, 30);
-    }
-
-    const cabinLights = [
-      { wx: 140, li: 1, tw: 0.0 },
-      { wx: 510, li: 2, tw: 1.3 },
-      { wx: 910, li: 1, tw: 2.1 },
-      { wx: 1240, li: 2, tw: 0.7 },
-      { wx: 1710, li: 1, tw: 2.8 },
-      { wx: 2070, li: 2, tw: 1.9 },
-    ];
-
-    function drawCabinLights(themeA, themeB, blend) {
-      cabinLights.forEach(({ wx, li, tw }) => {
-        const point = projectLoopingProp(wx, li, themeA, themeB, blend, 20, -H * 0.008);
-        if (!point) return;
-
-        const sx = point.sx;
-        const sy = point.y;
-        const flicker = 0.15 + 0.1 * Math.sin(t * 4 + tw);
-
-        cx.save();
-        cx.fillStyle = `rgba(238, 196, 110, ${0.55 + flicker})`;
-        cx.beginPath();
-        cx.arc(sx, sy, 1.2, 0, Math.PI * 2);
-        cx.fill();
-
-        const glow = cx.createRadialGradient(sx, sy, 0, sx, sy, 8);
-        glow.addColorStop(0, `rgba(238, 196, 110, ${0.15 + flicker * 0.4})`);
-        glow.addColorStop(1, 'rgba(238, 196, 110, 0)');
-        cx.fillStyle = glow;
-        cx.beginPath();
-        cx.arc(sx, sy, 8, 0, Math.PI * 2);
-        cx.fill();
-        cx.restore();
-      });
     }
 
     const fencePosts = [190, 360, 540, 860, 1110, 1450, 1760, 2010];
@@ -636,31 +624,6 @@ const Footer = () => {
         cx.restore();
       });
 
-      const lighthouse = projectLoopingProp(1680, 2, themeA, themeB, blend, 40, -H * 0.06);
-      if (lighthouse) {
-        const lighthouseScale = H / 240;
-        const lx = lighthouse.sx;
-        const ly = lighthouse.y;
-        const beamA = 0.08 * coastalW;
-        const sweep = Math.sin(t * 0.9) * 20;
-
-        cx.save();
-        cx.globalAlpha = coastalW;
-        cx.fillStyle = 'rgb(42,46,54)';
-        cx.fillRect(lx - 3 * lighthouseScale, ly, 6 * lighthouseScale, 24 * lighthouseScale);
-        cx.fillStyle = 'rgb(188,206,214)';
-        cx.fillRect(lx - 1.5 * lighthouseScale, ly + 2 * lighthouseScale, 3 * lighthouseScale, 3 * lighthouseScale);
-
-        cx.globalAlpha = 1;
-        cx.fillStyle = `rgba(206,226,232,${beamA})`;
-        cx.beginPath();
-        cx.moveTo(lx, ly + 3 * lighthouseScale);
-        cx.lineTo(lx + 65 * lighthouseScale, ly - 10 * lighthouseScale + sweep * 0.05);
-        cx.lineTo(lx + 58 * lighthouseScale, ly + 16 * lighthouseScale + sweep * 0.05);
-        cx.closePath();
-        cx.fill();
-        cx.restore();
-      }
     }
 
     function drawJungleProps(themeA, themeB, blend) {
@@ -764,7 +727,7 @@ const Footer = () => {
       cx.strokeStyle = mixColor(themeA.road, themeB.road, blend);
       cx.lineWidth = Math.max(2.2, H * 0.015);
       cx.beginPath();
-      for (let x = 0; x <= W + 3; x += 3) {
+        for (let x = 0; x <= W + roadStep; x += roadStep) {
         const worldX = jeepWorldX + (x - jeepScreenX);
         const y = blendedLayerY(4, worldX, themeA, themeB, blend) - H * 0.016;
         if (x === 0) cx.moveTo(x, y);
@@ -777,7 +740,7 @@ const Footer = () => {
       cx.setLineDash([10, 14]);
       cx.lineDashOffset = terrainOff;
       cx.beginPath();
-      for (let x = 0; x <= W + 3; x += 3) {
+        for (let x = 0; x <= W + roadStep; x += roadStep) {
         const worldX = jeepWorldX + (x - jeepScreenX);
         const y = blendedLayerY(4, worldX, themeA, themeB, blend) - H * 0.016;
         if (x === 0) cx.moveTo(x, y);
@@ -846,105 +809,6 @@ const Footer = () => {
         }
         cx.restore();
       }
-    }
-
-    const bats = Array.from({ length: 6 }, (_, i) => ({
-      x: Math.random(),
-      y: 0.09 + Math.random() * 0.16,
-      sp: 0.00008 + Math.random() * 0.0001,
-      ph: Math.random() * Math.PI * 2,
-      sc: 0.9 + Math.random() * 0.5,
-      dir: i % 2 === 0 ? 1 : -1,
-    }));
-
-    function drawBats() {
-      bats.forEach(b => {
-        b.x += b.sp * b.dir;
-        if (b.x > 1.08) b.x = -0.08;
-        if (b.x < -0.08) b.x = 1.08;
-
-        const bx = b.x * W;
-        const by = b.y * H + Math.sin(t * 1.6 + b.ph) * 3;
-        const flap = Math.sin(t * 10 + b.ph) * 2.5 * b.sc;
-
-        cx.save();
-        cx.strokeStyle = 'rgba(90,90,100,0.35)';
-        cx.lineWidth = 1.1;
-        cx.lineCap = 'round';
-        cx.beginPath();
-        cx.moveTo(bx - 4 * b.sc, by + flap * 0.25);
-        cx.quadraticCurveTo(bx - 1.5 * b.sc, by - flap, bx, by);
-        cx.quadraticCurveTo(bx + 1.5 * b.sc, by - flap, bx + 4 * b.sc, by + flap * 0.25);
-        cx.stroke();
-        cx.restore();
-      });
-    }
-
-    const shootingStar = {
-      active: false,
-      timer: 4 + Math.random() * 6,
-      x: 0,
-      y: 0,
-      vx: 0,
-      vy: 0,
-      life: 0,
-      maxLife: 0,
-    };
-
-    function updateAndDrawShootingStar(dt) {
-      if (!shootingStar.active) {
-        shootingStar.timer -= dt;
-        if (shootingStar.timer <= 0) {
-          shootingStar.active = true;
-          shootingStar.x = W * (0.75 + Math.random() * 0.22);
-          shootingStar.y = H * (0.08 + Math.random() * 0.16);
-          shootingStar.vx = -(H * 0.55 + Math.random() * H * 0.2) * dt;
-          shootingStar.vy = (H * 0.14 + Math.random() * H * 0.08) * dt;
-          shootingStar.life = 0;
-          shootingStar.maxLife = 0.7 + Math.random() * 0.4;
-        }
-        return;
-      }
-
-      shootingStar.life += dt;
-      if (shootingStar.life >= shootingStar.maxLife) {
-        shootingStar.active = false;
-        shootingStar.timer = 8 + Math.random() * 9;
-        return;
-      }
-
-      shootingStar.x += shootingStar.vx;
-      shootingStar.y += shootingStar.vy;
-
-      const k = 1 - shootingStar.life / shootingStar.maxLife;
-      cx.save();
-      cx.strokeStyle = `rgba(230,220,186,${0.6 * k})`;
-      cx.lineWidth = 1.2;
-      cx.beginPath();
-      cx.moveTo(shootingStar.x, shootingStar.y);
-      cx.lineTo(shootingStar.x + 26, shootingStar.y - 7);
-      cx.stroke();
-      cx.fillStyle = `rgba(238,230,200,${0.65 * k})`;
-      cx.beginPath();
-      cx.arc(shootingStar.x, shootingStar.y, 1.4, 0, Math.PI * 2);
-      cx.fill();
-      cx.restore();
-    }
-
-    /* ── stars ── */
-    const stars = Array.from({ length: 45 }, () => ({
-      x: Math.random(), y: Math.random() * 0.45,
-      r: 0.3 + Math.random() * 0.8,
-      p: Math.random() * Math.PI * 2,
-    }));
-
-    function drawStars() {
-      if (themeRef.current === 'light') return; // Hide stars in light mode for a 'daylight' feel
-      stars.forEach(s => {
-        const a = 0.15 + 0.1 * Math.sin(t * 1.1 + s.p);
-        cx.fillStyle = `rgba(79, 127, 240,${a})`;
-        cx.beginPath(); cx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); cx.fill();
-      });
     }
 
     /* ── YOUR JEEP IMAGE ── */
@@ -1077,9 +941,18 @@ const Footer = () => {
     }
 
     /* ── main loop ── */
-    function loop() {
+    function loop(now = performance.now()) {
+      animationFrameId = undefined;
+      if (!shouldAnimate()) return;
+
+      if (now - lastFrameTime < FRAME_MS) {
+        animationFrameId = requestAnimationFrame(loop);
+        return;
+      }
+      lastFrameTime = now;
+
       cx.clearRect(0, 0, W, H);
-      const dt = 0.016;
+      const dt = 1 / TARGET_FPS;
       t += dt;
       textOff += 0.5; // Speed of background text
       worldX += speeds[4] * PLACE_PREVIEW_SPEED;
@@ -1108,9 +981,6 @@ const Footer = () => {
         cx.fillRect(0, 0, W, H);
       }
 
-      drawStars();
-      drawBats();
-      if (!isLight) updateAndDrawShootingStar(dt); // No shooting stars in broad daylight
       drawThemeOverlays(themeA, themeB, blend);
 
       // Draw Typography in the Sky (Behind Hills)
@@ -1125,7 +995,11 @@ const Footer = () => {
           col
         );
         if (i === 4 && footerBarRef.current) {
-          footerBarRef.current.style.setProperty('--footer-land-rgb', layerColor.join(', '));
+          const nextFooterLandRgb = layerColor.join(', ');
+          if (nextFooterLandRgb !== lastFooterLandRgb) {
+            lastFooterLandRgb = nextFooterLandRgb;
+            footerBarRef.current.style.setProperty('--footer-land-rgb', nextFooterLandRgb);
+          }
         }
       }
 
@@ -1134,7 +1008,6 @@ const Footer = () => {
       const jeepWorldX = jx + off[4];
 
       withRoadBackdropClip(themeA, themeB, blend, () => {
-        drawCabinLights(themeA, themeB, blend);
         drawDesertProps(themeA, themeB, blend);
         drawCoastalProps(themeA, themeB, blend);
         drawTrees(themeA, themeB, blend);
@@ -1165,11 +1038,49 @@ const Footer = () => {
       animationFrameId = requestAnimationFrame(loop);
     }
 
+    function startLoop() {
+      if (!animationFrameId && shouldAnimate()) {
+        lastFrameTime = 0;
+        animationFrameId = requestAnimationFrame(loop);
+      }
+    }
+
+    function stopLoop() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = undefined;
+      }
+    }
+
+    function handleVisibilityChange() {
+      isPageVisible = document.visibilityState !== 'hidden';
+      if (shouldAnimate()) startLoop();
+      else stopLoop();
+    }
+
+    if (typeof IntersectionObserver !== 'undefined' && footerRef.current) {
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isFooterInView = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+          if (shouldAnimate()) startLoop();
+          else stopLoop();
+        },
+        { threshold: [0, 0.2] }
+      );
+      visibilityObserver.observe(footerRef.current);
+    } else {
+      isFooterInView = true;
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     jeepY = H * 0.7;
-    loop();
+    startLoop();
 
     return () => {
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (visibilityObserver) visibilityObserver.disconnect();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -1181,7 +1092,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative transition-colors duration-400" style={{ backgroundColor: 'var(--bg-base)' }}>
+    <footer ref={footerRef} className="relative transition-colors duration-400" style={{ backgroundColor: 'var(--bg-base)' }}>
       <div
         className="relative h-[220px] w-full overflow-hidden sm:h-[240px] md:h-[280px] lg:h-[300px]"
       >
@@ -1226,5 +1137,5 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);
 
