@@ -30,4 +30,4 @@ dist-ssr
 design-system/
 
 # Duplicate favicon export folder at repo root (use public/favicon_io instead)
-favicon_io/
+/favicon_io/
