@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import IntroLoader from './components/layout/IntroLoader';
@@ -7,42 +7,9 @@ import WhyChooseUs from './components/sections/WhyChooseUs';
 import Destinations from './components/sections/Destinations';
 import Experience from './components/sections/Experience';
 import JourneyMoodboard from './components/sections/JourneyMoodboard';
+import ContactForm from './components/sections/ContactForm';
 import { HERO_SLIDES } from './data/heroSlides';
-
-// ─── Theme Context ───────────────────────────────────────────────────────────
-export const ThemeContext = createContext({ theme: 'dark' });
-
-
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    // Respect OS preference on first load
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
-    return 'dark';
-  });
-
-  useEffect(() => {
-    // We no longer need to set a data-theme attribute on <html> 
-    // because index.css now handles it natively via @media queries.
-  }, [theme]);
-
-  // Keep in sync with OS preference changes
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: light)');
-    const handler = (e) => setTheme(e.matches ? 'light' : 'dark');
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
-  return (
-    <ThemeContext.Provider value={{ theme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
-
-export const useTheme = () => useContext(ThemeContext);
+import { ThemeProvider } from './ThemeContext';
 
 const INTRO_MIN_DURATION_MS = 2200;
 const INTRO_EXIT_DURATION_MS = 700;
@@ -111,9 +78,8 @@ function AppShell() {
       {showLoader && <IntroLoader isExiting={loaderExiting} />}
 
       <div
-        className={`min-h-dvh font-body selection:bg-gold selection:text-black transition-opacity duration-700 ${
-          heroReady ? 'opacity-100' : 'opacity-0'
-        }`}
+        className={`min-h-dvh font-body selection:bg-gold selection:text-black transition-opacity duration-700 ${heroReady ? 'opacity-100' : 'opacity-0'
+          }`}
         style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-body)' }}
       >
         <Header />
@@ -128,9 +94,10 @@ function AppShell() {
             <Destinations />
             <Experience />
             <JourneyMoodboard />
+            <ContactForm />
           </div>
         </main>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );

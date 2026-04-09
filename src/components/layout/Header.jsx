@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../../App';
+import { useTheme } from '../../ThemeContext';
 import logoMark from '../../assets/design-your-india-logo.png';
 
 
@@ -23,9 +23,8 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out px-4 md:px-8 flex justify-between items-center ${
-        scrolled ? scrolledBg : 'bg-transparent'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out px-4 md:px-8 flex justify-between items-center ${scrolled ? scrolledBg : 'bg-transparent'
+        }`}
     >
       <a href="#top" className="shrink-0 -ml-3 md:-ml-6" aria-label="Design Your India">
         <img

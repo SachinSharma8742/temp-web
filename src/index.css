@@ -15,39 +15,15 @@
   --spacing-section: clamp(56px, 8vw, 84px);
 }
 
-/* ─── Default / Dark Theme ─── */
+/* ─── Light Theme (Always) ─── */
 :root {
-  --bg-base: #0B0B0B;
-  --bg-surface: #111111;
-  --text-heading: #E8DCCB;
-  --text-body: #F7F4EF;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-}
-
-/* ─── Smart Theme (System Level Sync) ─── */
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-base: #F2F6FC;
-    --bg-surface: #FFFFFF;
-    --text-heading: #0F172A;
-    --text-body: #1E293B;
-    --border-subtle: rgba(30, 58, 138, 0.14);
-    /* Override Tailwind tokens so text-primary / text-secondary classes swap */
-    --color-primary: #1A1A1A;
-    --color-secondary: #0B0B0B;
-  }
-}
-
-/* Explicit Dark Override (Ensures Dark Mode defaults correctly) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-base: #0B0B0B;
-    --bg-surface: #111111;
-    --text-heading: #E8DCCB;
-    --text-body: #F7F4EF;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-  }
+  --bg-base: #F2F6FC;
+  --bg-surface: #FFFFFF;
+  --text-heading: #0F172A;
+  --text-body: #1E293B;
+  --border-subtle: rgba(30, 58, 138, 0.14);
+  --color-primary: #1A1A1A;
+  --color-secondary: #0B0B0B;
 }
 
 @layer base {
@@ -85,6 +61,7 @@
   }
 
   @supports (-webkit-touch-callout: none) {
+
     html,
     body,
     #root {
@@ -92,7 +69,12 @@
     }
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 800;
     color: var(--text-heading);
@@ -137,8 +119,10 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}

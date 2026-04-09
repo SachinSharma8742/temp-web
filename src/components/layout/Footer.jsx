@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef } from 'react';
-import { useTheme } from '../../App';
+import { useTheme } from '../../ThemeContext';
 
 const FOOTER_LINKS = [
   { label: 'Refund Policy', href: '#' },
@@ -187,7 +187,6 @@ const Footer = () => {
 
     /* ── SKY TYPOGRAPHY ── */
     function drawSkyTypography(offset) {
-      const isLight = themeRef.current === 'light';
       const fontSize = H * 0.52;
       cx.save();
       cx.font = `800 ${fontSize}px "Nunito Sans", "Segoe UI", sans-serif`;
@@ -197,9 +196,9 @@ const Footer = () => {
       const txtWidth = cx.measureText(txt).width;
 
       // SUBTLE: Reduced opacity so it's a "texture" not a "distraction"
-      const fillAlpha = isLight ? 0.05 : 0.04;
-      const strokeAlpha = isLight ? 0.15 : 0.1;
-      const baseCol = isLight ? "0, 0, 0" : "255, 255, 255"; 
+      const fillAlpha = 0.08;
+      const strokeAlpha = 0.2;
+      const baseCol = "79, 127, 240";
 
       for (let i = -1; i < W / txtWidth + 1; i++) {
         const x = (i * txtWidth) - (offset % txtWidth);
@@ -727,7 +726,7 @@ const Footer = () => {
       cx.strokeStyle = mixColor(themeA.road, themeB.road, blend);
       cx.lineWidth = Math.max(2.2, H * 0.015);
       cx.beginPath();
-        for (let x = 0; x <= W + roadStep; x += roadStep) {
+      for (let x = 0; x <= W + roadStep; x += roadStep) {
         const worldX = jeepWorldX + (x - jeepScreenX);
         const y = blendedLayerY(4, worldX, themeA, themeB, blend) - H * 0.016;
         if (x === 0) cx.moveTo(x, y);
@@ -740,7 +739,7 @@ const Footer = () => {
       cx.setLineDash([10, 14]);
       cx.lineDashOffset = terrainOff;
       cx.beginPath();
-        for (let x = 0; x <= W + roadStep; x += roadStep) {
+      for (let x = 0; x <= W + roadStep; x += roadStep) {
         const worldX = jeepWorldX + (x - jeepScreenX);
         const y = blendedLayerY(4, worldX, themeA, themeB, blend) - H * 0.016;
         if (x === 0) cx.moveTo(x, y);
@@ -1126,7 +1125,7 @@ const Footer = () => {
 
               <div className="flex items-center gap-4">
                 <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] md:tracking-[0.3em]">
-                  &copy; {new Date().getFullYear()} Design Your India
+                  &copy; {new Date().getFullYear()} <span className="text-gold">Design Your India</span>
                 </span>
               </div>
             </div>
