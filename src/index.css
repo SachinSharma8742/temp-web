@@ -126,3 +126,25 @@
   scrollbar-width: none;
   /* Firefox */
 }
+
+/* ─── Print Styles ─── */
+@media print {
+  header, footer, nav,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  body, html, #root {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .print\\:block {
+    display: block !important;
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+}

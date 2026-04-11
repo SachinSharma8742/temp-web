@@ -9,17 +9,17 @@ const features = [
   {
     icon: ShieldCheck,
     title: 'Absolute Privacy',
-    desc: 'From secluded estates to private charters, your journey remains entirely yours.'
+    desc: 'Exclusively for you—no group schedules, no shared experiences. Every moment remains entirely personal.'
   },
   {
     icon: Map,
     title: 'Curated Access',
-    desc: 'Unlock doors normally closed to the public—private palace dining to exclusive gallery previews.'
+    desc: 'Unlock doors normally closed to the public—private palace dining, village immersions, and exclusive cultural experiences handpicked just for you.'
   },
   {
     icon: Diamond,
     title: 'Uncompromising Luxury',
-    desc: 'Only the finest accommodations, handpicked for design, service, and profound character.'
+    desc: 'Only the finest, handpicked accommodations and local experiences—chosen for authentic character and impeccable service.'
   }
 ];
 
@@ -30,7 +30,10 @@ const WhyChooseUs = () => {
   const resumeTimerRef = useRef(null);
   const loopWidthRef = useRef(0);
   const isInteractingRef = useRef(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const cardsLayoutRef = useRef([]); // Stores { center, id, node } to prevent offsetLeft reads in loop
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)').matches : false
+  );
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -57,7 +60,6 @@ const WhyChooseUs = () => {
     const mq = window.matchMedia('(max-width: 767px)');
     const syncMobile = (e) => setIsMobile(e.matches);
 
-    setIsMobile(mq.matches);
     if (mq.addEventListener) {
       mq.addEventListener('change', syncMobile);
     } else {
@@ -79,26 +81,47 @@ const WhyChooseUs = () => {
     let virtualScrollLeft = container.scrollLeft;
 
     const syncLoopWidth = () => {
-      loopWidthRef.current = container.scrollWidth / 3;
+      if (!container) return;
+      const cards = container.querySelectorAll('.feature-card');
+      if (cards.length >= 4) {
+        // PRECISE MEASUREMENT: The distance between the 1st card of set 1 and the 1st card of set 2
+        // This is mathematically perfect because it includes exactly 3 cards and 3 gaps.
+        loopWidthRef.current = cards[3].offsetLeft - cards[0].offsetLeft;
+      } else {
+        loopWidthRef.current = container.scrollWidth / 3;
+      }
+      measureLayout();
       virtualScrollLeft = container.scrollLeft;
     };
 
-    const updateCenterFocus = (time = 0) => {
+    const measureLayout = () => {
       const cards = container.querySelectorAll('.feature-card');
-      const centerX = container.scrollLeft + container.clientWidth / 2;
+      cardsLayoutRef.current = Array.from(cards).map((node) => ({
+        center: node.offsetLeft + node.offsetWidth / 2,
+        node: node,
+      }));
+    };
+
+    const updateCenterFocus = (currentScroll, time = 0) => {
+      const layout = cardsLayoutRef.current;
+      if (!layout.length) return;
+
+      const centerX = currentScroll + container.clientWidth / 2;
       const focusRange = container.clientWidth * 0.6;
 
-      cards.forEach((card) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const distance = Math.abs(cardCenter - centerX);
+      layout.forEach((data) => {
+        const { center, node } = data;
+        const distance = Math.abs(center - centerX);
         const focus = Math.max(0, 1 - distance / focusRange);
+        
         const scale = 1 + focus * 0.12;
         const lift = focus * (4 + Math.sin(time * 0.01) * 2);
         const shadowStrength = 0.08 + focus * 0.2;
 
-        card.style.transform = `translateY(${-lift}px) scale(${scale})`;
-        card.style.zIndex = String(5 + Math.round(focus * 10));
-        card.style.boxShadow = `0 14px 34px color-mix(in srgb, var(--color-black) ${Math.round(
+        // Optimized direct style manipulation using cached nodes and translate3d
+        node.style.transform = `translate3d(0, ${-lift}px, 0) scale(${scale})`;
+        node.style.zIndex = String(5 + Math.round(focus * 10));
+        node.style.boxShadow = `0 14px 34px color-mix(in srgb, var(--color-black) ${Math.round(
           shadowStrength * 100
         )}%, transparent)`;
       });
@@ -116,16 +139,17 @@ const WhyChooseUs = () => {
     const handleScroll = () => {
       const loopWidth = loopWidthRef.current;
 
-      if (loopWidth > 0 && container.scrollLeft < loopWidth) {
+      const buffer = 2; // Pixel buffer to prevent oscillation
+      if (loopWidth > 0 && container.scrollLeft < loopWidth - buffer) {
         container.scrollLeft += loopWidth;
       }
 
-      if (loopWidth > 0 && container.scrollLeft >= loopWidth * 2) {
+      if (loopWidth > 0 && container.scrollLeft >= loopWidth * 2 - buffer) {
         container.scrollLeft -= loopWidth;
       }
 
       virtualScrollLeft = container.scrollLeft;
-      updateCenterFocus(performance.now());
+      // updateCenterFocus is now centralized in the step() RAF loop to prevent double-firing and shaking
     };
 
     const step = (time = 0) => {
@@ -136,18 +160,19 @@ const WhyChooseUs = () => {
         const pulse = 1 + Math.sin(time * 0.004) * 0.18;
         virtualScrollLeft += drift * pulse;
 
-        if (virtualScrollLeft >= loopWidth * 2) {
+        const buffer = 2;
+        if (virtualScrollLeft >= loopWidth * 2 - buffer) {
           virtualScrollLeft -= loopWidth;
         }
 
-        if (virtualScrollLeft < loopWidth) {
+        if (virtualScrollLeft < loopWidth - buffer) {
           virtualScrollLeft += loopWidth;
         }
 
         container.scrollLeft = virtualScrollLeft;
       }
 
-      updateCenterFocus(time);
+      updateCenterFocus(container.scrollLeft, time);
 
       rafRef.current = window.requestAnimationFrame(step);
     };
@@ -156,7 +181,6 @@ const WhyChooseUs = () => {
       typeof ResizeObserver !== 'undefined'
         ? new ResizeObserver(() => {
             syncLoopWidth();
-            updateCenterFocus(performance.now());
           })
         : null;
 
@@ -179,7 +203,8 @@ const WhyChooseUs = () => {
     syncLoopWidth();
     container.scrollLeft = loopWidthRef.current;
     virtualScrollLeft = loopWidthRef.current;
-    updateCenterFocus(0);
+    measureLayout(); 
+    updateCenterFocus(container.scrollLeft, 0);
     rafRef.current = window.requestAnimationFrame(step);
 
     return () => {
@@ -226,7 +251,11 @@ const WhyChooseUs = () => {
           {visibleFeatures.map((feature, idx) => (
             <div
               key={`${feature.title}-${idx}`}
-              className="feature-item feature-card my-3 md:my-0 w-[clamp(230px,74vw,320px)] max-w-none shrink-0 snap-center rounded-2xl border p-[clamp(18px,2vw,26px)] min-h-[clamp(220px,42vw,320px)] flex flex-col items-center justify-center text-center group transition-transform duration-300 will-change-transform md:w-auto md:min-h-[clamp(240px,20vw,300px)]"
+              className={`feature-item feature-card my-3 md:my-0 w-[clamp(230px,74vw,320px)] max-w-none shrink-0 snap-center rounded-2xl border p-[clamp(18px,2vw,26px)] min-h-[clamp(220px,42vw,320px)] flex flex-col items-center justify-center text-center group will-change-transform md:w-auto md:min-h-[clamp(240px,20vw,300px)] ${
+                isMobile 
+                  ? '' // Transition MUST be disabled on mobile to prevent conflict with high-freq RAF loop
+                  : 'transition-all duration-300' 
+              }`}
               style={{
                 borderColor: 'var(--border-subtle)',
                 backgroundColor: 'color-mix(in srgb, var(--bg-surface) 95%, transparent)',

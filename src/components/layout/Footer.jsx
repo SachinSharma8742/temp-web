@@ -1,15 +1,14 @@
 import React, { memo, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../../ThemeContext';
+import { FaFacebookF, FaInstagram, FaPhone, FaWhatsapp } from 'react-icons/fa';
 
 const FOOTER_LINKS = [
-  { label: 'Refund Policy', href: '#' },
   { label: 'Terms and Conditions', href: '#' },
-  { label: 'Contact us', href: '#' },
 ];
 
 const Footer = () => {
   const canvasRef = useRef(null);
-  const footerBarRef = useRef(null);
   const footerRef = useRef(null);
   const { theme } = useTheme();
 
@@ -104,11 +103,11 @@ const Footer = () => {
         road: [66, 69, 76],
         roadLine: [164, 158, 136],
         layers: [
-          { base: 0.36, amp1: 0.07, f1: 1.3, p1: 0.4, amp2: 0.04, f2: 2.8, p2: 1.1, col: [19, 19, 21] },
-          { base: 0.44, amp1: 0.06, f1: 1.7, p1: 1.0, amp2: 0.035, f2: 3.2, p2: 0.3, col: [25, 25, 25] },
-          { base: 0.53, amp1: 0.055, f1: 1.9, p1: 2.1, amp2: 0.03, f2: 3.8, p2: 0.8, col: [31, 31, 34] },
-          { base: 0.62, amp1: 0.05, f1: 2.1, p1: 0.7, amp2: 0.025, f2: 4.2, p2: 1.5, col: [37, 37, 40] },
-          { base: 0.70, amp1: 0.045, f1: 2.5, p1: 1.8, amp2: 0.022, f2: 5.0, p2: 0.2, col: [44, 44, 48] },
+          { base: 0.24, amp1: 0.07, f1: 1.3, p1: 0.4, amp2: 0.04, f2: 2.8, p2: 1.1, col: [19, 19, 21] },
+          { base: 0.32, amp1: 0.06, f1: 1.7, p1: 1.0, amp2: 0.035, f2: 3.2, p2: 0.3, col: [25, 25, 25] },
+          { base: 0.41, amp1: 0.055, f1: 1.9, p1: 2.1, amp2: 0.03, f2: 3.8, p2: 0.8, col: [31, 31, 34] },
+          { base: 0.50, amp1: 0.05, f1: 2.1, p1: 0.7, amp2: 0.025, f2: 4.2, p2: 1.5, col: [37, 37, 40] },
+          { base: 0.58, amp1: 0.045, f1: 2.5, p1: 1.8, amp2: 0.022, f2: 5.0, p2: 0.2, col: [44, 44, 48] },
         ],
       },
       {
@@ -120,11 +119,11 @@ const Footer = () => {
         road: [84, 70, 52],
         roadLine: [186, 158, 108],
         layers: [
-          { base: 0.34, amp1: 0.045, f1: 1.05, p1: 0.2, amp2: 0.018, f2: 2.1, p2: 0.6, col: [30, 24, 19] },
-          { base: 0.43, amp1: 0.042, f1: 1.2, p1: 0.9, amp2: 0.018, f2: 2.3, p2: 0.2, col: [40, 32, 24] },
-          { base: 0.52, amp1: 0.04, f1: 1.28, p1: 1.6, amp2: 0.016, f2: 2.6, p2: 0.9, col: [49, 39, 29] },
-          { base: 0.61, amp1: 0.038, f1: 1.38, p1: 0.4, amp2: 0.014, f2: 2.8, p2: 1.2, col: [58, 46, 33] },
-          { base: 0.70, amp1: 0.035, f1: 1.5, p1: 1.1, amp2: 0.012, f2: 3.2, p2: 0.3, col: [70, 55, 40] },
+          { base: 0.22, amp1: 0.045, f1: 1.05, p1: 0.2, amp2: 0.018, f2: 2.1, p2: 0.6, col: [30, 24, 19] },
+          { base: 0.31, amp1: 0.042, f1: 1.2, p1: 0.9, amp2: 0.018, f2: 2.3, p2: 0.2, col: [40, 32, 24] },
+          { base: 0.40, amp1: 0.04, f1: 1.28, p1: 1.6, amp2: 0.016, f2: 2.6, p2: 0.9, col: [49, 39, 29] },
+          { base: 0.49, amp1: 0.038, f1: 1.38, p1: 0.4, amp2: 0.014, f2: 2.8, p2: 1.2, col: [58, 46, 33] },
+          { base: 0.58, amp1: 0.035, f1: 1.5, p1: 1.1, amp2: 0.012, f2: 3.2, p2: 0.3, col: [70, 55, 40] },
         ],
       },
       {
@@ -136,11 +135,11 @@ const Footer = () => {
         road: [64, 74, 82],
         roadLine: [172, 178, 168],
         layers: [
-          { base: 0.35, amp1: 0.05, f1: 1.15, p1: 0.3, amp2: 0.02, f2: 2.2, p2: 1.4, col: [16, 26, 34] },
-          { base: 0.43, amp1: 0.048, f1: 1.28, p1: 0.7, amp2: 0.02, f2: 2.5, p2: 0.2, col: [20, 33, 43] },
-          { base: 0.52, amp1: 0.045, f1: 1.35, p1: 1.7, amp2: 0.018, f2: 2.8, p2: 0.9, col: [26, 40, 50] },
-          { base: 0.61, amp1: 0.042, f1: 1.46, p1: 0.4, amp2: 0.016, f2: 3.1, p2: 1.1, col: [35, 50, 58] },
-          { base: 0.70, amp1: 0.038, f1: 1.6, p1: 1.2, amp2: 0.014, f2: 3.5, p2: 0.1, col: [45, 62, 68] },
+          { base: 0.23, amp1: 0.05, f1: 1.15, p1: 0.3, amp2: 0.02, f2: 2.2, p2: 1.4, col: [16, 26, 34] },
+          { base: 0.31, amp1: 0.048, f1: 1.28, p1: 0.7, amp2: 0.02, f2: 2.5, p2: 0.2, col: [20, 33, 43] },
+          { base: 0.40, amp1: 0.045, f1: 1.35, p1: 1.7, amp2: 0.018, f2: 2.8, p2: 0.9, col: [26, 40, 50] },
+          { base: 0.49, amp1: 0.042, f1: 1.46, p1: 0.4, amp2: 0.016, f2: 3.1, p2: 1.1, col: [35, 50, 58] },
+          { base: 0.58, amp1: 0.038, f1: 1.6, p1: 1.2, amp2: 0.014, f2: 3.5, p2: 0.1, col: [45, 62, 68] },
         ],
       },
       {
@@ -152,11 +151,11 @@ const Footer = () => {
         road: [56, 64, 50],
         roadLine: [162, 166, 132],
         layers: [
-          { base: 0.35, amp1: 0.06, f1: 1.22, p1: 0.4, amp2: 0.024, f2: 2.5, p2: 1.1, col: [15, 30, 20] },
-          { base: 0.43, amp1: 0.056, f1: 1.36, p1: 0.8, amp2: 0.022, f2: 2.9, p2: 0.1, col: [19, 38, 24] },
-          { base: 0.52, amp1: 0.052, f1: 1.48, p1: 1.8, amp2: 0.02, f2: 3.3, p2: 0.7, col: [24, 46, 28] },
-          { base: 0.61, amp1: 0.048, f1: 1.6, p1: 0.5, amp2: 0.018, f2: 3.7, p2: 1.2, col: [30, 54, 34] },
-          { base: 0.70, amp1: 0.044, f1: 1.74, p1: 1.2, amp2: 0.016, f2: 4.0, p2: 0.2, col: [36, 62, 40] },
+          { base: 0.23, amp1: 0.06, f1: 1.22, p1: 0.4, amp2: 0.024, f2: 2.5, p2: 1.1, col: [15, 30, 20] },
+          { base: 0.31, amp1: 0.056, f1: 1.36, p1: 0.8, amp2: 0.022, f2: 2.9, p2: 0.1, col: [19, 38, 24] },
+          { base: 0.40, amp1: 0.052, f1: 1.48, p1: 1.8, amp2: 0.02, f2: 3.3, p2: 0.7, col: [24, 46, 28] },
+          { base: 0.49, amp1: 0.048, f1: 1.6, p1: 0.5, amp2: 0.018, f2: 3.7, p2: 1.2, col: [30, 54, 34] },
+          { base: 0.58, amp1: 0.044, f1: 1.74, p1: 1.2, amp2: 0.016, f2: 4.0, p2: 0.2, col: [36, 62, 40] },
         ],
       },
     ];
@@ -182,7 +181,8 @@ const Footer = () => {
     }
 
     function blendedLayerY(layerIndex, x, themeA, themeB, blend) {
-      return lerp(layerY(themeA, layerIndex, x), layerY(themeB, layerIndex, x), blend);
+      const respShift = W < 640 ? H * 0.015 : 0; // Drop land slightly on mobile to open breathing room
+      return lerp(layerY(themeA, layerIndex, x), layerY(themeB, layerIndex, x), blend) + respShift;
     }
 
     /* ── SKY TYPOGRAPHY ── */
@@ -202,7 +202,7 @@ const Footer = () => {
 
       for (let i = -1; i < W / txtWidth + 1; i++) {
         const x = (i * txtWidth) - (offset % txtWidth);
-        const y = H * 0.32;
+        const y = W < 640 ? H * 0.10 : H * 0.28; // Even higher on mobile
         cx.fillStyle = `rgba(${baseCol}, ${fillAlpha})`;
         cx.fillText(txt, x, y);
         cx.strokeStyle = `rgba(${baseCol}, ${strokeAlpha})`;
@@ -335,17 +335,27 @@ const Footer = () => {
     const ROAD_LAYER = 4;
     const FOREGROUND_EDGE_ZONE = 0.22;
 
-    function projectLoopingProp(wx, layerIndex, themeA, themeB, blend, padding = 60, yOffset = 1) {
+    function projectLoopingProp(wx, layerIndex, themeA, themeB, blend, padding = 120, yOffset = 1) {
       const layerOff = off[layerIndex];
       const offMod = layerOff % WORLD_W;
       let sx = wx - offMod;
       if (sx < -padding) sx += WORLD_W;
       if (sx > W + padding) return null;
 
+      // Soft spatial fade-in/out at screen edges to prevent jumping
+      const edgeFadeDistance = 100;
+      let spatialAlpha = 1;
+      if (sx < 0) {
+        spatialAlpha = clamp01((sx + padding) / edgeFadeDistance);
+      } else if (sx > W) {
+        spatialAlpha = clamp01((W + padding - sx) / edgeFadeDistance);
+      }
+
       const worldX = sx + offMod;
       return {
         sx,
         worldX,
+        spatialAlpha,
         y: blendedLayerY(layerIndex, worldX, themeA, themeB, blend) + yOffset,
       };
     }
@@ -432,7 +442,7 @@ const Footer = () => {
 
       Object.entries(bands).forEach(([biome, band]) => {
         const biomeWeight = themeWeight(themeA, themeB, blend, biome);
-        if (biomeWeight < 0.015) return;
+        if (biomeWeight <= 0) return;
 
         const fade = smoothstep(0, 1, biomeWeight);
 
@@ -444,7 +454,8 @@ const Footer = () => {
           if (layerIndex === ROAD_LAYER && !isForegroundEdgeX(point.sx)) return;
 
           const baseY = layerIndex === ROAD_LAYER ? point.y + H * 0.018 : point.y;
-          drawBiomeTree(biome, point.sx, baseY, adjSc, a * fade);
+          // Final alpha combines theme fade, per-prop alpha, and spatial edge fade
+          drawBiomeTree(biome, point.sx, baseY, adjSc, a * fade * point.spatialAlpha);
         });
       });
     }
@@ -461,7 +472,7 @@ const Footer = () => {
 
     function drawFencePosts(themeA, themeB, blend) {
       const dryW = clamp01(themeWeight(themeA, themeB, blend, 'desert') + themeWeight(themeA, themeB, blend, 'mountains') * 0.75);
-      if (dryW < 0.08) return;
+      if (dryW <= 0) return;
 
       fencePosts.forEach((wx, i) => {
         const point = projectLoopingProp(wx, ROAD_LAYER, themeA, themeB, blend, 30);
@@ -472,7 +483,7 @@ const Footer = () => {
         const h = (8 + (i % 3) * 4) * (H / 240);
 
         cx.save();
-        cx.globalAlpha = dryW;
+        cx.globalAlpha = dryW * point.spatialAlpha;
         cx.strokeStyle = 'rgb(55,55,60)';
         cx.lineWidth = 1;
         cx.lineCap = 'round';
@@ -534,7 +545,7 @@ const Footer = () => {
 
     function drawForegroundProps(themeA, themeB, blend) {
       const dryW = clamp01(themeWeight(themeA, themeB, blend, 'desert') + themeWeight(themeA, themeB, blend, 'mountains') * 0.65);
-      if (dryW < 0.05) return;
+      if (dryW <= 0) return;
 
       foregroundRocks.forEach(({ wx, s, a }) => {
         const adjS = s * (H / 240);
@@ -548,7 +559,7 @@ const Footer = () => {
         const rh = 4 * adjS;
         const rockTone = Math.round(lerp(24, 34, a));
         cx.save();
-        cx.globalAlpha = dryW;
+        cx.globalAlpha = dryW * point.spatialAlpha;
         cx.fillStyle = `rgb(${rockTone},${rockTone},${rockTone + 4})`;
         cx.beginPath();
         cx.ellipse(sx, y - rh * 0.5, rw, rh, 0, 0, Math.PI * 2);
@@ -566,7 +577,7 @@ const Footer = () => {
         const y = point.y + H * 0.018;
         const shrubTone = Math.round(lerp(42, 56, a));
         cx.save();
-        cx.globalAlpha = dryW;
+        cx.globalAlpha = dryW * point.spatialAlpha;
         cx.strokeStyle = `rgb(${shrubTone},${shrubTone},${shrubTone + 5})`;
         cx.lineWidth = Math.max(1, adjS * 1.1);
         cx.lineCap = 'round';
@@ -584,7 +595,7 @@ const Footer = () => {
 
     function drawCoastalProps(themeA, themeB, blend) {
       const coastalW = themeWeight(themeA, themeB, blend, 'coastal');
-      if (coastalW < 0.05) return;
+      if (coastalW <= 0) return;
 
       coastalPalms.forEach(({ wx, s }) => {
         const adjS = s * (H / 240) * 0.9;
@@ -597,7 +608,7 @@ const Footer = () => {
         const lean = Math.sin((sx + t * 25) * 0.012) * (3.5 * adjS);
 
         cx.save();
-        cx.globalAlpha = coastalW;
+        cx.globalAlpha = coastalW * point.spatialAlpha;
         cx.strokeStyle = 'rgb(34,44,40)';
         cx.lineWidth = Math.max(1.4, 2.2 * adjS);
         cx.lineCap = 'round';
@@ -622,12 +633,11 @@ const Footer = () => {
         cx.stroke();
         cx.restore();
       });
-
     }
 
     function drawJungleProps(themeA, themeB, blend) {
       const jungleW = themeWeight(themeA, themeB, blend, 'jungle');
-      if (jungleW < 0.05) return;
+      if (jungleW <= 0) return;
 
       jungleClusters.forEach(({ wx, s }) => {
         const adjS = s * (H / 240) * 0.92;
@@ -639,7 +649,7 @@ const Footer = () => {
         const trunkH = 22 * adjS;
 
         cx.save();
-        cx.globalAlpha = jungleW;
+        cx.globalAlpha = jungleW * point.spatialAlpha;
         cx.strokeStyle = 'rgb(34,39,30)';
         cx.lineWidth = Math.max(1.5, 2.3 * adjS);
         cx.lineCap = 'round';
@@ -696,27 +706,6 @@ const Footer = () => {
       });
     }
 
-    function drawFogBands() {
-      const drift1 = Math.sin(t * 0.22) * W * 0.015;
-      const drift2 = Math.cos(t * 0.18) * W * 0.02;
-
-      const g1 = cx.createLinearGradient(-W * 0.2 + drift1, H * 0.54, W * 1.2 + drift1, H * 0.66);
-      g1.addColorStop(0, 'rgba(145,145,158,0)');
-      g1.addColorStop(0.35, 'rgba(145,145,158,0.05)');
-      g1.addColorStop(0.65, 'rgba(145,145,158,0.06)');
-      g1.addColorStop(1, 'rgba(145,145,158,0)');
-
-      const g2 = cx.createLinearGradient(-W * 0.3 + drift2, H * 0.62, W * 1.1 + drift2, H * 0.76);
-      g2.addColorStop(0, 'rgba(170,170,182,0)');
-      g2.addColorStop(0.5, 'rgba(170,170,182,0.045)');
-      g2.addColorStop(1, 'rgba(170,170,182,0)');
-
-      cx.fillStyle = g1;
-      cx.fillRect(0, H * 0.5, W, H * 0.2);
-      cx.fillStyle = g2;
-      cx.fillRect(0, H * 0.58, W, H * 0.24);
-    }
-
     function drawRoad(jeepWorldX, terrainOff, themeA, themeB, blend) {
       cx.save();
       cx.lineCap = 'round';
@@ -750,46 +739,10 @@ const Footer = () => {
       cx.restore();
     }
 
-    function drawPlaceLabel(themeA, themeB, blend) {
-      cx.save();
-      cx.textBaseline = 'top';
-      cx.font = `600 ${Math.max(11, H * 0.033)}px "Inter", sans-serif`;
-      cx.letterSpacing = '2px';
 
-      const alphaA = clamp01(1 - blend * 1.15);
-      const alphaB = clamp01((blend - 0.05) * 1.2);
-
-      cx.fillStyle = `rgba(212, 191, 145, ${0.8 * alphaA})`;
-      cx.fillText(themeA.label.toUpperCase(), 18, 16);
-
-      cx.fillStyle = `rgba(212, 191, 145, ${0.8 * alphaB})`;
-      cx.fillText(themeB.label.toUpperCase(), 18, 16);
-      cx.restore();
-    }
 
     function drawThemeOverlays(themeA, themeB, blend) {
-      const coastalW = themeWeight(themeA, themeB, blend, 'coastal');
       const jungleW = themeWeight(themeA, themeB, blend, 'jungle');
-
-      if (coastalW > 0.01) {
-        cx.save();
-        const coastG = cx.createLinearGradient(0, H * 0.44, 0, H * 0.62);
-        coastG.addColorStop(0, `rgba(66,122,156,${0.04 * coastalW})`);
-        coastG.addColorStop(1, `rgba(36,92,126,${0.14 * coastalW})`);
-        cx.fillStyle = coastG;
-        cx.fillRect(0, H * 0.44, W, H * 0.19);
-
-        cx.strokeStyle = `rgba(178,216,225,${0.22 * coastalW})`;
-        cx.lineWidth = 1;
-        cx.beginPath();
-        for (let x = 0; x <= W + 8; x += 8) {
-          const y = H * 0.56 + Math.sin((x + t * 90) * 0.02) * 1.2;
-          if (x === 0) cx.moveTo(x, y);
-          else cx.lineTo(x, y);
-        }
-        cx.stroke();
-        cx.restore();
-      }
 
       if (jungleW > 0.01) {
         const fireflies = 16;
@@ -812,7 +765,7 @@ const Footer = () => {
 
     /* ── YOUR JEEP IMAGE ── */
     const JEEP_X_FRAC = 0.42;
-    let jeepY = 0, jeepVY = 0, jeepAngle = 0;
+    let jeepY = 0, jeepAngle = 0;
 
     const jeepImg = new Image();
     // THE EXACT IMAGE YOU PROVIDED
@@ -993,11 +946,11 @@ const Footer = () => {
           x => blendedLayerY(i, x + off[i], themeA, themeB, blend),
           col
         );
-        if (i === 4 && footerBarRef.current) {
+        if (i === 4 && footerRef.current) {
           const nextFooterLandRgb = layerColor.join(', ');
           if (nextFooterLandRgb !== lastFooterLandRgb) {
             lastFooterLandRgb = nextFooterLandRgb;
-            footerBarRef.current.style.setProperty('--footer-land-rgb', nextFooterLandRgb);
+            footerRef.current.style.setProperty('--footer-land-rgb', nextFooterLandRgb);
           }
         }
       }
@@ -1014,7 +967,7 @@ const Footer = () => {
         drawFencePosts(themeA, themeB, blend);
       });
       drawRoad(jeepWorldX, off[4], themeA, themeB, blend);
-      drawFogBands();
+      // Removed drawFogBands() as it creates visible horizontal lines on certain screen sizes
       const spread = 45;
       const frontFn = x => blendedLayerY(4, x + off[4], themeA, themeB, blend);
       const y1 = frontFn(jx - spread);
@@ -1022,9 +975,9 @@ const Footer = () => {
       const targetY = (y1 + y2) / 2 + 3;
       const targetA = Math.atan2(y2 - y1, spread * 2);
 
-      jeepVY += (targetY - jeepY) * 0.12;
-      jeepVY *= 0.82;
-      jeepY += jeepVY;
+      // Use damped interpolation (instead of spring velocity) to prevent bounce
+      // artifacts when users scroll quickly through the footer.
+      jeepY += (targetY - jeepY) * 0.22;
       jeepAngle += (targetA - jeepAngle) * 0.15;
 
       emitDust(jx, jeepY, jeepAngle, dustWeight);
@@ -1072,9 +1025,8 @@ const Footer = () => {
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
-
     jeepY = H * 0.7;
-    startLoop();
+    // Removed manual startLoop(); — we now rely 100% on the IntersectionObserver to trigger the first frame.
 
     return () => {
       window.removeEventListener('resize', resize);
@@ -1084,48 +1036,78 @@ const Footer = () => {
     };
   }, []);
 
-  const footerBarStyle = {
-    background:
-      'linear-gradient(180deg, rgba(var(--footer-land-rgb, 44, 44, 48), 0.08) 0%, rgba(var(--footer-land-rgb, 44, 44, 48), 0.82) 34%, rgba(var(--footer-land-rgb, 44, 44, 48), 0.98) 100%)',
-    color: 'rgba(247,244,239,0.5)',
-  };
-
   return (
-    <footer ref={footerRef} className="relative transition-colors duration-400" style={{ backgroundColor: 'var(--bg-base)' }}>
-      <div
-        className="relative h-[220px] w-full overflow-hidden sm:h-[240px] md:h-[280px] lg:h-[300px]"
-      >
+    <footer
+      ref={footerRef}
+      className="relative transition-colors duration-400 w-full overflow-hidden"
+      style={{ backgroundColor: 'var(--bg-base)' }}
+    >
+      {/* Unified Scenery & Content Container */}
+      <div className="relative h-[310px] sm:h-[320px] md:h-[360px] lg:h-[400px] w-full">
         <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full block" />
-        {/* Sky-top fade: blends canvas sky into the section above */}
+
+        {/* Sky-top fade */}
         <div
-          className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-20 sm:h-24"
+          className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-16 sm:h-20"
           style={{ background: 'linear-gradient(to bottom, var(--bg-base), transparent)' }}
         />
-        <div className="absolute inset-x-0 bottom-0 z-20">
-          <div
-            ref={footerBarRef}
-            className="w-full px-5 pb-4 pt-3 transition-colors duration-400 sm:px-6 sm:pb-5 sm:pt-3.5 md:px-12 md:py-6"
-            style={footerBarStyle}
-          >
-            <div className="flex flex-col items-center gap-2.5 md:flex-row md:justify-between md:gap-6">
-              <nav
-                aria-label="Footer"
-                className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-center sm:gap-x-5 md:w-auto md:justify-start md:gap-x-8 md:gap-y-2 md:text-left"
-              >
-                {FOOTER_LINKS.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] transition-colors hover:text-[#4F7FF0] sm:text-[9px] sm:tracking-[0.16em] md:text-[10px] md:tracking-[0.3em]"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
 
-              <div className="flex items-center gap-4">
-                <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] md:tracking-[0.3em]">
-                  &copy; {new Date().getFullYear()} <span className="text-gold">Design Your India</span>
+        {/* Footer Content: Floating OVER the expanded land layer */}
+        <div className="absolute inset-x-0 bottom-0 z-20 w-full px-4 pb-4 pt-12 sm:px-8 sm:pb-8 sm:pt-16 md:px-12 pointer-events-none">
+          <div className="mx-auto max-w-[1320px] w-full pointer-events-auto" style={{ color: 'rgba(247,244,239,0.85)' }}>
+            <div className="flex items-end justify-between gap-4">
+              <div className="flex flex-col items-start gap-1.5 sm:gap-2">
+                <nav aria-label="Footer Legal" className="flex items-center">
+                  <Link
+                    to="/terms"
+                    className="inline-flex items-center gap-1 rounded-sm px-1 py-0.5 text-[9px] sm:text-[10px] md:text-[11px] uppercase font-bold tracking-[0.14em] sm:tracking-[0.2em] text-gold/95 underline underline-offset-[3px] decoration-gold/55 transition-all hover:decoration-gold hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 cursor-pointer leading-none"
+                  >
+                    Terms & Conditions
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </nav>
+                <div className="flex flex-col gap-1 pt-1">
+                  <a
+                    href="mailto:designyourindia@gmail.com"
+                    className="text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.06em] text-white/70 hover:text-gold transition-colors"
+                  >
+                    designyourindia@gmail.com
+                  </a>
+                  <a
+                    href="tel:+919649550551"
+                    className="text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.06em] text-white/60 hover:text-gold transition-colors"
+                  >
+                    +91 96495 50551
+                  </a>
+                </div>
+              </div>
+
+              <nav
+                aria-label="Social Channels"
+                className="flex items-center gap-3.5 sm:gap-7"
+              >
+                <a href="https://www.facebook.com/people/Design-Your-India/" target="_blank" rel="noreferrer" className="transition-all hover:text-gold hover:-translate-y-0.5 opacity-85 hover:opacity-100">
+                  <FaFacebookF size={18} className="sm:w-5.5 sm:h-5.5" />
+                </a>
+                <a href="https://www.instagram.com/designyourindia/" target="_blank" rel="noreferrer" className="transition-all hover:text-gold hover:-translate-y-0.5 opacity-85 hover:opacity-100">
+                  <FaInstagram size={20} className="sm:w-6.5 sm:h-6.5" />
+                </a>
+                <a href="https://wa.me/919999022503" target="_blank" rel="noreferrer" className="transition-all hover:text-gold hover:-translate-y-0.5 opacity-85 hover:opacity-100">
+                  <FaWhatsapp size={20} className="sm:w-6.5 sm:h-6.5" />
+                </a>
+                <a href="tel:+919649550551" className="transition-all hover:text-gold hover:-translate-y-0.5 opacity-85 hover:opacity-100">
+                  <FaPhone size={18} className="sm:w-5.5 sm:h-5.5" />
+                </a>
+              </nav>
+            </div>
+
+            <div className="mt-3 border-t border-white/10 pt-2.5 sm:mt-4 sm:pt-3.5">
+              <div className="flex items-center justify-between gap-3">
+                <span className="whitespace-nowrap text-[8px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.12em] sm:tracking-[0.2em] opacity-50 font-medium leading-none">
+                  Design Your India
+                </span>
+                <span className="whitespace-nowrap text-[8px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.24em] md:tracking-[0.28em] opacity-45 font-medium leading-none text-right">
+                  &copy; {new Date().getFullYear()} All Rights Reserved
                 </span>
               </div>
             </div>

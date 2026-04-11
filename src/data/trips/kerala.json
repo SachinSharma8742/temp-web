@@ -1,0 +1,542 @@
+[
+  {
+    "title": "10 Days / 9 Nights",
+    "price": "starting from 42000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival",
+        "activities": [
+          "You will arrive at Kochi International Airport or Railway Station and proceed to your hotel.",
+          "After check-in and some rest, you will visit St. Francis Church, the oldest church in India.",
+          "Explore the historic Mattancherry Palace, built by the Portuguese.",
+          "In the evening, you can stroll through the local markets of Cochin.",
+          "Enjoy an overnight stay at your hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Cochin to Munnar Transfer",
+        "activities": [
+          "After breakfast at the hotel, you will check out and begin your journey to Munnar.",
+          "On the way, enjoy scenic views at Cheeyappara Waterfalls, Valara Waterfalls, and Karadippara Viewpoint.",
+          "Arrive in Munnar by evening and relax at your hotel for an overnight stay.",
+          "Places Covered: Cheeyappara Waterfalls, Valara Waterfalls, Karadippara Viewpoint"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar sightseeing",
+        "activities": [
+          "Visit Mattupetty Dam and enjoy optional boating at your own expense.",
+          "Explore the Tea Factory and Tea Museum, followed by a visit to the scenic Echo Point.",
+          "Spend the evening at leisure and return for an overnight stay in Munnar.",
+          "Places Covered: Tea Factory and Tea Museum, Echo Point"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Munnar to Thekkady Transfer",
+        "activities": [
+          "Enjoy breakfast at the hotel before driving to Thekkady.",
+          "Visit the renowned Periyar National Park and Tiger Reserve, with optional activities like boat safari or bamboo rafting(at your own cost).",
+          "Check in to your hotel, then explore nearby spice plantations and the vibrant local spice market.",
+          "Spend your evening at leisure or shopping, followed by an overnight stay in Thekkady.",
+          "Places Covered: Periyar National Park , boat safari or bamboo rafting."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Thekkady to Alleppey",
+        "activities": [
+          "After breakfast at the hotel, drive to Alleppey and check in to your deluxe sharing houseboat.",
+          "Enjoy a scenic backwater cruise passing by lush paddy fields, vibrant birdlife, and glimpses of traditional village life.",
+          "Relax and unwind with an overnight stay on the houseboat.",
+          "Places Covered: Houseboat stay in Alleppey"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Alleppey to Kovalam",
+        "activities": [
+          "You can enjoy a perfect sun rise from your houseboat and proceed to Kovalam.",
+          "After check-in formalities, the day is for leisure enjoy the beaches of Kovalam -  Lighthouse Beach, Kovalam Beach and Hawa Beach.",
+          "Overnight stay in the Hotel at Kovalam.",
+          "Places Covered: Lighthouse Beach, Kovalam Beach, Hawa Beach"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Kovalam to Kanyakumari",
+        "activities": [
+          "Enjoy breakfast at your hotel in Kovalam and get ready for a drive to Kanyakumari, which takes around 2.5 to 3 hours.",
+          "On arrival, begin sightseeing with a ferry ride to Vivekananda Rock Memorial.",
+          "Explore the impressive 133-feet tall Thiruvalluvar Statue and visit the revered Kanyakumari Temple.",
+          "After completing your sightseeing, return to Kovalam.",
+          "Overnight stay in Kovalam.",
+          "Places Covered: Vivekananda Rock Memorial, Thiruvalluvar Statue, Kanyakumari Temple"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Kanyakumari to Rameshwaram",
+        "activities": [
+          "Begin your journey from Kanyakumari to Rameswaram, enjoying a scenic 6\u20137 hour drive along the peaceful southern Tamil Nadu coastline.",
+          "Pass through picturesque landscapes featuring salt pans, lagoons, and charming rural villages.",
+          "Arrive in Rameswaram by afternoon and check in to your hotel for a relaxing break.",
+          "Spend your evening at leisure with an optional stroll along Agni Theertham beach, followed by an overnight stay in Rameswaram."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 9,
+        "title": "Rameswaram Exploration | Divine & Historic Landmarks",
+        "activities": [
+          "Start your day with a visit to the revered Ramanathaswamy Temple, known for its grand corridors and status as one of the 12 Jyotirlingas.",
+          "Head to Agni Theertham, a sacred seashore spot where pilgrims take ritual baths.",
+          "Drive across the iconic Pamban Sea Bridge, enjoying breathtaking views of the ocean.",
+          "Explore the hauntingly beautiful Dhanushkodi, a ghost town where land meets the sea.",
+          "Visit the APJ Abdul Kalam Memorial to pay tribute to India\u2019s beloved Missile Man.",
+          "If time permits, visit the Five-faced Hanuman Temple or climb Gandhamadhana Parvatham for panoramic views, followed by an overnight stay in Rameswaram.",
+          "Places Covered: Ramanathaswamy Temple, Pamban Sea Bridge, Dhanushkodi, Agni Theertham, Five-faced Hanuman Temple, climb Gandhamadhana Parvatham"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 10,
+        "title": "Rameswaram to Madurai | Cultural Farewell",
+        "activities": [
+          "After breakfast, drive to Madurai, a journey of approximately 3\u20134 hours through scenic Tamil Nadu.",
+          "Visit the iconic Meenakshi Amman Temple, renowned for its stunning Dravidian architecture and spiritual aura.",
+          "Conclude your trip with a drop-off at Madurai Airport or Railway Station for your onward journey."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "7 Days / 6 Nights",
+    "price": "\u2022 If staying in a houseboat, relax as you float along the serene backwaters, passing by paddy fields, coconut groves, and small villages.",
+    "days": [
+      {
+        "day": 2,
+        "title": "Munnar Local Sightseeing",
+        "activities": [
+          "After breakfast, set out to explore Munnar\u2019s breathtaking attractions.",
+          "Start with a visit to the Mattupetty Dam, an idyllic picnic spot known for its tranquil reservoir and boating activities (at your own expense).",
+          "Next, head to Kundale Lake, a serene water body surrounded by lush green hills.",
+          "Experience the natural acoustic marvel of Echo Point, where your voice resonates back.",
+          "In the afternoon, visit Rajamalai (Eravikulam National Park), home to the endangered Nilgiri Tahr.",
+          "The rolling grasslands and misty hills make for a perfect nature walk. Return to your hotel and unwind.",
+          "Overnight Stay at Munnar",
+          "Places Covered: Mattupetty Dam, Kundale Lake, Echo Point, Rajamalai (Eravikulam National Park)"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar to Thekkady (100 Km )",
+        "activities": [
+          "After breakfast, check out and drive towards Thekkady, home to the renowned Periyar Wildlife Sanctuary.",
+          "On arrival, check into your hotel and later, visit Periyar Wildlife Sanctuary, one of the best places to witness wildlife in their natural habitat.",
+          "Opt for a boat ride on Periyar Lake (at your own expense) to catch glimpses of elephants, bison, and exotic bird species.",
+          "You can also explore a spice plantation (at your own expense), where you will learn about the cultivation of Kerala\u2019s famous spices like cardamom, pepper, and cinnamon.",
+          "If interested, enjoy an elephant ride (at your own expense) for an unforgettable experience.",
+          "Overnight Stay at Thekkady",
+          "Places Covered: Periyar Wildlife Sanctuary, Periyar Lake, Spice Plantation"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Thekkady to Alleppey (140 Km)",
+        "activities": [
+          "Wake up to a refreshing morning and check out after breakfast. Drive towards Alleppey, often called the Venice of the East for its enchanting backwaters and serene houseboat experiences.",
+          "Upon arrival, check into your hotel or a traditional houseboat (houseboat stay at your own expense).",
+          "Visit St. Mary\u2019s Forane Church, an architectural marvel, and later, enjoy the sunset at Alleppey Beach.",
+          "Overnight Stay at Alleppey",
+          "Places Covered: St. Mary\u2019s Forane Church, Alleppey Beach, Backwater Cruise"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Alleppey to Kovalam (180 Km)",
+        "activities": [
+          "After breakfast, check out and drive towards Kovalam, a coastal paradise known for its golden beaches and azure waters.",
+          "On arrival, check into your hotel and head out to explore Lighthouse Beach, famous for its iconic lighthouse and mesmerizing sunset views.",
+          "Visit Samudra Beach, a serene and less crowded spot perfect for relaxation.",
+          "Later, explore the Rock Cut Cave Temple, an ancient site with exquisite carvings.",
+          "You can also indulge in thrilling water sports such as scuba diving, parasailing, and speed boating (at your own expense).",
+          "Overnight Stay at Kovalam",
+          "Places Covered: Lighthouse Beach, Samudra Beach, Rock Cut Cave Temple"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Kovalam to Poovar and Trivandrum",
+        "activities": [
+          "Post breakfast, check out and drive towards Poovar, a hidden gem with golden sand beaches and tranquil backwaters.",
+          "En route, visit the Aazhimala Shiva Temple, known for its magnificent Shiva statue and breathtaking sea views.",
+          "At Poovar, enjoy a boat ride (at your own expense) through the mangrove forests, witnessing floating cottages and the confluence of river, sea, and backwaters.",
+          "Later, head to Trivandrum for check-in and an evening at leisure.",
+          "Overnight Stay at Trivandrum",
+          "Places Covered: Aazhimala Shiva Temple, Poovar Backwaters"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Trivandrum Local Sightseeing",
+        "activities": [
+          "Start your day with a visit to Padmanabhaswamy Temple, one of the richest and most revered temples in India, known for its stunning Dravidian architecture.",
+          "Next, explore Napier Museum, home to rare artifacts and ancient Kerala art (entry fee at your own expense).",
+          "Admire the artworks at Sri Chitra Art Gallery, featuring paintings from various Indian and international artists (entry fee at your own expense).",
+          "Walk through Puthenmalika Palace, showcasing royal heritage and intricate woodwork (entry fee at your own expense).",
+          "End your day with a visit to Trivandrum Zoo, one of the oldest zoological parks in India (entry fee at your own expense).",
+          "Overnight Stay at Trivandrum",
+          "Places Covered: Padmanabhaswamy Temple, Napier Museum, Sri Chitra Art Gallery, Puthenmalika Palace, Trivandrum Zoo"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Trivandrum to Cochin (240 Km) | Departure",
+        "activities": [
+          "After breakfast, check out and drive back to Cochin for your departure.",
+          "Upon arrival, you will be dropped off at Cochin International Airport or Ernakulam Railway Station for your onward journey, carrying unforgettable memories of Kerala\u2019s breathtaking landscapes and vibrant culture.",
+          "Trip Ends"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "7 Days / 6 Nights",
+    "price": "starting from 24500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival and transfer to Munnar",
+        "activities": [
+          "You will arrive in Cochin and picked up by our representative then you will be transferred to Munnar.",
+          "Overnight stay in Munnar."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Munnar sightseeing",
+        "activities": [
+          "Visit Mattupetty Dam and enjoy optional boating at your own expense.",
+          "Explore the Tea Factory and Tea Museum, followed by a visit to the scenic Echo Point.",
+          "Spend the evening at leisure and return for an overnight stay in Munnar.",
+          "Places Covered: Tea Factory and Tea Museum, Echo Point"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar \u2013 Thekkady",
+        "activities": [
+          "Enjoy breakfast at the hotel before driving to Thekkady.",
+          "Visit the renowned Periyar National Park and Tiger Reserve, with optional activities like boat safari or bamboo rafting at your own cost.",
+          "Check in to your hotel, then explore nearby spice plantations and the vibrant local spice market.",
+          "Spend your evening at leisure or shopping, followed by an overnight stay in Thekkady.",
+          "Places Covered: Periyar National Park , boat safari or bamboo rafting(optional)"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Thekkady \u2013 Alleppey",
+        "activities": [
+          "After breakfast at the hotel, drive to Alleppey and check in to your deluxe sharing houseboat.",
+          "Enjoy a scenic backwater cruise passing by lush paddy fields, vibrant birdlife, and glimpses of traditional village life.",
+          "Relax and unwind with an overnight stay on the houseboat.",
+          "Places Covered: Houseboat stay in Alleppey"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Alleppey \u2013 Varkala",
+        "activities": [
+          "After breakfast on the houseboat, disembark and proceed to Jatayu Earth\u2019s Center to witness the world\u2019s largest bird sculpture.",
+          "Continue your drive to Varkala and check in at your hotel or resort.",
+          "Spend the day exploring Varkala Cliff, relaxing at Papanasam Beach, and enjoying local cafes.",
+          "End your day with a beautiful sunset from the cliffs.",
+          "Overnight stay in Varkala.",
+          "Places Covered:  Jatayu Earth\u2019s Center, Varkala Califf, Papanasam beach,"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Varkala \u2013 Kovalam",
+        "activities": [
+          "After breakfast, you will drive to Kovalam.",
+          "After check-in formalities, the day is for leisure enjoy the beaches of Kovalam -  Lighthouse Beach, Kovalam Beach and Hawa Beach.",
+          "Overnight stay in the Hotel at Kovalam.",
+          "Places Covered: Lighthouse Beach, Kovalam Beach, Hawa Beach"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Kovalam \u2013 Trivandrum Drop",
+        "activities": [
+          "After breakfast you will move to Trivandram.",
+          "Drop to Trivandrum Railway station/Airport and begin your onward journey.",
+          "Your trip ends here."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "starting from 28000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Kannur Arrival",
+        "activities": [
+          "Pick-up from Kannur Airport/Railway station and drop to hotel. Done with check-in formalities and have some rest.",
+          "You will visit today Fort St. Angelo, built in 1505 by Portuguese and Arakkal Museum. In evening back to your hotel. Overnight stay in Hotel"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Kannur to Wayanad Transfer",
+        "activities": [
+          "After breakfast, You will visit remaining sightseeing of Kannur Kannur Lighthouse & Payyambalam Beach and proceed to Wayanad.  It will take 3 hour to reach Wayanad. On arrival check-in to your hotel. Overnight stay in Hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Wayanad to Kozhikode Transfer",
+        "activities": [
+          "After breakfast you will start local sightseeing of Wayanad.",
+          "Wayanad is known for its green mountains, lush forests and green paddy fields. You will explore Edakkal Caves, Soochippara Falls and Wayanad Wildlife Sanctuary after visiting these places proceed to Kozhikode.",
+          "On arrival check-in to your hotel And relex at Kozhikode Beach. Overnight stay in Hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Kozhikode to Thrissur Transfer",
+        "activities": [
+          "After breakfast you will go for local sightseeing of Kozhikode. Places you will see see kappad Beach (Kappad is the place where Vasco da Gama set foot for the first time), Kadalundi Bird Sanctuary, Pazhassiraja Archaeological Museum and Dolphin's Point after that proceed to Thrissur. On arrival check-in to your hotel. Overnight stay in your hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Thrissur Sightseeing - Athirappilly Water Falls - Thrissur",
+        "activities": [
+          "After breakfast we will go for excursion of Athirappilly Water Falls",
+          "When we talk about Athirappilly waterfall, we get a vision of actress Aishwarya Rai dancing for the song 'Barso re'!. Athirappilly waterfall is formed by Chalakudy River. It is largest waterfall of Kerala and also call \"The Naigara of India\". It is surrounded by a dense Vazhachal Forest Which is one of the best bio-diversity hotspots in Kerala.",
+          "In afternoon come back to the main city and visit remaining places of Thrissur - Thrissur Zoo & Museum and Vadakkunnathan Temple.  In evening back to your hotel. Overnight stay in Hotel"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Thrissur to Cochin Departure",
+        "activities": [
+          "After breakfast you will drop to Cochin International Airport/Railway station."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "5 Days / 4 Nights",
+    "price": "starting from 17000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival and transfer to Munnar",
+        "activities": [
+          "You will arrive in Cochin and picked up by our representative then you will be transferred to Munnar.",
+          "Overnight stay in Munnar."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Munnar sightseeing",
+        "activities": [
+          "Visit Mattupetty Dam and enjoy optional boating at your own expense.",
+          "Explore the Tea Factory and Tea Museum, followed by a visit to the scenic Echo Point.",
+          "Spend the evening at leisure and return for an overnight stay in Munnar.",
+          "Highlights of the Day: Tea Factory and Tea Museum, Echo Point"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar \u2013 Thekkady",
+        "activities": [
+          "Enjoy breakfast at the hotel before driving to Thekkady.",
+          "Visit the renowned Periyar National Park and Tiger Reserve, with optional activities like boat safari or bamboo rafting at your own cost.",
+          "Check in to your hotel, then explore nearby spice plantations and the vibrant local spice market.",
+          "Spend your evening at leisure or shopping, followed by an overnight stay in Thekkady.",
+          "Highlights of the Day: Periyar National Park , boat safari or bamboo rafting."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Thekkady \u2013 Alleppey",
+        "activities": [
+          "After breakfast at the hotel, drive to Alleppey and check in to your deluxe sharing houseboat.",
+          "Enjoy a scenic backwater cruise passing by lush paddy fields, vibrant birdlife, and glimpses of traditional village life.",
+          "Relax and unwind with an overnight stay on the houseboat.",
+          "Highlights of the Day: Houseboat stay in Alleppey"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Alleppey \u2013 Cochin Drop",
+        "activities": [
+          "You will drive from Alleppey to Cochin and depart for you onward journey from Cochin airport.",
+          "Your Journey Ends here."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "4 Days / 3 Nights",
+    "price": "starting from 13000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival and transfer to Munnar",
+        "activities": [
+          "Arrival at Kochi International Airport/Railway station and transfer to Munnar. It will take approximately 4 hours to reach Munnar, enroute visit Cheyyappara Waterfalls and Valara Waterfall . In this beautiful journey of Munnar you will pass through the Pothamedu View Point, beautiful tea gardens spread like a green carpet over hundreds of kilometers and lush green hills.",
+          "On arrival check into the hotel.",
+          "Overnight at Hotel"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Munnar City Tour",
+        "activities": [
+          "After breakfast explore the Munnar City.",
+          "Munnar is also known as the 'Kashmir of South India'. It is famous for its lush green forests, spectacular tea estates, blankets of mist & craggy peaks and exotic varieties of flora & fauna. It is also home to some of the endangered species of animals like Neelakurinji and Nilgiri Tahr.",
+          "You will visit Eco Point, Kundala Lake, Tea Gardens, Tea Museum (Monday Closed), Eravikulam National Park(This is decided on ground as per the availability and rush) and Mattupetty Lake & Dam. In evening back to your hotel. Overnight stay in Munnar hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar to Alleppey Transfer",
+        "activities": [
+          "After breakfast head towards Alleppey",
+          "Alleppey is famous for backwaters and houseboat cruises. Which will give you glimpse of green paddy fields, pleasing avifauna and choir making activities.",
+          "Check in Houseboat and make a trip through the best possible canals in Alleppey.",
+          "Overnight stay in houseboat."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Alleppey to Cochin Departure",
+        "activities": [
+          "After breakfast you will drop to Cochin International Airport/Railway station."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "\u2022 Take back memories of Kerala\u2019s lush landscapes, backwaters, and cultural richness.",
+    "days": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival \u2013 Munnar Transfer",
+        "activities": [
+          "Arrive at Cochin Airport or Railway Station and drive to Munnar (130 km / approx. 4 hrs).",
+          "En route, enjoy scenic landscapes, Cheeyappara Waterfalls, and mountains shrouded in low-hanging clouds.",
+          "Check in at the hotel in Munnar and relax for the evening.",
+          "You will stay overnight at a hotel in Munnar.",
+          "Highlights of the Day: Cheeyappara Waterfalls"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Munnar Sightseeing",
+        "activities": [
+          "After breakfast, visit Mattupetty Dam and enjoy boating amidst lush surroundings.",
+          "Explore the tea gardens, Echo Point, and the picturesque landscapes of Munnar.",
+          "Visit Top Station, Eravikulam National Park, and witness Anamudi Peak.",
+          "Evening free at leisure to relax or explore local markets.",
+          "You will stay overnight at a hotel in Munnar.",
+          "Highlights of the Day:  Echo Point, Anamudi Peak, Eravikulam National Park"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Munnar \u2013 Thekkady",
+        "activities": [
+          "After breakfast, transfer to Thekkady (120 km / approx. 3.5 hrs).",
+          "Visit Periyar National Park, home to diverse wildlife and part of the Tiger Reserve.",
+          "Explore spice plantations and shop for authentic spices from local vendors.",
+          "Check in at the hotel and relax for the evening.",
+          "You will stay overnight at a hotel in Thekkady.",
+          "Highlights of the Day: Periyar National Park"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Thekkady \u2013 Alleppey",
+        "activities": [
+          "Drive to Alleppey and board a traditional Kerala Houseboat.",
+          "Enjoy freshly prepared meals onboard and relax amidst serene surroundings.",
+          "You will stay overnight on the Houseboat in Alleppey.",
+          "Highlights of the Day: Houseboat stay in Alleppey."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Alleppey \u2013 Cochin",
+        "activities": [
+          "Disembark from the Houseboat and transfer to Cochin (90 km / approx. 1.5 hrs).",
+          "Explore Cochin\u2019s heritage sites: Jewish Synagogue, Mattanchery Palace, St. Francis Church, and Chinese Fishing Nets.",
+          "Check in at the hotel and spend the evening at leisure.",
+          "You will stay overnight at a hotel in Cochin.",
+          "Highlights of the Day: Jewish Synagogue, Mattanchery Palace, St. Francis Church, and Chinese Fishing Nets"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Depart Cochin",
+        "activities": [
+          "After breakfast, transfer to Cochin Airport or Railway Station for your onward journey."
+        ],
+        "highlight": ""
+      }
+    ]
+  }
+]

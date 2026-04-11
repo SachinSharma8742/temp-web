@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getDeliveredImageUrl } from '../../utils/mediaDelivery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -136,8 +137,18 @@ const ParallaxStory = () => {
               <div className="absolute inset-0 overflow-hidden">
                 <img
                   data-preview-media
-                  src={moment.image}
+                  src={getDeliveredImageUrl(moment.image, { width: 1600, quality: 70, format: 'webp' })}
                   alt={moment.title}
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    if (target.dataset.fallbackApplied === '1') return;
+                    target.dataset.fallbackApplied = '1';
+                    target.src = moment.image;
+                  }}
                   className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                   style={{ objectPosition: moment.objectPosition }}
                 />

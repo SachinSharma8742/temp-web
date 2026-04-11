@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HERO_SLIDES } from '../../data/heroSlides';
+import { getDeliveredImageUrl } from '../../utils/mediaDelivery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,14 @@ const Hero = ({ isReady = false }) => {
   const slidesRef = useRef([]); // Now refers to <img> elements
   const subtextRef = useRef(null);
   const kenBurnsRef = useRef(null); // To store active animation
+
+  const scrollToDestinations = () => {
+    const destinationsSection = document.getElementById('destinations');
+    if (!destinationsSection) return;
+
+    const y = destinationsSection.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  };
 
   // Slide interval timer
   useEffect(() => {
@@ -130,25 +139,43 @@ const Hero = ({ isReady = false }) => {
       {/* Background Slides with Parallax Layer */}
       <div className="absolute inset-0 z-0 parallax-container">
         {HERO_SLIDES.map((slide, index) => (
+          (() => {
+            const totalSlides = HERO_SLIDES.length;
+            const previousIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            const nextIndex = (currentIndex + 1) % totalSlides;
+            const shouldLoadSlide = index === currentIndex || index === previousIndex || index === nextIndex || index === 0;
+
+            return (
           <div 
             key={index}
             className="absolute inset-0 overflow-hidden"
           >
             <img 
               ref={el => slidesRef.current[index] = el}
-              src={slide.image}
+              src={shouldLoadSlide ? getDeliveredImageUrl(slide.image, { width: 1920, quality: 70, format: 'webp' }) : undefined}
               alt={slide.subtext}
-              loading="lazy"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+              decoding="async"
+              sizes="100vw"
+              onError={(event) => {
+                const target = event.currentTarget;
+                if (target.dataset.fallbackApplied === '1') return;
+                target.dataset.fallbackApplied = '1';
+                target.src = slide.image;
+              }}
               className="absolute inset-0 w-full h-full object-cover opacity-0 transition-none scale-105"
             />
             <div className={`absolute inset-0 bg-gradient-to-b from-black/38 via-black/14 to-transparent transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`} />
           </div>
+            );
+          })()
         ))}
       </div>
 
       <div ref={contentRef} className="relative z-20 text-center px-4 max-w-2xl" style={{ color: '#FFFFFF' }}>
         <h1 className="hero-text font-heading text-3xl md:text-5xl lg:text-6xl text-white mb-3 md:mb-4 leading-[1.06] drop-shadow-[0_8px_28px_rgba(0,0,0,0.35)]">
-          Tailor-Made Journeys <br className="hidden md:block" /> Across India.
+          <span className="whitespace-nowrap">Tailor-Made Itineraries</span> <br className="hidden md:block" /> Across India.
         </h1>
         
         <div className="h-8 md:h-9 mb-5 md:mb-8 flex items-center justify-center">
@@ -163,6 +190,8 @@ const Hero = ({ isReady = false }) => {
         
         <div className="hero-text flex items-center justify-center gap-4 md:gap-6">
           <button 
+            type="button"
+            onClick={scrollToDestinations}
             className="group relative min-w-[13rem] px-8 py-3 md:px-10 md:py-3.5 border border-white/70 rounded-full shadow-[0_12px_28px_rgba(0,0,0,0.22)] transition-all duration-500 overflow-hidden backdrop-blur-md hover:border-white"
             style={{ color: '#FFFFFF' }}
           >

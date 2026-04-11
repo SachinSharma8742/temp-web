@@ -1,3 +1,21 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Project build artifacts
+dist/
+dist-ssr/
+*.mjs.map
+*.js.map
+
+# Environmental variables (CRITICAL: DO NOT REMOVE)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
 # Logs
 logs
 *.log
@@ -7,27 +25,40 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Editor specific
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# Local Copilot/session artifacts
+# OS Specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Assistant & Agent Artifacts
 .agent/
+.gemini/
+.system_generated/
 
-# Local design scratch area (not part of runtime app)
+# Local design & scratch
 design-system/
-
-# Duplicate favicon export folder at repo root (use public/favicon_io instead)
 /favicon_io/
+scratch/
+test.html
+wiki_urls.json
+
+# Generated media optimization output (auto-created by optimize:media)
+public/assets/media-optimized/
+
+# Test results
+coverage/
+.nyc_output/

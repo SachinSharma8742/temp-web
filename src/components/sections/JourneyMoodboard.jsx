@@ -1,699 +1,465 @@
-import React, {
-  memo,
-  startTransition,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import gsap from 'gsap';
+import React, { memo, useEffect, useRef, useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
+import { Volume2, VolumeX } from 'lucide-react';
+import MEDIA_OPTIMIZED_MANIFEST from '../../data/mediaOptimizedManifest.json';
+import { getDeliveredImageUrl, isRemoteUrl } from '../../utils/mediaDelivery';
 
-const extraStyles = `
-  @keyframes fadeIt {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-  }
-  @keyframes slideIt {
-    0%   { background-position: -200% center; }
-    100% { background-position:  200% center; }
-  }
-  .fadeClass { animation: fadeIt 900ms ease forwards; }
-  .noScrollClass { scrollbar-width: none; }
-  .noScrollClass::-webkit-scrollbar { display: none; }
-`;
+// Global Media Set — The ultimate fusion of client offline media and stunning high-end scenes.
+const RAW_MEDIA = [
+  // === CLIENT'S OFFLINE MEDIA (Physically trimmed to 8s via Python) ===
+  "/assets/media/WhatsApp%20Video%202026-04-09%20at%204.06.00%20PM.mp4",
+  "/assets/media/WhatsApp%20Video%202026-04-09%20at%204.06.04%20PM.mp4",
+  "/assets/media/WhatsApp%20Video%202026-04-09%20at%204.11.01%20PM.mp4",
+  "/assets/media/WhatsApp%20Video%202026-04-09%20at%204.11.04%20PM.mp4",
+  "/assets/media/WhatsApp%20Video%202026-04-09%20at%204.05.40%20PM.mp4",
+  "/assets/media/WhatsApp%20Image%202026-04-09%20at%204.05.44%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-09%20at%204.05.48%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-09%20at%204.05.54%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.45.56%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.45.57%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.49.12%20PM.jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.45.56%20PM%20(1).jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.45.56%20PM%20(2).jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.49.12%20PM%20(1).jpeg",
+  "/assets/media/WhatsApp%20Image%202026-04-10%20at%202.55.46%20PM.jpeg",
+  "/assets/media/IMG_0660.MOV",
+  "/assets/media/IMG_0664.MOV",
+  "/assets/media/IMG_1540.MOV",
+  "/assets/media/VID_20240514_120916.mp4",
 
-if (typeof document !== 'undefined' && !document.getElementById('myStylesId')) {
-  const myTag = document.createElement('style');
-  myTag.id = 'myStylesId';
-  myTag.textContent = extraStyles;
-  document.head.appendChild(myTag);
-}
+  // === RAJASTHAN ===
+  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1600&q=90&fit=crop",
 
-const placesData = [
-  {
-    title: 'Varanasi', region: 'Uttar Pradesh', tagline: 'Where eternity meets the Ganges',
-    images: [
-      'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Jaisalmer', region: 'Rajasthan', tagline: 'A golden fortress in the desert',
-    images: [
-      'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Alleppey', region: 'Kerala', tagline: 'Backwaters and monsoon silence',
-    images: [
-      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Ladakh', region: 'Kashmir', tagline: 'Sky kingdoms above the clouds',
-    images: [
-      'https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Hampi', region: 'Karnataka', tagline: 'Ruins of forgotten empires',
-    images: [
-      'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1496372412473-e8548ffd82bc?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1568168361784-22e428b8a9c3?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Udaipur', region: 'Rajasthan', tagline: 'The city of lakes and longing',
-    images: [
-      'https://images.unsplash.com/photo-1568168361784-22e428b8a9c3?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1496372412473-e8548ffd82bc?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&q=90&fit=crop',
-    ],
-  },
-  {
-    title: 'Darjeeling', region: 'West Bengal', tagline: 'Tea gardens veiled in mist',
-    images: [
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1622308644420-b20142dc993c?w=1200&q=90&fit=crop',
-      'https://images.unsplash.com/photo-1623625434462-e5e42318ae49?w=1200&q=90&fit=crop',
-    ],
-  },
+  // === HIMACHAL PRADESH ===
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=90&fit=crop",
+  "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1600&q=90&fit=crop",
+
+  // === SPITI VALLEY ===
+  "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1600&q=90&fit=crop",
+
+  // === UTTARAKHAND ===
+  "https://images.unsplash.com/photo-1704392768299-cbc3cae79817?w=1600&q=90&fit=crop",
+  
+  // === KASHMIR ===
+  "https://images.unsplash.com/photo-1566837945700-30057527ade0?w=1600&q=90&fit=crop",
+
+  // === LADAKH ===
+  "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1600&q=90&fit=crop",
+  "https://images.unsplash.com/photo-1530331130276-f0a905c819c2?w=1600&q=90&fit=crop",
+
+  // === NORTHEAST INDIA ===
+  "https://images.unsplash.com/photo-1759906356131-9a36dbba796c?w=1600&q=90&fit=crop",
+
+  // === KERALA ===
+  "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=90&fit=crop",
+  "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=90&fit=crop"
 ];
 
-const boxSizes = [
-  { left: '0%',    top: '0%',  width: '55%', height: '62%', opacity: 1,    zIndex: 20, size: 'hero'   },
-  { left: '56%',   top: '0%',  width: '44%', height: '30%', opacity: 1,    zIndex: 10, size: 'medium' },
-  { left: '56%',   top: '32%', width: '44%', height: '30%', opacity: 1,    zIndex: 10, size: 'medium' },
-  { left: '0%',    top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
-  { left: '25.5%', top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
-  { left: '51%',   top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
-  { left: '76%',   top: '64%', width: '24%', height: '36%', opacity: 1,    zIndex: 6,  size: 'small'  },
-];
+const toMediaEntry = (rawUrl) => {
+  const manifestEntry = MEDIA_OPTIMIZED_MANIFEST[rawUrl];
+  const isVideoByPath = /\.(mp4|mov)$/i.test(rawUrl);
 
-const boxCount = boxSizes.length;
-const cardCount = placesData.length;
+  if (isVideoByPath) {
+    return {
+      raw: rawUrl,
+      type: 'video',
+      url: manifestEntry?.mp4 || rawUrl,
+    };
+  }
 
-const baseBoxArr = Object.freeze(
-  Array.from({ length: cardCount }, (_, i) => i % boxCount)
-);
+  if (manifestEntry?.type === 'image') {
+    return {
+      raw: rawUrl,
+      type: 'image',
+      url: manifestEntry.default,
+      webpSrcSet: manifestEntry.webpSrcSet,
+      avifSrcSet: manifestEntry.avifSrcSet,
+      sizes: manifestEntry.sizes,
+    };
+  }
 
-const textSizesObj = {
-  hero:   'text-2xl md:text-3xl',
-  medium: 'text-lg md:text-xl',
-  small:  'text-sm md:text-base',
+  return {
+    raw: rawUrl,
+    type: 'image',
+    url: isRemoteUrl(rawUrl)
+      ? getDeliveredImageUrl(rawUrl, { width: 1600, quality: 72, format: 'webp' })
+      : rawUrl,
+  };
 };
 
-let didPreloadThing = false;
-function doPreload() {
-  if (didPreloadThing) return;
-  didPreloadThing = true;
-  const runnerFunc = typeof requestIdleCallback !== 'undefined'
-    ? (fn) => requestIdleCallback(fn, { timeout: 4000 })
-    : (fn) => setTimeout(fn, 200);
-  runnerFunc(() => {
-    const checkedStuff = new Set();
-    placesData.forEach(({ images }) =>
-      images.forEach((theSrc) => {
-        if (checkedStuff.has(theSrc)) return;
-        checkedStuff.add(theSrc);
-        const pic = new Image();
-        pic.decoding = 'async';
-        pic.fetchPriority = 'low';
-        pic.src = theSrc;
-      })
-    );
-  });
-}
+const GLOBAL_MEDIA = RAW_MEDIA.map(toMediaEntry);
+const LIGHTWEIGHT_MEDIA = GLOBAL_MEDIA.filter((entry) => entry.type !== 'video');
 
-const SmallIconThing = memo(function SmallIconThing({ className, style }) {
+// Layout Definition for Desktop Overlap
+const DESKTOP_LAYOUT = [
+  { w: '35%', h: '62%', t: '16%', l: '33%', z: 10, r: 0 },    // Hero
+  { w: '24%', h: '45%', t: '4%', l: '8%', z: 5, r: -2 },      // Top Left Large
+  { w: '25%', h: '48%', t: '48%', l: '66%', z: 12, r: -1 },   // Bottom Right Large
+  { w: '22%', h: '38%', t: '52%', l: '12%', z: 15, r: 1 },    // Bottom Left Medium
+  { w: '21%', h: '34%', t: '6%', l: '71%', z: 8, r: 1.5 },    // Top Right Medium
+  { w: '18%', h: '26%', t: '72%', l: '43%', z: 20, r: -1.5 },  // Bottom Center Small
+  { w: '15%', h: '24%', t: '22%', l: '3%', z: 2, r: -3 },     // Far Left Small
+  { w: '16%', h: '24%', t: '32%', l: '79%', z: 3, r: 3 },     // Far Right Small
+];
+
+// Aesthetic Mobile Configuration - Organic vertical collage
+const MOBILE_LAYOUT = [
+  { w: '88%', h: '280px', x: '0%', r: -2, delay: 0 },
+  { w: '72%', h: '340px', x: '25%', r: 3, delay: 0.1 },
+  { w: '92%', h: '260px', x: '-2%', r: -1, delay: 0.05 },
+  { w: '78%', h: '320px', x: '15%', r: 2, delay: 0.15 },
+  { w: '84%', h: '280px', x: '10%', r: -3, delay: 0.1 },
+  { w: '88%', h: '360px', x: '-5%', r: 1.5, delay: 0.05 },
+  { w: '100%', h: '250px', x: '0%', r: 0, delay: 0.2 },
+  { w: '75%', h: '300px', x: '22%', r: -4, delay: 0.1 },
+];
+
+// ─── MediaSwitcher ───────────────────────────────────────────────────────────
+// Now using Framer Motion AnimatePresence for a military-grade smooth crossfade.
+const MediaSwitcher = memo(({ src, isPlaying }) => {
+  const isVideo = src?.type === 'video';
+  const videoRef = useRef(null);
+
+  // Physically pause/play video based on viewport visibility to save CPU/GPU
+  // AND manage muted state dynamically for user interaction
+  useEffect(() => {
+    if (!videoRef.current || !isVideo) return;
+    
+    // Play/Pause sync
+    if (isPlaying) {
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+    }
+
+    // Audio sync - direct mutation for reliability across browsers
+    videoRef.current.muted = !src.isUnmuted;
+  }, [isPlaying, isVideo, src.isUnmuted]);
+
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-      aria-hidden="true"
-    >
-      <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-    </svg>
+    <div className="absolute inset-0 overflow-hidden rounded-[inherit]">
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={src?.raw}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          {isVideo ? (
+            <video
+              ref={videoRef}
+              src={src.url}
+              muted loop playsInline
+              preload="metadata"
+              autoPlay // Added as a hint for mobile browsers
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <picture>
+              {src?.avifSrcSet ? <source type="image/avif" srcSet={src.avifSrcSet} sizes={src.sizes} /> : null}
+              {src?.webpSrcSet ? <source type="image/webp" srcSet={src.webpSrcSet} sizes={src.sizes} /> : null}
+              <img
+                src={src.url}
+                srcSet={src.webpSrcSet || undefined}
+                sizes={src.sizes || '(max-width: 768px) 92vw, (max-width: 1280px) 72vw, 1280px'}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                className="w-full h-full object-cover"
+              />
+            </picture>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 });
 
-const ImageSwitcher = memo(
-  function ImageSwitcher({ images, alt, priority, advanceTick, onImageClick }) {
-    const [goodImg, setGoodImg] = useState(0);
-    const [badImg, setBadImg] = useState(-1);
-    const goodRef = useRef(0);
-    const timeRef = useRef(null);
-    const lastTick = useRef(advanceTick);
-
-    const switchItUp = useCallback(() => {
-      const oldVal = goodRef.current;
-      const newVal = (oldVal + 1) % images.length;
-      goodRef.current = newVal;
-      setGoodImg(newVal);
-      setBadImg(oldVal);
-      clearTimeout(timeRef.current);
-      timeRef.current = setTimeout(() => setBadImg(-1), 960);
-    }, [images.length]);
-
-    useEffect(() => {
-      if (advanceTick !== lastTick.current) {
-        lastTick.current = advanceTick;
-        switchItUp();
-      }
-    });
-
-    useEffect(() => () => clearTimeout(timeRef.current), []);
-
-    const clickyFunc = useCallback(() => {
-      switchItUp();
-      if (onImageClick) onImageClick();
-    }, [switchItUp, onImageClick]);
-
-    return (
-      <div
-        className="absolute inset-0 w-full h-full cursor-pointer group/rot overflow-hidden"
-        onClick={clickyFunc}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && clickyFunc()}
-        aria-label="Next photo"
-      >
-        <img
-          key={`a-${images[goodImg]}`}
-          src={images[goodImg]}
-          alt={alt}
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={priority ? 'high' : 'auto'}
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover transform-gpu transition-transform duration-700 group-hover/rot:scale-[1.04]"
-          style={{ pointerEvents: 'none' }}
-        />
-        {badImg !== -1 && (
-          <img
-            key={`o-${images[badImg]}`}
-            src={images[badImg]}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover transform-gpu fadeClass"
-            style={{ pointerEvents: 'none' }}
-          />
-        )}
-      </div>
-    );
-  },
-  (oldProps, newProps) =>
-    oldProps.advanceTick === newProps.advanceTick &&
-    oldProps.priority === newProps.priority &&
-    oldProps.images === newProps.images &&
-    oldProps.onImageClick === newProps.onImageClick
-);
-
-const CoolMoodboardComponent = () => {
-  const bigDivRef = useRef(null);
-  const cardItemsRef = useRef([]);
-  const boxStateRef = useRef([...baseBoxArr]);
-  const pausedRef = useRef(false);
-  const myFlowTimer = useRef(null);
-  const myStepTimer = useRef(null);
-  const myCycleTimer = useRef(null);
-  const cursorRef = useRef(0);
-  const mobTimerA = useRef(null);
-  const mobTimerB = useRef(null);
-  const mobPauseRef = useRef(false);
-
-  const [tickNums, setTickNums] = useState(() => Array.from({ length: cardCount }, () => 0));
-  const [bigOneIdx, setBigOneIdx] = useState(0);
-  const [currBoxArray, setCurrBoxArray] = useState(() => [...baseBoxArr]);
-
-  const emptyClicks = useMemo(() => placesData.map(() => () => {}), []);
-
-  useLayoutEffect(() => {
-    doPreload();
-  }, []);
-
-  const makeStateGood = useCallback(() => {
-    const arrThing = boxStateRef.current;
-    const findBig = arrThing.indexOf(0);
-    startTransition(() => {
-      setBigOneIdx(findBig >= 0 ? findBig : 0);
-      setCurrBoxArray([...arrThing]);
-    });
-  }, []);
-
-  const startDoingSequence = useCallback(() => {
-    clearTimeout(myStepTimer.current);
-    clearTimeout(myCycleTimer.current);
-    if (pausedRef.current) return;
-
-    const theStepFunc = () => {
-      if (pausedRef.current) return;
-      let triesNum = 0;
-      while (triesNum < cardCount) {
-        const val1 = cursorRef.current % cardCount;
-        cursorRef.current = (val1 + 1) % cardCount;
-        triesNum++;
-
-        const getSz = boxSizes[boxStateRef.current[val1]]?.size ?? 'small';
-        if (getSz !== 'small') {
-          setTickNums((oldTicks) => {
-            const nextTicks = [...oldTicks];
-            nextTicks[val1] = oldTicks[val1] + 1;
-            return nextTicks;
-          });
-
-          if (cursorRef.current === 0) {
-            myCycleTimer.current = setTimeout(() => { startDoingSequence(); }, 7000);
-          } else {
-            myStepTimer.current = setTimeout(theStepFunc, 1000);
-          }
-          return;
-        }
-      }
-      myCycleTimer.current = setTimeout(() => { startDoingSequence(); }, 7000);
-    };
-
-    myStepTimer.current = setTimeout(theStepFunc, 1000);
-  }, []);
-
-  const stopDoingSequence = useCallback(() => {
-    clearTimeout(myStepTimer.current);
-    clearTimeout(myCycleTimer.current);
-  }, []);
-
-  useEffect(() => {
-    const theStage = bigDivRef.current;
-    if (!theStage) return;
-
-    const moveTheBox = (elItem, slotIdVal, makeFast = false) => {
-      const sObj = boxSizes[slotIdVal];
-      gsap.to(elItem, {
-        left: sObj.left, top: sObj.top, width: sObj.width, height: sObj.height,
-        opacity: sObj.opacity, zIndex: sObj.zIndex,
-        duration: makeFast ? 0 : 1.45,
-        ease: 'power3.inOut',
-        overwrite: true,
-        force3D: true,
-      });
-    };
-
-    const runFlow = () => {
-      if (pausedRef.current) return;
-      const arrNext = boxStateRef.current.map((sNum) => (sNum + 1) % boxCount);
-      boxStateRef.current = arrNext;
-      arrNext.forEach((idVal, cardIdVal) => {
-        const dEl = cardItemsRef.current[cardIdVal];
-        if (dEl) moveTheBox(dEl, idVal);
-      });
-      makeStateGood();
-    };
-
-    const gCtx = gsap.context(() => {
-      const mMed = gsap.matchMedia();
-      mMed.add('(min-width: 1024px)', () => {
-        cardItemsRef.current.forEach((elementThing, iVal) => {
-          if (!elementThing) return;
-          gsap.set(elementThing, { position: 'absolute', force3D: true });
-          moveTheBox(elementThing, boxStateRef.current[iVal], true);
-        });
-        makeStateGood();
-        myFlowTimer.current = setInterval(runFlow, 5600);
-        startDoingSequence();
-
-        const inHover = () => {
-          pausedRef.current = true;
-          stopDoingSequence();
-        };
-        const outHover = () => {
-          pausedRef.current = false;
-          startDoingSequence();
-        };
-
-        theStage.addEventListener('mouseenter', inHover, { passive: true });
-        theStage.addEventListener('mouseleave', outHover, { passive: true });
-
-        return () => {
-          theStage.removeEventListener('mouseenter', inHover);
-          theStage.removeEventListener('mouseleave', outHover);
-          clearInterval(myFlowTimer.current);
-          stopDoingSequence();
-          pausedRef.current = false;
-        };
-      });
-      return () => mMed.revert();
-    }, theStage);
-
-    const mQuery = window.matchMedia('(max-width: 1023px)');
-    if (mQuery.matches) startDoingSequence();
-
-    return () => {
-      clearInterval(myFlowTimer.current);
-      stopDoingSequence();
-      gCtx.revert();
-    };
-  }, [makeStateGood, startDoingSequence, stopDoingSequence]);
-
-  useEffect(() => {
-    const theStageBox = bigDivRef.current;
-    if (!theStageBox) return;
-    const chkDesk = () => window.matchMedia('(min-width: 1024px)').matches;
-    let rafScrollId = null;
-
-    const getVisibleCards = () =>
-      Array.from(theStageBox.querySelectorAll('[data-mood-card-index]')).filter(
-        (el) => el.offsetParent !== null
-      );
-
-    const syncNowShowing = () => {
-      if (chkDesk()) return;
-
-      const cards = getVisibleCards();
-      if (!cards.length) return;
-
-      const viewCenter = theStageBox.scrollLeft + theStageBox.clientWidth / 2;
-      let nearestIdx = 0;
-      let nearestDist = Number.POSITIVE_INFINITY;
-
-      cards.forEach((cardEl) => {
-        const idxAttr = Number(cardEl.getAttribute('data-mood-card-index'));
-        if (Number.isNaN(idxAttr)) return;
-
-        const cardCenter = cardEl.offsetLeft + cardEl.offsetWidth / 2;
-        const dist = Math.abs(cardCenter - viewCenter);
-        if (dist < nearestDist) {
-          nearestDist = dist;
-          nearestIdx = idxAttr;
-        }
-      });
-
-      setBigOneIdx((prevIdx) => (prevIdx === nearestIdx ? prevIdx : nearestIdx));
-    };
-
-    const onScrollSync = () => {
-      if (rafScrollId) window.cancelAnimationFrame(rafScrollId);
-      rafScrollId = window.requestAnimationFrame(syncNowShowing);
-    };
-
-    const doNextScroll = () => {
-      clearTimeout(mobTimerA.current);
-      if (chkDesk() || mobPauseRef.current) return;
-      mobTimerA.current = setTimeout(() => {
-        if (mobPauseRef.current || chkDesk()) return;
-        const cards = getVisibleCards();
-        if (!cards.length) return;
-        const randNum = Math.floor(Math.random() * cards.length);
-        const childEl = cards[randNum];
-        if (childEl) theStageBox.scrollTo({ left: childEl.offsetLeft - 16, behavior: 'smooth' });
-        doNextScroll();
-      }, 5000 + Math.random() * 2000);
-    };
-
-    const stopScrollThing = () => {
-      mobPauseRef.current = true;
-      clearTimeout(mobTimerA.current);
-      clearTimeout(mobTimerB.current);
-      mobTimerB.current = setTimeout(() => {
-        mobPauseRef.current = false;
-        doNextScroll();
-      }, 2000);
-    };
-
-    const mobQuery = window.matchMedia('(max-width: 1023px)');
-    if (mobQuery.matches) {
-      syncNowShowing();
-      doNextScroll();
-    }
-    const fixChange = (evObj) => {
-      clearTimeout(mobTimerA.current);
-      if (evObj.matches) {
-        mobPauseRef.current = false;
-        syncNowShowing();
-        doNextScroll();
-      }
-    };
-
-    theStageBox.addEventListener('scroll', onScrollSync, { passive: true });
-    window.addEventListener('resize', onScrollSync);
-    theStageBox.addEventListener('touchstart', stopScrollThing, { passive: true });
-    theStageBox.addEventListener('touchend',   stopScrollThing, { passive: true });
-    theStageBox.addEventListener('mouseenter', stopScrollThing, { passive: true });
-    theStageBox.addEventListener('mouseleave', stopScrollThing, { passive: true });
-    mobQuery.addEventListener('change', fixChange);
-
-    return () => {
-      clearTimeout(mobTimerA.current);
-      clearTimeout(mobTimerB.current);
-      if (rafScrollId) window.cancelAnimationFrame(rafScrollId);
-      theStageBox.removeEventListener('scroll', onScrollSync);
-      window.removeEventListener('resize', onScrollSync);
-      theStageBox.removeEventListener('touchstart', stopScrollThing);
-      theStageBox.removeEventListener('touchend',   stopScrollThing);
-      theStageBox.removeEventListener('mouseenter', stopScrollThing);
-      theStageBox.removeEventListener('mouseleave', stopScrollThing);
-      mobQuery.removeEventListener('change', fixChange);
-    };
-  }, []);
-
-  const theTitleTxt = useMemo(
-    () => placesData[bigOneIdx]?.title ?? placesData[0].title,
-    [bigOneIdx]
+const CinematicMoodboard = () => {
+  const [allowHeavyMedia, setAllowHeavyMedia] = useState(true);
+  const [currentMedia, setCurrentMedia] = useState(
+    DESKTOP_LAYOUT.map((_, i) => ({ 
+      ...LIGHTWEIGHT_MEDIA[i % LIGHTWEIGHT_MEDIA.length],
+      isUnmuted: false 
+    }))
   );
-  const theRegTxt = placesData[bigOneIdx]?.region ?? '';
+  const [isInView, setIsInView] = useState(false);
+  const [isPC, setIsPC] = useState(false);
+
+  // Viewport detection to separate PC and Mobile logic
+  useEffect(() => {
+    const checkPC = () => setIsPC(window.innerWidth >= 1024);
+    checkPC();
+    window.addEventListener('resize', checkPC);
+    return () => window.removeEventListener('resize', checkPC);
+  }, []);
+
+  useEffect(() => {
+    if (typeof navigator === 'undefined') return;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!connection) return;
+
+    const setPreference = () => {
+      const effectiveType = connection.effectiveType || '';
+      const isSlowNetwork = /(^|-)2g$|(^|-)3g$/i.test(effectiveType);
+      setAllowHeavyMedia(!(connection.saveData || isSlowNetwork));
+    };
+
+    setPreference();
+    connection.addEventListener?.('change', setPreference);
+
+    return () => {
+      connection.removeEventListener?.('change', setPreference);
+    };
+  }, []);
+
+  const containerRef = useRef(null);
+  const triggerSwitchRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  const triggerSwitch = useCallback((cardIndex) => {
+    // If not in view, don't even try to switch or schedule next
+    if (!triggerSwitchRef.current || !document.getElementById('moodboard')) return;
+
+    setCurrentMedia(prev => {
+      const mediaPool = allowHeavyMedia ? GLOBAL_MEDIA : LIGHTWEIGHT_MEDIA;
+      const currentlyShown = new Set(prev.map((item) => item.raw));
+      const available = mediaPool.filter((m) => !currentlyShown.has(m.raw));
+      const selectionPool = available.length > 0 ? available : mediaPool;
+      const validPool = selectionPool.filter((m) => m.raw !== prev[cardIndex]?.raw);
+      const nextItem = validPool[Math.floor(Math.random() * validPool.length)];
+
+      if (!nextItem) return prev;
+
+      const performSwitch = () => {
+        setCurrentMedia(latest => {
+          const updated = [...latest];
+          updated[cardIndex] = { ...nextItem, isUnmuted: false };
+          return updated;
+        });
+        
+        // Schedule next switch ONLY if we're still in view
+        // If not in view, the IntersectionObserver will restart the cycle later
+        if (triggerSwitchRef.current) {
+          setTimeout(() => triggerSwitchRef.current(cardIndex), 8000);
+        }
+      };
+
+      // Preload before switching
+      if (nextItem.type === 'video') {
+        performSwitch();
+      } else {
+        const img = new window.Image();
+        img.onload = performSwitch;
+        img.onerror = performSwitch;
+        img.src = nextItem.url;
+      }
+      
+      return prev;
+    });
+  }, [allowHeavyMedia]);
+
+  // Intersection Observer to Pause/Resume
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Sync ref with latest callback
+  useEffect(() => {
+    triggerSwitchRef.current = triggerSwitch;
+  }, [triggerSwitch]);
+
+  // Restart timers when coming back into view
+  useEffect(() => {
+    if (!isInView) return;
+
+    const timers = DESKTOP_LAYOUT.map((_, i) => {
+      const stagger = 4000 + i * 2000; // Slightly faster initial switch when entering
+      return setTimeout(() => triggerSwitch(i), stagger);
+    });
+
+    return () => timers.forEach(clearTimeout);
+  }, [isInView, triggerSwitch]);
+
+  const handleCardClick = (index) => {
+    const media = currentMedia[index];
+    if (!media?.url || media.type !== 'video') return;
+
+    setCurrentMedia(prevMedia => {
+      const currentlyUnmutedIndex = prevMedia.findIndex(m => m.isUnmuted);
+      const isNewActive = currentlyUnmutedIndex !== index;
+      const nextActiveIndex = isNewActive ? index : null;
+
+      return prevMedia.map((m, i) => ({
+        ...m,
+        isUnmuted: i === nextActiveIndex
+      }));
+    });
+  };
+
+  // Subtle continuous floating drift
+  useEffect(() => {
+    let frame;
+    const update = (time) => {
+      if (!isInView || !containerRef.current) {
+        frame = requestAnimationFrame(update);
+        return;
+      }
+      const cards = containerRef.current.querySelectorAll('.collage-card');
+      cards.forEach((card, i) => {
+        const ox = Math.sin(time * 0.0003 + i * 2) * 6;
+        const oy = Math.cos(time * 0.0004 + i * 2) * 6;
+        card.style.setProperty('--drift-x', `${ox}px`);
+        card.style.setProperty('--drift-y', `${oy}px`);
+      });
+      frame = requestAnimationFrame(update);
+    };
+    frame = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(frame);
+  }, [isInView]);
 
   return (
     <section
-      id="journey-moodboard"
-      className="relative -mt-px overflow-hidden px-4 py-16 md:px-8 md:py-24 lg:px-12"
-      style={{ backgroundColor: 'var(--bg-base, #0e0e0e)', color: 'var(--text-body, #e8e0d0)' }}
+      ref={sectionRef}
+      id="moodboard"
+      className="relative w-full overflow-hidden py-16 md:py-24 transition-colors duration-400"
+      style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-body)' }}
     >
+      <style>{`
+        .collage-container {
+          display: flex;
+          flex-direction: column;
+          gap: 3.5rem; /* More space for the organic overlap feel */
+          padding: 0 6vw 5rem;
+          width: 100%;
+        }
+        
+        .collage-card {
+           position: relative;
+           width: var(--w);
+           height: var(--h);
+           left: var(--x);
+           flex-shrink: 0;
+           border-radius: 20px;
+           overflow: hidden;
+           box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+           /* Use mobile-specific rotation on small screens */
+           transform: rotate(var(--mobile-rot, 0deg));
+        }
+
+        @media (min-width: 1024px) {
+          .collage-container {
+            position: relative;
+            display: block;
+            height: 88vh;
+            max-height: 960px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 0;
+          }
+          .collage-card {
+            position: absolute;
+            width: var(--w);
+            height: var(--h);
+            top: var(--t);
+            left: var(--l);
+            z-index: var(--z);
+            border-radius: 24px;
+            /* Use desktop-specific rotation + drift on PC */
+            transform: translate3d(var(--drift-x,0px), var(--drift-y,0px), 0) rotate(var(--desktop-rot, 0deg));
+            transition: box-shadow 0.5s ease, z-index 0s;
+          }
+          .collage-card:hover {
+            box-shadow: 0 30px 80px rgba(0,0,0,0.28);
+            z-index: 50 !important;
+          }
+        }
+      `}</style>
+
+
+      {/* Edge vignette */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          WebkitMaskImage: 'linear-gradient(180deg, transparent 0%, black 14%, black 100%)',
-          maskImage: 'linear-gradient(180deg, transparent 0%, black 14%, black 100%)',
-        }}
+        className="pointer-events-none absolute inset-0 z-40 hidden lg:block"
+        style={{ background: 'radial-gradient(ellipse at center, transparent 30%, var(--bg-base) 100%)' }}
       />
 
-      <div className="mx-auto max-w-[1120px]">
-        <div className="mb-10 md:mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-5">
-          <div className="max-w-2xl">
-            <span
-              className="mb-4 block text-[10px] uppercase tracking-[0.3em] md:text-xs font-bold"
+      {/* Mobile heading */}
+      <div className="mx-auto max-w-7xl px-5 mb-12 lg:hidden">
+        <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-3">
+          A Visual Journey
+        </h2>
+        <p className="text-sm md:text-base opacity-60">Scroll to explore places in motion</p>
+      </div>
+
+      <div ref={containerRef} className="collage-container">
+        {DESKTOP_LAYOUT.map((l, index) => {
+          const media = currentMedia[index];
+          const ml = MOBILE_LAYOUT[index] || MOBILE_LAYOUT[0];
+          
+          return (
+            <motion.article
+              key={`card-${index}`}
+              onClick={() => handleCardClick(index)}
+              initial={{ opacity: 0, y: 40, rotate: (isPC ? l.r : ml.r) - 2 }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0, 
+                rotate: isPC ? l.r : ml.r,
+                transition: { duration: 0.8, delay: (isPC ? index * 0.1 : ml.delay), ease: "easeOut" }
+              }}
+              viewport={{ once: true, margin: "-10%" }}
+              className="collage-card group"
               style={{
-                backgroundImage: 'linear-gradient(90deg, var(--accent-primary, #4F7FF0) 0%, #8FB3FF 45%, var(--accent-primary, #4F7FF0) 100%)',
-                backgroundSize: '200% auto',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                animation: 'slideIt 5s linear infinite',
+                // General Props - Dynamic scaling based on viewport
+                '--w': isPC ? l.w : ml.w, 
+                '--h': isPC ? l.h : ml.h, 
+                '--x': ml.x,
+                '--t': l.t, '--l': l.l, '--z': l.z, 
+                // Platform-Specific Rotations
+                '--desktop-rot': `${l.r}deg`,
+                '--mobile-rot': `${ml.r}deg`,
               }}
             >
-              Journey Moodboard
-            </span>
-            <h2
-              className="font-heading text-[1.75rem] leading-[1.05] md:text-4xl lg:text-[3rem]"
-              style={{ letterSpacing: '-0.025em' }}
-            >
-              Places In Motion
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed opacity-50 md:mt-4 md:text-[15px] max-w-sm">
-              One destination at a time — a slow visual journey across India.
-            </p>
-          </div>
+              <MediaSwitcher src={media} isPlaying={isInView && allowHeavyMedia} />
 
-          <div className="flex items-end gap-4">
-            <div className="text-right">
-              <p className="text-[9px] uppercase tracking-[0.3em] opacity-35 mb-1">Now Showing</p>
-              <p className="font-heading text-xl md:text-2xl" style={{ letterSpacing: '-0.02em' }}>
-                {theTitleTxt}
-              </p>
-              <p
-                className="mt-0.5 text-[9px] uppercase tracking-[0.3em]"
-                style={{ color: 'var(--accent-primary, #4F7FF0)', opacity: 0.8 }}
-              >
-                {theRegTxt}
-              </p>
-            </div>
-            <div className="flex flex-col gap-[4px] pb-[2px]">
-              {placesData.map((dItem, iNum) => (
-                <span
-                  key={dItem.title}
-                  className="rounded-full block transition-all duration-500"
-                  style={{
-                    width:  '2px',
-                    height: iNum === bigOneIdx ? '22px' : '5px',
-                    backgroundColor:
-                      iNum === bigOneIdx
-                        ? 'var(--accent-primary, #4F7FF0)'
-                        : 'rgba(255,255,255,0.12)',
-                    boxShadow: iNum === bigOneIdx
-                      ? '0 0 6px rgba(79, 127, 240,0.6)'
-                      : 'none',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div
-          ref={bigDivRef}
-          className="noScrollClass relative flex w-full gap-4 md:gap-5 overflow-x-auto pb-4 lg:block lg:h-[620px] lg:overflow-visible"
-        >
-          {placesData.map((dItem2, idxNum) => {
-            const thisBoxId = currBoxArray[idxNum];
-            const sizeStr = boxSizes[thisBoxId]?.size ?? 'small';
-            const isBigOne = thisBoxId === 0;
-
-            return (
-              <article
-                key={dItem2.title}
-                data-mood-card-index={idxNum}
-                ref={(theNode) => { cardItemsRef.current[idxNum] = theNode; }}
-                className={[
-                  'group relative shrink-0 snap-center overflow-hidden rounded-2xl',
-                  'border bg-transparent',
-                  'h-[200px] w-[80vw] max-w-[280px]',
-                  'md:h-[240px] md:w-[320px] md:max-w-[320px]',
-                  'lg:mb-4 lg:h-auto lg:w-auto lg:max-w-none',
-                  'backdrop-blur-[1px]',
-                  'transition-[border-color,box-shadow] duration-500',
-                  isBigOne
-                    ? 'border-[rgba(79,127,240,0.42)] lg:hover:border-[rgba(79,127,240,0.7)]'
-                    : 'border-white/[0.14] lg:hover:border-white/35',
-                  'lg:hover:shadow-[0_18px_50px_rgba(8,15,34,0.45)]',
-                  idxNum > 4 ? 'hidden md:block lg:block' : '',
-                ].join(' ')}
-                style={{ willChange: 'transform, opacity, left, top, width, height' }}
-              >
-                <div className="absolute inset-0 transform-gpu">
-                  <ImageSwitcher
-                    images={dItem2.images}
-                    alt={dItem2.title}
-                    priority={isBigOne}
-                    advanceTick={tickNums[idxNum]}
-                    onImageClick={emptyClicks[idxNum]}
-                  />
-                </div>
-
-                <div
-                  className="pointer-events-none absolute inset-0 transition-all duration-500"
-                  style={{
-                    background:
-                      sizeStr === 'small'
-                        ? 'linear-gradient(to top, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.16) 42%, rgba(0,0,0,0) 78%)'
-                        : 'linear-gradient(to top, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0) 78%)',
-                  }}
-                />
-
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-2xl"
-                  style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}
-                />
-
-                <div
-                  className="absolute top-2.5 right-2.5 z-20 pointer-events-none
-                    w-7 h-7 rounded-full
-                    flex items-center justify-center
-                    bg-black/45 backdrop-blur-md
-                    border border-white/10
-                    group-hover:border-white/22 group-hover:bg-black/65
-                    transition-all duration-300"
-                >
-                  <SmallIconThing
-                    className="w-3 h-3 transition-colors duration-300"
-                    style={{ color: 'rgba(255,255,255,0.45)', transform: 'rotate(-10deg)' }}
-                  />
-                </div>
-
-                <div className="absolute top-3 left-3 z-20 flex gap-[5px] pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-400">
-                  {dItem2.images.map((_, imgN) => (
-                    <div
-                      key={imgN}
-                      className="rounded-full"
-                      style={{
-                        height: '2px',
-                        width:  imgN === 0 ? '14px' : '4px',
-                        backgroundColor:
-                          imgN === 0
-                            ? 'var(--accent-primary, #4F7FF0)'
-                            : 'rgba(255,255,255,0.18)',
-                      }}
-                    />
-                  ))}
-                </div>
-
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-10
-                    p-4 md:p-5
-                    group-hover:-translate-y-1 transition-transform duration-400
-                    bg-gradient-to-t to-transparent"
-                  style={{
-                    backgroundImage:
-                      sizeStr === 'small'
-                        ? 'linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0) 100%)'
-                        : 'linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0.42) 48%, rgba(0,0,0,0) 100%)',
-                  }}
-                >
-                  <div className="mb-1 flex items-center gap-2">
-                    <span
-                      className="h-[4px] w-[4px] rounded-full shrink-0"
-                      style={{ backgroundColor: 'var(--accent-primary, #4F7FF0)' }}
-                    />
-                    <span
-                      className="text-[8px] uppercase tracking-[0.45em] font-bold"
-                      style={{ color: 'var(--accent-primary, #4F7FF0)', opacity: 0.85 }}
+              {/* Audio Status Indicators */}
+              <div className="absolute top-4 right-4 z-30">
+                <AnimatePresence>
+                  {media?.type === 'video' && (
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className={`p-2 rounded-full backdrop-blur-md border border-white/20 ${media.isUnmuted ? 'bg-gold text-black' : 'bg-black/30 text-white/70 hover:bg-black/50'}`}
                     >
-                      {dItem2.region}
-                    </span>
-                  </div>
+                      {media.isUnmuted ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-                  <h3
-                    className={`font-heading leading-[1.1] text-white/95 ${textSizesObj[sizeStr]}`}
-                    style={{ letterSpacing: '-0.015em' }}
-                  >
-                    {dItem2.title}
-                  </h3>
-
-                  <p className="mt-1 text-[11px] md:text-xs leading-relaxed text-white/65 group-hover:text-white/80 transition-colors duration-300">
-                    {dItem2.tagline}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <div
-          className="mt-5 flex items-center justify-between"
-          style={{ opacity: 0.3, fontSize: '10px', letterSpacing: '0.25em', textTransform: 'uppercase' }}
-        >
-          <span>{placesData.length} destinations</span>
-          <span style={{ color: 'var(--accent-primary, #4F7FF0)' }}>India</span>
-        </div>
+              {/* Inner edge highlight */}
+              <div
+                className="pointer-events-none absolute inset-0 rounded-[inherit] z-20"
+                style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}
+              />
+            </motion.article>
+          );
+        })}
       </div>
     </section>
   );
 };
 
-export default CoolMoodboardComponent;
+export default CinematicMoodboard;
 

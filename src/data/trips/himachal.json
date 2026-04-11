@@ -1,0 +1,648 @@
+[
+  {
+    "title": "11 Days / 10 Nights",
+    "price": "starting from 31400 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Delhi to Shimla",
+        "activities": [
+          "Board your overnight Volvo bus from Delhi and start the scenic drive towards the hills of Himachal Pradesh.",
+          "Enjoy the journey as the route gradually changes from plains to winding mountain roads surrounded by pine forests and beautiful Himalayan landscapes.",
+          "Overnight journey to Shimla."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Shimla Sightseeing",
+        "activities": [
+          "Pick up from Shimla, after check- In formalities, take Breakfast and rest.",
+          "Ready to explore Shimla",
+          "Shimla is the capital city of Himachal Pradesh, Shimla is one of the most popular hill stations in India and is frequented by millions of tourists every year. It is one of the few hill stations in India which are home to UNESCO World Heritage Sites and beautiful hills, also known as Queen of Hills.",
+          "You will visit today's second oldest church in north India Christ Church, Green Valley, Jakhoo Hills, Jakhu Temple, Explore local Mall Road in the evening and enjoy Cafe hopping with a beautiful view of Queen of Hills.",
+          "Back to the hotel in the evening for dinner and an overnight stay at Shimla Hotel."
+        ],
+        "highlight": "Christ Church, Green valley, Jakhoo Hills, Jakhoo Temple, local market spree"
+      },
+      {
+        "day": 3,
+        "title": "Shimla \u2013 Kufri Excursion",
+        "activities": [
+          "Post Breakfast and move to explore Kufri, Kufri is one the beautiful places in the Suburb famous for snow in winter time.",
+          "This morning after breakfast at the hotel you will leave for sightseeing at Kufri and other tourist spots like Green Valley, Indira tourist park, Himalayan Nature Park at Chini Bungalow and Fagu Valley. After completing the excursion you will return back to the hotel for dinner and an overnight stay in Shimla."
+        ],
+        "highlight": "Green valley, Indira tourist park, Himalayan Nature park, Fagu valley"
+      },
+      {
+        "day": 4,
+        "title": "Shimla to Manali \u2013 Transfer via Kullu",
+        "activities": [
+          "After breakfast, check out from the hotel and drive to Manali.",
+          "Enjoy a scenic drive through the beautiful Kullu Valley, known for its lush greenery and river views.",
+          "En route enjoy views of the Beas River and visit a local shawl factory in Kullu (optional).",
+          "Upon arrival in Manali, check in to the hotel and relax.",
+          "Dinner and overnight stay in Manali."
+        ],
+        "highlight": "Mall road exploration"
+      },
+      {
+        "day": 5,
+        "title": "Manali Local Sightseeing",
+        "activities": [
+          "After a delicious breakfast, start exploring Manali",
+          "Breakfast at the hotel.",
+          "Visit Hadimba Devi Temple, a famous wooden temple surrounded by cedar forests.",
+          "Visit Vashisht Temple, known for its natural hot water springs.",
+          "Explore Manu Temple and nearby attractions.",
+          "Spend the evening at Mall Road for shopping and caf\u00e9 hopping.",
+          "Dinner and overnight stay in Manali."
+        ],
+        "highlight": "Hadimba Devi Temple, manu Temple, mall road, cafe hopping"
+      },
+      {
+        "day": 6,
+        "title": "Manali \u2013 Solang Valley Excursion",
+        "activities": [
+          "After breakfast, proceed to Solang Valley, located about 13 km from Manali.",
+          "Enjoy breathtaking views of snow-covered peaks and glaciers.",
+          "Experience adventure activities such as: Paragliding, Zorbing, Snow scooter rides, Ropeway rides, Skiing during winter",
+          "Return to Manali in the evening.",
+          "Dinner and overnight stay in Manali.",
+          "Highlights of the Day: Solang valley, Paragliding, Zorbing, scooter rides, Ropeway rides, Skiing during winter"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Manali to McLeod Ganj \u2013 Transfer",
+        "activities": [
+          "Breakfast at the hotel and check out.",
+          "Begin the journey to McLeod Ganj, the spiritual center of Tibetan culture and residence of the Dalai Lama.",
+          "Enjoy the scenic drive through the Himalayan foothills.",
+          "Upon arrival, check in to the hotel and relax.",
+          "Evening at leisure to explore local caf\u00e9s and markets.",
+          "Dinner and overnight stay in McLeod Ganj."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "McLeod Ganj and Dharamshala Sightseeing",
+        "activities": [
+          "After breakfast at your hotel, begin the day exploring the scenic and spiritual attractions of McLeod Ganj and Dharamshala.",
+          "Visit the Dalai Lama Temple Complex, an important center of Tibetan Buddhism known for its peaceful surroundings and prayer halls.",
+          "Explore the nearby Namgyal Monastery, the personal monastery of the Dalai Lama, where monks can often be seen engaged in prayers and rituals.",
+          "Continue to Bhagsu Nag Temple, a revered temple dedicated to Lord Shiva, followed by a short walk to the scenic Bhagsu Waterfall.",
+          "Later, visit St. John in the Wilderness Church and the peaceful Dal Lake surrounded by tall deodar trees.",
+          "You will also pass by the Himachal Pradesh Cricket Association Stadium, one of the most scenic cricket stadiums in the world, set against the backdrop of the Dhauladhar mountains.",
+          "In the evening, explore the vibrant markets and caf\u00e9s of McLeod Ganj, known for Tibetan handicrafts and scenic mountain views.",
+          "Return to the hotel for dinner and an overnight stay in Dharamshala."
+        ],
+        "highlight": "Dalai Lama Temple, Namgyal Monastery, Bhagsu Nag Temple, Bhagsu Waterfall, St. John in the Wilderness Church, Dharamshala Cricket Stadium, shopping Spree, Cafe hopping."
+      },
+      {
+        "day": 9,
+        "title": "Dharamshala to Dalhousie \u2013 Transfer",
+        "activities": [
+          "After breakfast at your hotel in Dharamshala, check out and begin your drive to Dalhousie, a charming hill station known for its colonial architecture and serene mountain landscapes.",
+          "Enjoy a picturesque drive through winding mountain roads, lush valleys, and dense pine forests.",
+          "En route or after arrival, visit Kalatop Wildlife Sanctuary, a beautiful forest reserve known for its deodar trees, rich wildlife, and stunning views of the surrounding mountains. You can enjoy a short nature walk and experience the peaceful environment of this Himalayan sanctuary.",
+          "Upon arrival in Dalhousie, check in to your hotel and relax for a while.",
+          "In the evening, you may explore the local markets of Dalhousie or take a leisurely walk along the charming hill station roads.",
+          "Dinner and overnight stay in Dalhousie."
+        ],
+        "highlight": "Kalatop wildlife sanctuary"
+      },
+      {
+        "day": 10,
+        "title": "Dalhousie \u2013 Khajjiar \u2013 Dharamshala \u2013 Delhi",
+        "activities": [
+          "Breakfast at the hotel.",
+          "Visit Khajjiar, famously called the Mini Switzerland of India.",
+          "Explore Khajjiar Lake surrounded by lush green meadows and cedar forests.",
+          "Enjoy activities like horse riding and nature walks.",
+          "Later drive back to Dharamshala and begin your overnight journey to Delhi."
+        ],
+        "highlight": "Khajjiar day-exploration"
+      },
+      {
+        "day": 11,
+        "title": "Delhi Arrival",
+        "activities": [
+          "Reach Delhi next day in the morning.",
+          "Your trip ends here."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "8 Days / 7 Nights",
+    "price": "starting from 25000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Delhi to Manali \u2013 Overnight Journey",
+        "activities": [
+          "Pick up from the Airport or Railway Station in Delhi.",
+          "Begin your scenic journey towards Manali through the plains of North India and the winding Himalayan roads.",
+          "Enjoy the overnight drive as the landscape gradually changes from city views to beautiful mountain valleys."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Manali Local Sightseeing",
+        "activities": [
+          "Reach Manali in the morning and check in to the hotel. Take breakfast / brunch and relax.",
+          "Later begin sightseeing with a visit to Hadimba Devi Temple, surrounded by tall cedar forests.",
+          "Visit Manu Temple located in Old Manali and explore the charming streets of the area.",
+          "In the evening stroll along Mall Road, explore local markets and enjoy caf\u00e9 hopping.",
+          "Return to the hotel for dinner and overnight stay in Manali."
+        ],
+        "highlight": "Hadimba Temple, Manu Temple, Old Manali, Mall Road"
+      },
+      {
+        "day": 3,
+        "title": "Manali to Solang Valley Excursion (Approx. 13 Km)",
+        "activities": [
+          "This day after breakfast proceed to Solang Valley the; snow point in Manali. After breakfast, proceed to Solang Valley, the famous snow and adventure point near Manali.",
+          "Enjoy stunning views of snow-capped peaks and glaciers.",
+          "Solang Valley is popular for skiing during winters and adventure activities during summers.",
+          "Activities available (at extra cost): Paragliding, Zorbing, Ropeway ride, Snow scooters and horse riding.",
+          "Return to Manali in the evening. Dinner and overnight stay in Manali."
+        ],
+        "highlight": "Solang Valley, snow point, adventure activities"
+      },
+      {
+        "day": 4,
+        "title": "Manali to Kasol \u2013 Transfer & Kasol Sightseeing",
+        "activities": [
+          "After breakfast check out and drive to Kasol, located in the scenic Parvati Valley.",
+          "Check-in to your hotel and relax.",
+          "Visit Manikaran Sahib, famous for its hot springs and religious significance.",
+          "Later enjoy the Chalal village hike along the Parvati River and explore Kasol market with caf\u00e9 hopping.",
+          "Dinner and overnight stay in Kasol."
+        ],
+        "highlight": "Manikaran Sahib, Chalal hike, Kasol caf\u00e9s"
+      },
+      {
+        "day": 5,
+        "title": "Kasol to Jibhi \u2013 Transfer",
+        "activities": [
+          "After breakfast, drive towards Jibhi, a peaceful village surrounded by pine forests.",
+          "Enjoy the scenic mountain drive and beautiful valley views.",
+          "On arrival check in to the hotel / campsite and relax.",
+          "Later visit the charming Jibhi Waterfall and explore the quiet village surroundings.",
+          "Dinner and overnight stay in Jibhi."
+        ],
+        "highlight": "Scenic drive, Jibhi village, Jibhi waterfall"
+      },
+      {
+        "day": 6,
+        "title": "Jibhi Excursion to Serolsar Lake",
+        "activities": [
+          "After breakfast, drive to Jalori Pass (3120 m).",
+          "From here begin the trek to Serolsar Lake through dense oak and pine forests.",
+          "The trek offers beautiful views of Himalayan meadows and forests.",
+          "Spend some peaceful time at the lake before returning to Jibhi.",
+          "Dinner and overnight stay in Jibhi."
+        ],
+        "highlight": "Jalori Pass, Serolsar Lake trek"
+      },
+      {
+        "day": 7,
+        "title": "Jibhi to Chandigarh \u2013 Transfer",
+        "activities": [
+          "After breakfast check out and drive towards Chandigarh.",
+          "Enjoy the scenic journey as the mountains gradually give way to the plains.",
+          "Reach Chandigarh by evening and check in to the hotel.",
+          "Dinner and overnight stay in Chandigarh."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Sukhna Lake Visit & Chandigarh to Delhi \u2013Departure day",
+        "activities": [
+          "After breakfast check out and visit the beautiful Sukhna Lake.",
+          "Enjoy lakeside views and optional boating.",
+          "Later begin the drive towards Delhi.",
+          "Drop at Delhi Airport or Railway Station for your onward journey.",
+          "Your trip ends here with beautiful memories of the mountains."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "5 Days / 4 Nights",
+    "price": "starting from 14000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Delhi to Shimla",
+        "activities": [
+          "Meet at RK Ashram/Majnu ka Tila and overnight travel to Shimla by AC Volvo bus."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Shimla Sightseeing",
+        "activities": [
+          "Pick up from Shimla, after check- In formalities take Breakfast and rest.",
+          "Ready to explore Shimla",
+          "Shimla is the capital city of Himachal Pradesh, Shimla is one of the most popular hill stations in India and is frequented by millions of tourists every year. It is one of the few hill stations in India which are home to UNESCO World Heritage Sites and beautiful hills, also known as Queen of Hills.",
+          "You will visit today's second oldest church in north India Christ Church, Green Valley, Jakhoo Hills, Jakhu Temple, Explore local Mall Road in the evening and enjoy Cafe hopping with a beautiful view of Queen of Hills.",
+          "Back to the hotel in the evening for dinner and an overnight stay at the Shimla Hotel."
+        ],
+        "highlight": "Christ Church, Green Valley, Jakhoo Hills, Jakhu Temple, Cafe hopping and local market exploration"
+      },
+      {
+        "day": 3,
+        "title": "Shimla to Naldehra Transfer",
+        "activities": [
+          "On arrival after check-in formalities. Start your day with a natural walk of Naldhera. later you will visit the oldest golf course in India - The Golf Course Naldehra and Mahu Nath Temple. One can enjoy Ski activity over here(At your own).",
+          "In the evening come back to your stay. Enjoy a delicious dinner and overnight stay in your Naldehra hotel."
+        ],
+        "highlight": "The Golf Course- Naldehra, Mahu Nath Temple"
+      },
+      {
+        "day": 4,
+        "title": "Kufri Sightseeing",
+        "activities": [
+          "Post Breakfast and move to explore Kufri, Kufri is one the beautiful places in the Suburb famous for snow in winter time.",
+          "This morning after breakfast at the hotel you will leave for sightseeing at Kufri and other tourist spots like Green Valley, Indira tourist park, Himalayan Nature Park at Chini Bungalow and Fagu Valley. After completing the excursion you will depart to Shimla Volvo Station. Overnight journey to Delhi."
+        ],
+        "highlight": "Green Valley, Indira tourist park, Himalayan Nature Park"
+      },
+      {
+        "day": 5,
+        "title": "Delhi Arrival",
+        "activities": [
+          "Reach Delhi by early morning."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "starting from 21500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Day 1",
+        "activities": [
+          "Arrival in Amritsar | Visit the famous Wagah Border"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Day 2",
+        "activities": [
+          "Amritsar to Dalhousie | Sightseeing Tour of Amritsar"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Day 3",
+        "activities": [
+          "Excursion to Khajjiar | Explore the Mini Switzerland of India"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Day 4",
+        "activities": [
+          "Dalhousie to Dharamshala | The Holy Residence of Dalai Lama"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Day 5",
+        "activities": [
+          "Sightseeing in Mcleod Ganj | Visit the Revered Bhagsunath Temple"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Day 6",
+        "activities": [
+          "Dharamshala to Amritsar | Departure",
+          "[11:10 am, 10/04/2026] Design Your India: Day 1",
+          "Arrival in Amritsar | Visit the famous Wagah Border",
+          "Upon your arrival in Amritsar, driver will pick you up from a pre-decided location and transfer you to your hotel. Check in and get ready for a visit to Wagah Border. Enjoy the famous Beating Retreat ceremony. After your visit, get transferred back to your hotel. You can also explore the local neighborhood and shop for some souvenirs. Have an overnight stay in Amritsar.",
+          "[11:10 am, 10/04/2026] Design Your India: Day 2",
+          "Amritsar to Dalhousie | Sightseeing Tour of Amritsar",
+          "Post check-out, the driver will take you on a sightseeing tour of Amritsar. Visit the famous Golden Temple. Then, visit Durgiana Temple dedicated to the goddess Durga. Continue to the famous Jallianwala Bagh and pay your respects to the victims of the Jallianwala Bagh massacre. Then, shop for some authentic Punjabi handicrafts and artifacts at the Hall Bazaar. Post sightseeing, get transferred to Dalhousie for an overnight stay.",
+          "[11:10 am, 10/04/2026] Design Your India: Day 3",
+          "Excursion to Khajjiar | Explore the Mini Switzerland of India",
+          "Driver will pick you up from your hotel and take you on an excursion to Khajjiar. On the way, take a stop at Kalatop and admire the picturesque views of the valley. Afterward, head to Khajjiar, also known as the Mini Switzerland of India and visit the renowned Khajjiar Lake and Khajji Nag Temple. Post your excursion, get transferred back to your hotel in Dalhousie for an overnight stay.",
+          "[11:10 am, 10/04/2026] Design Your India: Day 4",
+          "Dalhousie to Dharamshala | The Holy Residence of Dalai Lama",
+          "Post check-out, the driver will transfer you to your hotel in Dharamshala. Check in at the hotel and get ready for a sightseeing tour of Dharamshala. Visit the beautiful Dharamshala Cricket Stadium. Next, visit the Norbulinka Institute & see traditional Tibetan arts and crafts on display. Later, honor the country's heroes at the Dharamshala War Memorial. After sightseeing, get transferred back to your hotel for an overnight stay in Dharamshala.",
+          "[11:10 am, 10/04/2026] Design Your India: Day 5",
+          "Sightseeing in Mcleod Ganj | Visit the Revered Bhagsunath Temple",
+          "Driver will pick you from the hotel and take you to McLeod Ganj for sightseeing. Explore Naddi Village and have a great time by the beautiful Dal Lake. Then, visit the beautiful St. John Church amidst a lush deodar forest. Later, visit the famous Bhagsunath Temple dedicated to lord Shiva and Bhagsunath waterfall. Afterward, return to Dharamshala & visit the Tibetan Monastery. Later get dropped to your hotel for overnight stay in Dharamshala.",
+          "[11:10 am, 10/04/2026] Design Your India: Day 6",
+          "Dharamshala to Amritsar | Departure",
+          "Post check-out the driver will pick you up from the hotel and transfer you to Amritsar where your trip comes to an end.",
+          "[11:10 am, 10/04/2026] Design Your India: Inclusions:",
+          "\u2794 Accommodation in Hotel as per the variant selected",
+          "\u2794 Buffet breakfast and dinner on all days",
+          "\u2794 Highly-Experienced driver cum guide",
+          "\u2794 Sightseeing as per itinerary",
+          "\u2794 All toll tax, parking, fuel and driver allowances",
+          "\u2794 All applicable taxes",
+          "\u2794 Comfortable and hygienic vehicle (SUV) for sightseeing on all days as per the itinerary"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "starting from 25000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "DAY 01 | Chandigarh \u2192 Manali",
+        "activities": [
+          "Morning pickup from Chandigarh",
+          "Scenic drive via Bilaspur \u2013 Mandi",
+          "Evening leisure / Mall Road",
+          "Overnight stay in Manali"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "DAY 02 | Manali \u2192 Jispa (via Atal Tunnel)",
+        "activities": [
+          "Breakfast & check-out",
+          "Drive through Atal Tunnel",
+          "Enter Lahaul Valley",
+          "Scenic stops en route",
+          "Arrival at Jispa",
+          "Overnight stay in Jispa",
+          "jispa \u2192 Bara Lacha La / Shinkula \u2192 Udaipur \u2192 Manali",
+          "Early morning departure",
+          "High-altitude day excursion to:",
+          "Bara Lacha La Pass or",
+          "Shinkula Top (as per road & weather)",
+          "On return:",
+          "Visit Udaipur (Trilokinath area)",
+          "Udaipur Mata Temple",
+          "Drive back to Manali",
+          "Overnight stay in Manali",
+          "Pass visit strictly subject to weather & BRO clearance"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "DAY 04 | Manali \u2192 Kasol",
+        "activities": [
+          "Breakfast & check-out",
+          "Drive to Kasol",
+          "En-route sightseeing:",
+          "Kullu Shawl Factory",
+          "Manikaran Sahib (Gurudwara & hot springs)",
+          "Evening free near Parvati River",
+          "Overnight stay in Kasol"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "DAY 05 | Kasol \u2192 Jibhi",
+        "activities": [
+          "Morning at leisure",
+          "Drive to Jibhi via Banjar Valley",
+          "Evening relaxation / riverside walk",
+          "Overnight stay in Jibhi"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "DAY 06 | Jibhi Sightseeing",
+        "activities": [
+          "Visit:",
+          "Jibhi Waterfall",
+          "Mini Thailand",
+          "Optional: Jalori Pass (if open)",
+          "Leisure evening in nature",
+          "Overnight stay in Jibhi"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "DAY 07 | Jibhi \u2192 Chandigarh (Drop)",
+        "activities": [
+          "Morning check-out",
+          "Scenic drive back to Chandigarh",
+          "Arrival by evening",
+          "Tour ends with mountain memories"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "10 Days / 9 Nights",
+    "price": "starting from 28100 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Delhi to Manali - (14hr Journey 541km)",
+        "activities": [
+          "Meet at RK Ashram/ Majnu ka Tila at 7 PM and drive to Manali by AC Volvo bus",
+          "Overnight Travel"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Reach Manali. Manali Sightseeing",
+        "activities": [
+          "Reach Manali in the morning and check in to your hotel have Breakfast and explore Manali",
+          "Hadimba Temple",
+          "Manu Temple",
+          "Mall Road",
+          "Cafe hopping",
+          "Back to hotel for dinner and overnight stay"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Manali to Solang Valley",
+        "activities": [
+          "This day after breakfast proceed to Solang Valley the Snow point in Manali. You can enjoy the various adventure sports activities there. In the evening, back to the hotel Dinner and overnight stay.",
+          "Sightseeing for the day:",
+          "Solang Valley",
+          "Ski Village",
+          "Various adventure activities up to you (On extra charges)",
+          "Paragliding",
+          "Zorbing",
+          "Snow scooters",
+          "Ropeway"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Manali to Kasol. Night stay at Kasol",
+        "activities": [
+          "Post Breakfast Check out and drive to Kasol (3hr drive)",
+          "Check in to your camps and relax.",
+          "Back to Camps for Dinner and Overnight Stay."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Kasol to Malana",
+        "activities": [
+          "Post Breakfast Check out and drive to Malana (2hr drive)",
+          "Explore Malana Village",
+          "Back to camps for dinner and overnight stay"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Tosh Sightseeing",
+        "activities": [
+          "Post Breakfast Check out and drive to Tosh.",
+          "Check in to your Homestay and explore Tosh and do Hike.",
+          "Leisure time in the evening.",
+          "Back to Homestay for dinner and overnight stay."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Tosh to Shimla",
+        "activities": [
+          "Post Breakfast Check out and drive to Shimla (10hr drive)",
+          "Check in to your hotel for dinner and overnight stay."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Shimla Sightseeing",
+        "activities": [
+          "Post Breakfast Ready to explore Shimla",
+          "Christ Church",
+          "Mall Road",
+          "Cafe hopping",
+          "Leisure time in the evening back to hotel for dinner and overnight stay"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 9,
+        "title": "Shimla to Kufri, Return to Delhi",
+        "activities": [
+          "Post Breakfast Check out from Hotel and move to explore Kufri, Kufri is one the beautiful places in Suburb famous for snow in winter time.",
+          "In evening Return to Delh by Volvo Overnight Journey."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 10,
+        "title": "Reach Delhi",
+        "activities": [
+          "Reach Delhi by Early Morning."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "starting from 16000 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Delhi to Manali \u2013 Overnight Travel",
+        "activities": [
+          "Board the Volvo bus from Majnu Ka Tila for an overnight journey to Manali.",
+          "Enjoy the scenic drive through the plains and hills as you head towards Himachal Pradesh.",
+          "Overnight travel by Volvo bus to Manali."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 1,
+        "title": "Manali pick-up and overnight stay",
+        "activities": [
+          "Arrive in Manali and get picked up from the designated location.",
+          "Check in to your accommodation and freshen up.",
+          "Spend the day exploring Mall Road and enjoy caf\u00e9 hopping in Manali.",
+          "You will stay overnight at a hotel in Manali.",
+          "Highlights of the Day: Mall road exploration, Cafe Hopping"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Manali \u2013 Rohtang Pass \u2013 Sissu \u2013 Return to Manali",
+        "activities": [
+          "Depart from Manali in the morning towards Rohtang Pass.",
+          "Enjoy the breathtaking scenery and make a stop at Sissu village.",
+          "Return to Manali in the evening after sightseeing.",
+          "You will stay overnight at a hotel in Manali.",
+          "Highlights of the Day: Sissu village"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Manali \u2013 Keylong \u2013 Jispa",
+        "activities": [
+          "Leave Manali and head towards Jispa, passing through stunning landscapes.",
+          "En route, stop at Keylong and Sissu to explore the beauty of the region.",
+          "Arrive in Jispa and check in to your accommodation.",
+          "You will stay overnight at a hotel/camp in Jispa."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Jispa \u2013 Deepak Tal \u2013 Suraj Tal \u2013 Baralacha Pass \u2013 Return to Manali",
+        "activities": [
+          "Start early for a scenic trip to Deepak Tal, Suraj Tal, and Baralacha Pass.",
+          "Enjoy the breathtaking views and take memorable photographs.",
+          "Return to Manali in the evening.",
+          "You will stay overnight at a hotel in Manali. Note: Baralacha Pass visit is subject to weather conditions.",
+          "Highlights of the Day: Deepak Tal, Suraj Tal, and Baralacha Pass"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Manali \u2013 Local Leisure \u2013 Depart for Delhi",
+        "activities": [
+          "After breakfast, check out from your hotel.",
+          "Spend the day at leisure exploring local markets, enjoying caf\u00e9 hopping, and shopping.",
+          "In the evening, board the Volvo bus for an overnight journey back to Delhi.",
+          "Overnight travel by Volvo bus to Delhi."
+        ],
+        "highlight": ""
+      }
+    ]
+  }
+]

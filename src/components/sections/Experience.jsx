@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getDeliveredImageUrl } from '../../utils/mediaDelivery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,9 +13,9 @@ const experienceScenes = [
     objectPosition: 'center 62%',
   },
   {
-    title: 'Private desert safari in Rajasthan',
-    desc: 'Golden dunes, quiet service, and long stretches of stillness reserved entirely for you.',
-    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1800&auto=format&fit=crop',
+    title: 'Connect with village artisans and traditions',
+    desc: 'Handpicked visits to local craftspeople, authentic family dinners, and immersive moments that reveal the real heartbeat of India.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Kaza_-_Losar_Entry_point.jpg/1280px-Kaza_-_Losar_Entry_point.jpg',
     objectPosition: 'center center',
   },
   {
@@ -32,8 +33,8 @@ const experienceScenes = [
 ];
 
 const benefits = [
-  'You’ll never follow a fixed itinerary again',
-  'Experiences not available to the public',
+  'Exclusively yours—no shared groups, no fixed schedules, only you and your preferred companions',
+  'Handpicked experiences and accommodations, including authentic local and cultural immersions not available to the public',
 ];
 
 const Experience = () => {
@@ -134,6 +135,10 @@ const Experience = () => {
           >
             {experienceScenes.map((scene, index) => {
               const isActive = index === activeScene;
+              const totalScenes = experienceScenes.length;
+              const previousScene = (activeScene - 1 + totalScenes) % totalScenes;
+              const nextScene = (activeScene + 1) % totalScenes;
+              const shouldLoadScene = isActive || index === previousScene || index === nextScene || index === 0;
 
               return (
                 <div
@@ -144,8 +149,18 @@ const Experience = () => {
                   }`}
                 >
                   <img
-                    src={scene.image}
+                    src={shouldLoadScene ? getDeliveredImageUrl(scene.image, { width: 1600, quality: 70, format: 'webp' }) : undefined}
                     alt={isActive ? scene.title : ''}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : 'low'}
+                    decoding="async"
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    onError={(event) => {
+                      const target = event.currentTarget;
+                      if (target.dataset.fallbackApplied === '1') return;
+                      target.dataset.fallbackApplied = '1';
+                      target.src = scene.image;
+                    }}
                     className={`h-full w-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isActive ? 'scale-100' : 'scale-[1.04]'
                     }`}

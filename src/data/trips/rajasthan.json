@@ -1,0 +1,662 @@
+[
+  {
+    "title": "12 Days / 11 Nights",
+    "price": "starting from 36500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrival in Jaipur \u2013 The Pink City Welcomes You",
+        "activities": [
+          "Arrive in Jaipur, where tradition meets modernity.",
+          "After check-in, spend your day at leisure. In the evening, explore the local markets\u2014a vibrant mix of handcrafted mojris, block-printed textiles, lac jewelry, and spicy street food.",
+          "Highlight: Immersive walk through Jaipur\u2019s bustling bazaars"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Jaipur Sightseeing \u2013 Amber Fort & Royal Marvels",
+        "activities": [
+          "Begin your day with a visit to the majestic Amber Fort, known for its Sheesh Mahal, Ganesh Pol, and Maota Lake views.",
+          "Continue to the Hawa Mahal, a five-story pink sandstone marvel built for royal women to observe street life.",
+          "Explore the Jal Mahal, floating serenely in Man Sagar Lake, and the Jantar Mantar, a UNESCO-listed astronomical observatory.",
+          "End with Jaigarh Fort, home to the world\u2019s largest cannon on wheels.",
+          "Highlight: Amber Fort\u2019s light & sound show and mirror palace"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Jaipur to Bikaner via Junagarh Fort",
+        "activities": [
+          "Drive to Bikaner, a city known for its camel breeding and red sandstone architecture.",
+          "Visit the Junagarh Fort, an unconquered fortress with ornate palaces like Anup Mahal and Phool Mahal.",
+          "Explore the Lalgarh Palace, a fusion of Rajput, Mughal, and European styles, and the Karni Mata Temple, famous for its sacred rats.",
+          "End with a stroll through Gajner Palace, nestled beside a tranquil lake.",
+          "Highlight: Junagarh Fort\u2019s undefeated legacy and intricate interiors"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Bikaner to Jaisalmer \u2013 Jaisalmer Fort Sightseeing",
+        "activities": [
+          "Travel to Jaisalmer, the golden city rising from the Thar Desert.",
+          "Visit the iconic Jaisalmer Fort (Sonar Quila), built in 1156 AD by Rawal Jaisal. With 99 bastions and golden sandstone walls, it glows at sunset.",
+          "Inside, explore Raj Mahal, Jain Temples, and merchant havelis.",
+          "Highlight: Sunset views from the ramparts of Jaisalmer Fort"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Jaisalmer City Tour",
+        "activities": [
+          "Start with Bada Bagh, a royal cenotaph garden offering stunning sunrise views.",
+          "Visit Gadisar Lake, a historic reservoir surrounded by temples and ghats\u2014perfect for a boat ride.",
+          "Explore the Jain Temples inside the fort, known for their Dilwara-style carvings.",
+          "End your day with local market browsing for embroidered textiles and mirror work.",
+          "Highlight: Boat ride on Gadisar Lake and Jain temple carvings"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Jaisalmer to Jodhpur \u2013 Mehrangarh Fort Visit",
+        "activities": [
+          "Drive to Jodhpur, the gateway to Marwar.",
+          "Visit the imposing Mehrangarh Fort, perched on a rocky hill and housing palaces like Moti Mahal, Phool Mahal, and Sheesh Mahal.",
+          "Nearby, explore Jaswant Thada, a white marble memorial with peaceful gardens and lake views.",
+          "Highlight: Mehrangarh Fort\u2019s panoramic views and museum treasures"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Jodhpur to Udaipur via Kumbhalgarh Fort",
+        "activities": [
+          "En route to Udaipur, stop at Kumbhalgarh Fort, birthplace of Maharana Pratap. Its 36-km-long wall is second only to the Great Wall of China.",
+          "Visit Badal Mahal, known for its cloud-painted interiors and hilltop views.",
+          "Arrive in Udaipur; check in and take rest.",
+          "Highlight: Walking the mighty wall of Kumbhalgarh Fort"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Udaipur City Tour | City Palace",
+        "activities": [
+          "Begin with City Palace, a sprawling complex of 11 palaces with balconies, courtyards, and museums.",
+          "Visit Sajjangarh (Monsoon Palace) for panoramic views, and the Vintage Car Museum for royal rides.",
+          "Explore Jag Mandir, a marble palace on Lake Pichola, and enjoy a sunset boat ride.",
+          "Highlight: Sunset cruise on Lake Pichola with palace views"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 9,
+        "title": "Chittorgarh Day Trip",
+        "activities": [
+          "Take a day trip to Chittorgarh Fort, India\u2019s largest fort complex.",
+          "Visit Vijay Stambha, Kirti Stambha, and Rani Padmini\u2019s Palace, each echoing tales of sacrifice and bravery.",
+          "Return to Udaipur by evening.",
+          "Highlight: Standing beneath the Victory Tower and reliving Rajput legends"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 10,
+        "title": "Udaipur to Bundi | Taragarh Fort Sightseeing",
+        "activities": [
+          "Drive to Bundi, a hidden gem known for its murals and stepwells.",
+          "Visit Taragarh Fort, perched above the town, and Garh Palace, adorned with frescoes.",
+          "Relax by Nawal Sagar Lake, a peaceful spot reflecting Bundi\u2019s charm.",
+          "Highlight: Discovering Bundi\u2019s untouched artistic legacy"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 11,
+        "title": "Bundi to Jaipur via Bhangarh Fort",
+        "activities": [
+          "Return to Jaipur with a stop at Bhangarh Fort, one of India\u2019s most haunted sites. Explore its ruins, temples, and eerie silence.",
+          "Check in at Jaipur for your final night.",
+          "Highlight: Exploring the haunted legends of Bhangarh Fort"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 12,
+        "title": "Departure from Jaipur",
+        "activities": [
+          "After breakfast, check out and transfer to Jaipur Airport or Railway Station.",
+          "Depart with unforgettable memories of Rajasthan\u2019s royal grandeur."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "6 Days / 5 Nights",
+    "price": "starting from 18500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Day 1",
+        "activities": [
+          "Arrival in Jaipur | Welcome to the Pink City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Day 2",
+        "activities": [
+          "Local Sightseeing of Jaipur | Explore the heritage city"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Day 3",
+        "activities": [
+          "Jaipur to Jodhpur | Welcome to the Blue City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Day 4",
+        "activities": [
+          "Jodhpur to Udaipur | Via the Marble Jain Temple of Ranakpur"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Day 5",
+        "activities": [
+          "Udaipur Local Sightseeing | Explore the city of Lakes and Palaces"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Day 6",
+        "activities": [
+          "Departure | Head back home with a plethora of memories",
+          "[10:30 am, 10/04/2026] Design Your India: Day 1",
+          "Arrival in Jaipur | Welcome to the Pink City",
+          "Meet a representative at a pre-decided location in Jaipur.",
+          "Get transferred to your pre-booked hotel where you can check-in and relax for some time.",
+          "You can start with the short stopover at the iconic Hawa Mahal which is a symbol of Jaipur and then check on time at the world's biggest sundial in Jantar Mantar (Observatory).",
+          "Visit the current residence of the royal family - The City Palace and Museum that displays the weaponry and handlooms that were used by the royal family.",
+          "In evening, visit Govind Dev Ji Temple and Local Market.",
+          "Return back to hotel for overnight stay.",
+          "[10:30 am, 10/04/2026] Design Your India: Day 2",
+          "Local Sightseeing of Jaipur | Explore the heritage city",
+          "After breakfast start a full day of local sightseeing in Jaipur.",
+          "You can then visit the Jaigarh Fort that houses one of the biggest cannons and the Nahargarh Fort from where you can enjoy stunning views of the city..",
+          "Take a photo stop at Jal Mahal to get some amazing clicks in a traditional Indian attire.",
+          "You can also visit Birla Temple, a temple made with shimmering white marble and carved with various mythological events.",
+          "Return back to the hotel for an overnight stay at Jaipur.",
+          "[10:30 am, 10/04/2026] Design Your India: Day 3",
+          "Jaipur to Jodhpur | Welcome to the Blue City",
+          "Enjoy a delicious breakfast in the morning and then check out of the hotel.",
+          "Continue your drive towards Jodhpur. You will reach there by afternoon and check-in.",
+          "Proceed towards the mighty Mehrangarh Fort that sits above a hill and is visible from throughout the city.",
+          "You\u2019ll also visit the \u201cTaj Mahal of Marwar\u201d, Jaswant Thada that is made up ou white marble sheets.",
+          "In the evening, you can also visit the market at Ghanta Ghar.",
+          "Head back to the hotel for an overnight stay in Jodhpur.",
+          "[10:30 am, 10/04/2026] Design Your India: Day 4",
+          "Jodhpur to Udaipur | Via the Marble Jain Temple of Ranakpur",
+          "After breakfast check out from the hotel and drive for Udaipur - The City of Lakes",
+          "En-route visit Ranakpur Chaumukha Marble Temple with 29 halls supported by 1444 pillars and an architectural wonder.",
+          "Visit Sahelion-ki-Bari, a greenhouse built for ladies who went with princess after marrying Maharana Sangram Singh.",
+          "After strolling through the garden with a variety of roses and getting face to face with rare animals at the zoo you will head towards the Fateh Sagar Lake.",
+          "In evening, visit Under the Sun Aquarium where you can see various colourful fishes.",
+          "Head to hotel for an overnight stay in Udaipur.",
+          "[10:30 am, 10/04/2026] Design Your India: Day 5",
+          "Udaipur Local Sightseeing | Explore the city of Lakes and Palaces",
+          "Enjoy a delicious breakfast and get ready for a city tour.",
+          "Further, visit the City Palace, & admire architecture with mirrored walls, ivory doors & windows with colored glasses,",
+          "You will then visit the nearby Crystal Gallery in Fateh Sagar Palace that will help you peek into the royal history and hosts the largest private collection of crystal in the world.",
+          "In the evening, take a breathtaking Boat Ride over the picturesque Lake Pichola or Fateh Sagar Lake.",
+          "You can then stroll through Local Market shopping for souvenirs.",
+          "Head to hotel for an overnight stay in Udaipur.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 6",
+          "Departure | Head back home with a plethora of memories",
+          "Wake up in the morning, have a scrumptious breakfast, pack your bags and a bundle of memories.",
+          "Complete the check out formalities from the hotel.",
+          "Conclude the tour with beautiful memories on reaching your desired destination in Udaipur.",
+          "[10:31 am, 10/04/2026] Design Your India: Inclusions :",
+          "Airport / Railway Station pick up and drop as per your flight / train timings",
+          "Comfortable and hygienic Vehicle (Sedan)",
+          "Stay on a double sharing",
+          "Breakfast (from Day 2 to Last Day as per itinerary)",
+          "Driver night charges & allowances, toll tax, parking charges, etc.",
+          "Experienced driver for the entire journey",
+          "Sightseeing as per itinerary"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "9 Days / 8 Nights",
+    "price": "starting from 32500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Day 1",
+        "activities": [
+          "Arrival in Jaipur | Welcome to the Pink City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Day 2",
+        "activities": [
+          "Sightseeing in Jaipur | Explore the Heritage City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Day 3",
+        "activities": [
+          "Jaipur to Bikaner | Witness the Process of Camel Breeding"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Day 4",
+        "activities": [
+          "Bikaner to Jaisalmer | Visit the invincible Junagarh Fort"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Day 5",
+        "activities": [
+          "Jaisalmer Local Sightseeing | Camel Ride on the Golden Sand Dunes"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Day 6",
+        "activities": [
+          "Jaisalmer to Jodhpur | Explore The Blue City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Day 7",
+        "activities": [
+          "Jodhpur to Udaipur | Welcome to the City of Lakes"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Day 8",
+        "activities": [
+          "Udaipur Local Sightseeing | Explore the Largest Palace Complex in Rajasthan"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 9,
+        "title": "Day 9",
+        "activities": [
+          "Udaipur to Ajmer | Feel the Divine Energy at the Ajmer-e-Shar\u2026",
+          "[10:31 am, 10/04/2026] Design Your India: Day 1",
+          "Arrival in Jaipur | Welcome to the Pink City",
+          "Upon your arrival in Jaipur, the driver will pick you up from the airport/railway or bus station & take you to the hotel. Once you check in, rest for a while & get ready for sightseeing. Begin with a short stopover at Hawa Mahal & then visit Jantar Mantar, an observatory. Then admire City Palace, the royal residence, followed by a visit to Govind Dev Ji Temple and the local market in the evening. Later, return to your hotel for an overnight stay.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 2",
+          "Sightseeing in Jaipur | Explore the Heritage City",
+          "The driver will pick you up from your hotel & take you for heritage city tour of Jaipur. Visit the majestic Amer Fort, witness to wars & royal celebrations. Continue to Jaigarh Fort, boasting one of the largest cannons, & visit Nahargarh Fort, offering stunning city views. Capture the essence of Indian tradition with a photo stop at Jal Mahal (water palace). Discover the magnificence of Birla Temple, crafted with shimmering white marble. Return back to hotel.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 3",
+          "Jaipur to Bikaner | Witness the Process of Camel Breeding",
+          "Post check-out the driver will pick you up from hotel & transfer you to Bikaner. Upon reaching Bikaner, check-in, relax & get ready for sightseeing. Experience the mystical charm of Karni Mata Temple & visit Asia's largest Camel Breeding Farm. Strolls through bustling markets, & savoring the world-famous Bikaneri bhujia to end your tour. Later, return back to hotel for an overnight stay.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 4",
+          "Bikaner to Jaisalmer | Visit the invincible Junagarh Fort",
+          "Post check-out, the driver will pick you up from hotel & take you for sightseeing. Visit Junagarh Fort and explore its various attractions such as Gaj Mandir, Sheesh Mahal (Palace), Lalgarh Palace, & Prachina Museum in Bikaner. Later, get transfered to Jaisalmer and visit Jaisalmer War Museum, offering a unique and poignant tribute to the valor and sacrifices of war heroes. After tour, check-in to your pre-booked hotel for an overnight stay.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 5",
+          "Jaisalmer Local Sightseeing | Camel Ride on the Golden Sand Dunes",
+          "The driver will pick you up from your hotel & take you for Jaisalmer city tour. See the Jaisalmer Fort, crafted from unique Golden Lime stone, earning it the names of Golden Fort or Sonar Kella. Marvel at the intricate beauty of heritage havelis like Patwon ki Haveli, Nathmal-ki-haveli, & Salim Singh ki Haveli, each telling its own tale of bygone eras. Later, take a camel ride on Sam Sand Dunes, where the Thar desert unveils its breathtaking splendor. Return back to hotel.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 6",
+          "Jaisalmer to Jodhpur | Explore The Blue City",
+          "Post check-out, the driver will pick you up from hotel & transfer you to Jodhpur. Upon reaching Jodhpur, check-in, rest & get ready for some local sightseeing. Marvel at the beauty of Mehrangarh Fort, a majestic and imposing citadel. Pay homage to the royal ancestors at Jaswant Thada, a historical museum, known as the Taj Mahal of Marwar. Next, take a stroll around the scenic Umaid Public Garden or Shastri Circle. Return back to your hotel.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 7",
+          "Jodhpur to Udaipur | Welcome to the City of Lakes",
+          "Post check-out, the driver will pick you up from hotel & take you for sightseeing tour. Visit Umaid Bhawan Palace, the last royal palace built by Maharaja Umaid Singh. Later, transfer to Udaipur, check-in and in the evening visit Lake Pichola, surrounded by majestic royal buildings & breathtaking sunset views. You can enjoy a boat ride here. After the ride, return back to your hotel for an overnight stay.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 8",
+          "Udaipur Local Sightseeing | Explore the Largest Palace Complex in Rajasthan",
+          "The driver will pick you up from your hotel & take you for sightseeing tour. Visit City Palace, the royal residence of the King of Mewar. Delight in the beauty of Sahelion-ki-Bari, a noble greenhouse built for princesses and their ladies, & visit the divine Jagdish Temple dedicated to Lord Vishnu. Explore the serene Gulab Bagh & immerse yourself in the cultural wonders at Bhartiya Lok Kala Museum. Later, return back to your hotel for an overnight stay.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 9",
+          "Udaipur to Ajmer | Feel the Divine Energy at the Ajmer-e-Sharif Dargah",
+          "Post check-out the driver will pick you up from hotel and transfer you to Ajmer. Upon arrival, check-in to your pre-booked hotel, rest and in the late afternoon visit Ajmer-e-Sharif Dargah, a revered Sufi shrine, awaits as one of the holiest places in the region. Explore the historical Adhai-Din-Ka Jhonpara, an ancient mosque with captivating architecture. Continue to the tranquil Ana Sagar Lake, where the serenity of the surroundings offers a peaceful respite. Return back to hotel.",
+          "[10:31 am, 10/04/2026] Design Your India: Day 10",
+          "Ajmer to Jaipur | Depart from the Land of Maharajas",
+          "( Return train from Jaipur or Ajmer )",
+          "Post check-out, the driver will pick you up from your hotel and transfer to Jaipur airport/railwaystation/bus stop for your transfer back to home.",
+          "[10:31 am, 10/04/2026] Design Your India: 2 Nights Jaipur",
+          "2 nights Jaisalmer",
+          "2 Nights Udaipur",
+          "1 Night Ajmer or Pushkar"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "8 Days / 7 Nights",
+    "price": "starting from 22500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Day 1",
+        "activities": [
+          "Arrival in Jaipur | Welcome to the Pink City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Day 2",
+        "activities": [
+          "Sightseeing in Jaipur | Explore the Heritage City"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Day 3",
+        "activities": [
+          "Jaipur to Udaipur | Welcome to the City of Lakes"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Day 4",
+        "activities": [
+          "Udaipur Local Sightseeing | Explore the City of Lakes and Palaces"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Day 5",
+        "activities": [
+          "Udaipur to Jodhpur | Home to the Impregnable Mehrangarh Fort"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Day 6",
+        "activities": [
+          "Jodhpur to Jaisalmer | Travel to the Shimmering 'Golden City' of Rajasthan"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Day 7",
+        "activities": [
+          "Jaisalmer Local Sightseeing | Camel Ride on the Golden Sand Dunes"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Day 8",
+        "activities": [
+          "Jaisalmer to Jodhpur | Departure",
+          "[10:33 am, 10/04/2026] Design Your India: Day 1",
+          "Arrival in Jaipur | Welcome to the Pink City",
+          "Upon your arrival in Jaipur, the driver will pick you up from the airport/railway or bus station & take you to the hotel. Once you check in, rest for a while & get ready for sightseeing. Begin with a short stopover at Hawa Mahal & then visit Jantar Mantar, an observatory. Then admire City Palace, the royal residence, followed by a visit to Govind Dev Ji Temple and the local market in the evening. Later, return to your hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 2",
+          "Sightseeing in Jaipur | Explore the Heritage City",
+          "The driver will pick you up from your hotel & take you on a city tour of Jaipur. Visit Amer Fort, a historical site adorned with intricate architecture and rich heritage. Continue to Jaigarh Fort, boasting one of the largest cannons, & visit Nahargarh Fort, offering stunning city views. Capture the essence of Indian tradition with a photo stop at Jal Mahal (water palace). Discover the magnificence of Birla Temple, crafted with shimmering white marble. Later, return to the hotel.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 3",
+          "Jaipur to Udaipur | Welcome to the City of Lakes",
+          "Post-checkout from your hotel, the driver will take you to Udaipur, the City of Lakes. On the way, stop at the Shiva Statue in Nathdwara and continue towards Eklingji Temple. Reach Udaipur, check in to your pre-booked hotel, and take some rest. Later, you will be taken on a sightseeing tour of the city. Visit the amazing gardens of Sahelion-ki-Bari and the beautiful Fateh Sagar Lake. See exotic fish at the Under the Sun Aquarium. Later, return to your hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 4",
+          "Udaipur Local Sightseeing | Explore the City of Lakes and Palaces",
+          "The driver will pick you up from your hotel & take you for Udaipur sightseeing. Begin the tour by visiting City Palace, an opulent palace complex located on the banks of Lake Pichola followed by a visit to the Crystal Gallery in the palace. In the evening, you can take a boat ride on the picturesque Pichola lake and later stroll through the local markets of Udaipur. Head over to your hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 5",
+          "Udaipur to Jodhpur | Home to the Impregnable Mehrangarh Fort",
+          "Post-checkout, the driver will pick you up and take you to Jodhpur, the Blue City. Check into your pre-booked hotel and rest for a while. Then, you will be taken on a sightseeing tour of Jodhpur. Visit the amazing Mehrangargh Fort and the Taj Mahal of Marwar, Jaswant Thada. In the evening, visit the market at Ghanta Ghar, where you can buy some authentic Jodhpuri handicrafts. Later, return to your hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 6",
+          "Jodhpur to Jaisalmer | Travel to the Shimmering 'Golden City' of Rajasthan",
+          "Post-checkout, the driver will pick you up from your hotel and take you to Jaisalmer, the Golden City of Rajasthan. On your way, stop at the Jaisalmer War Memorial, which honors the contributions and sacrifices of war heroes. Upon your arrival in Jaisalmer, check into your pre-booked hotel and take some rest. After that, you will be taken to see the ancient architecture of the iconic Jaisalmer Fort. Later, return to your hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 7",
+          "Jaisalmer Local Sightseeing | Camel Ride on the Golden Sand Dunes",
+          "The driver will pick you up from your hotel and take you on a Jaisalmer city tour. Start your tour by visiting the beautiful Gadisar Lake and relaxing by the side of its serene waters. Marvel at the beauty of historic havelis like Patwon ki Haveli, Nathmal ki Haveli, & Salim Singh ki Haveli, each telling its own tale of bygone eras. Next, take a camel ride on Sam Sand Dunes, where the Thar desert unveils its breathtaking splendor. Later, return to the hotel for an overnight stay.",
+          "[10:33 am, 10/04/2026] Design Your India: Day 8",
+          "Jaisalmer to Jodhpur or Jaipur | Departure",
+          "Pack your bags and check out from your hotel. The driver will pick you up from the hotel and take you to Jodhpur Railway Station or the airport, from where you will return home."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "9 Days / 8 Nights",
+    "price": "starting from 24500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrive in Jaipur \u2013 Dive into the Pink City",
+        "activities": [
+          "Get picked up from Jaipur Airport or Railway Station and check in to your hotel.",
+          "Begin sightseeing with visits to City Palace, Jantar Mantar, and the iconic Hawa Mahal.",
+          "Enjoy a photo stop at Albert Hall Museum and explore the bustling Johari and Bapu Bazaars.",
+          "In the evening, you can opt for a traditional dinner and cultural show at Chokhi Dhani.",
+          "Overnight stay in Jaipur."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Explore Jaipur\u2019s Majestic Forts",
+        "activities": [
+          "After breakfast, head to Amber Fort and enjoy an optional elephant or jeep ride.",
+          "Continue to Jaigarh Fort and Nahargarh Fort for sweeping views of the city.",
+          "Stop by Jal Mahal for a beautiful lakeside photo opportunity.",
+          "Spend your evening at leisure or enjoy rooftop dining with city views.",
+          "Overnight stay in Jaipur.",
+          "Highlights of the Day: Jaigarh Fort, Nahargarh Fort , Jal Mahal"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Jaipur to Udaipur via Ajmer & Pushkar",
+        "activities": [
+          "Check out after an early breakfast and start your journey to Udaipur (approx. 6.5 hrs).",
+          "En route, visit the Ajmer Sharif Dargah and Pushkar\u2019s sacred Brahma Temple & Lake.",
+          "Arrive in Udaipur by evening and check in to your hotel.",
+          "Unwind with a walk along Fatehsagar Lake or relax at a lakeside caf\u00e9.",
+          "Overnight stay in Udaipur.",
+          "Highlights of the Day: Ajmer Sharif Dargah, Brahma Temple,  Fatehsagar Lake"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Udaipur \u2013 The City of Lakes & Palaces",
+        "activities": [
+          "Post breakfast, explore the grand City Palace Complex and the Crystal Gallery.",
+          "Visit Jagdish Temple, Saheliyon Ki Bari, and Moti Magri for cultural and scenic highlights.",
+          "Optionally, stop by the Vintage Car Museum.",
+          "In the evening, enjoy a boat ride on Lake Pichola followed by an optional cultural show at Bagore Ki Haveli.",
+          "Overnight stay in Udaipur.",
+          "Highlights of the Day: Jagdish Temple, Saheliyon Ki Bari, Vintage Car Museum, Lake Pichola, Bagore Ki Haveli."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 5,
+        "title": "Udaipur to Jodhpur via Ranakpur",
+        "activities": [
+          "After breakfast, check out and drive to Jodhpur (approx. 5.5 hrs).",
+          "Stop at the stunning Ranakpur Jain Temples known for intricate marble carvings.",
+          "On arrival in Jodhpur, visit the Clock Tower Market and optionally sample local street food.",
+          "Overnight stay in Jodhpur.",
+          "Highlights of the Day: Ranakpur Jain Temples, Clock Tower Market"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 6,
+        "title": "Jodhpur Sightseeing \u2013 Drive to Jaisalmer",
+        "activities": [
+          "Visit the mighty Mehrangarh Fort, serene Jaswant Thada, and the Umaid Bhawan Palace (museum optional).",
+          "After sightseeing, drive to Jaisalmer (approx. 5.5 hrs) and check in to your hotel.",
+          "Overnight stay in Jaisalmer City.",
+          "Highlights of the Day: Mehrangarh Fort, Jaswant Thada, Umaid Bhawan Palace"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 7,
+        "title": "Explore Jaisalmer \u2013 Desert Camp Experience",
+        "activities": [
+          "After breakfast, explore Jaisalmer Fort, Patwon Ki Haveli, Salim Singh Ki Haveli, and Gadisar Lake.",
+          "Post-lunch, drive to the Sam Sand Dunes for an unforgettable desert adventure.",
+          "Enjoy a camel safari at sunset, followed by a folk dance & music performance, bonfire, and buffet dinner.",
+          "Stay overnight in a luxury desert camp under the stars.",
+          "Highlights of the Day: Jaisalmer Fort, Patwon Ki Haveli, Salim Singh Ki Haveli, and Gadisar Lake."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 8,
+        "title": "Jaisalmer to Bikaner \u2013 Forts & Culture",
+        "activities": [
+          "After breakfast, check out and drive to Bikaner (approx. 6 hrs).",
+          "Check in to your hotel and then visit the grand Junagarh Fort.",
+          "Optionally, visit the unique Karni Mata Temple (Rat Temple) in Deshnok.",
+          "Spend your evening relaxing or take a heritage walk through Rampuria Havelis.",
+          "Overnight stay in Bikaner.",
+          "Highlights of the Day: Junagarh Fort, Karni Mata Temple, Rampuria Havelis"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 9,
+        "title": "Departure from Bikaner \u2013 Back to Jaipur or Jodhpur",
+        "activities": [
+          "Enjoy breakfast and check out from your hotel.",
+          "Drive back to Jaipur (approx. 6 hrs) or Jodhpur (approx. 5 hrs) based on your preference.",
+          "Tour ends with beautiful memories of royal Rajasthan!"
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "4 Days / 3 Nights",
+    "price": "starting from 12500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Welcome to Udaipur \u2013 Lakeside Charm",
+        "activities": [
+          "Arrive in Udaipur and get picked up from the airport or railway station, then check in to your hotel.",
+          "Head out to explore the serene Fateh Sagar Lake and the beautifully landscaped Saheliyon Ki Bari.",
+          "Visit Sukhadia Circle for optional boating or to sample local street food.",
+          "In the evening, opt for a scenic boat ride at Lake Pichola and catch breathtaking sunset views (optional).",
+          "Return for an overnight stay in Udaipur.",
+          "Highlights of the Day: Fateh Sagar Lake, Saheliyon Ki Bari, Sukhadia Circle, Lake Pichola Boat Ride (optional)"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Udaipur Sightseeing",
+        "activities": [
+          "After breakfast, begin with a tour of the majestic City Palace and its museum.",
+          "Visit the Jagdish Temple and admire its Indo-Aryan architecture.",
+          "Explore the Vintage Car Museum and ride the Karni Mata Ropeway for panoramic views of Udaipur.",
+          "In the evening, you can attend the optional Sound & Light Show at City Palace.",
+          "Overnight stay in Udaipur.",
+          "Highlights of the Day: City Palace, Jagdish Temple, Vintage Car Museum, Karni Mata Ropeway, Sound & Light Show (optional)"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Udaipur to Mount Abu",
+        "activities": [
+          "Post breakfast, drive to Mount Abu, Rajasthan\u2019s only hill station (approx. 3.5 hours).",
+          "On arrival, explore the intricately carved Dilwara Jain Temples, a marvel in marble.",
+          "Enjoy leisure time at Nakki Lake with optional boating, then visit Toad Rock and Sunset Point.",
+          "Stroll through the Tibetan Market or local bazaars for souvenirs.",
+          "Overnight stay in Mount Abu.",
+          "Highlights of the Day: Dilwara Jain Temples, Nakki Lake, Toad Rock, Sunset Point, Tibetan Market"
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Departure from Mount Abu",
+        "activities": [
+          "After breakfast, check out from your hotel and spend your morning at leisure or visit any missed spots.",
+          "Proceed for your drop-off at either Udaipur Airport/Railway Station or Abu Road Railway Station."
+        ],
+        "highlight": ""
+      }
+    ]
+  },
+  {
+    "title": "4 Days / 3 Nights",
+    "price": "starting from 12500 per person",
+    "days": [
+      {
+        "day": 1,
+        "title": "Udaipur Arrival",
+        "activities": [
+          "Meet our driver at Udaipur Airport /Railway Station. Check-in at Hotel & Day for Leisure.",
+          "If time allows you explore local market, you can try authentic Rajasthani Thali (served everywhere) and  authentic Rajasthani Handicraft. Overnight Stay at Hotel."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 2,
+        "title": "Udaipur Sightseeing",
+        "activities": [
+          "After breakfast we will start city tour of Udaipur. the city of lakes Udaipur is located around azure water lakes and is hemmed in by lush green hills of Aravallis. Udaipur's kaleidoscope of fairy-tale palaces, lakes, temples, gardens, vibrant and colourful festivals and narrow lanes strewn with stalls, carry the flavor of a heroic past, epitomizing valor and chivalry. Famous attractions of Udaipur are City Palace, Sajjangarh Palace, Vintage Car Museum, Jag Mandir Palace are some of the beautiful attractions other than the famous Lake Pichola. Explore these serene places on a quiet evening and be blessed with a beautiful sunset. overnight stay in Hotel. Night Stay at Udaipur."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 3,
+        "title": "Udaipur - Chittorgarh Fort - Udaipur",
+        "activities": [
+          "After having breakfast at the hotel we start our trip from Udaipur  to Chittorgarh, which is 120 kms and takes 3 hrs max to reach.",
+          "Chittorgarh is the largest fort complex in India echoes with the tales of Rajput gallantry. The historical magnificence of the city is reflected in its majestic monuments, a legacy of the Sisodia Rajputs of Mewar, who made the region their capital.",
+          "Visit the local places, Chittorgarh fort -  Chittorgarh Fort is a fitting symbol of the Rajput spirit. Legend has it that the fort was constructed by Bhima, one of the Pandavas from the Mahabharata. It is an imposing structure that rings with the stories and tragedies of the past  , Maharana Kumbha\u2019s Palace and Vijay Stambha. In evening head back to Udaipur. overnight stay in Udaipur."
+        ],
+        "highlight": ""
+      },
+      {
+        "day": 4,
+        "title": "Udaipur Departure",
+        "activities": [
+          "After Breakfast, Check - out from hotel and drop to Udaipur Airport/ Railway Station."
+        ],
+        "highlight": ""
+      }
+    ]
+  }
+]

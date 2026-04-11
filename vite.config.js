@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
-  // Treat dev server as a multi‑page app so unknown paths (e.g. /temp-web) 404 instead of falling back to index.html.
-  appType: 'mpa',
+  // appType: 'mpa', // Removed 'mpa' to allow React Router Single-Page Application features to function!
   plugins: [react(), tailwindcss()],
 })

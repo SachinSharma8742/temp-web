@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { DESTINATIONS } from '../../data/destinations';
+import { getDeliveredImageUrl } from '../../utils/mediaDelivery';
 
 const PATH_VIEWBOX_HEIGHT = 120;
 
@@ -17,8 +19,7 @@ function buildPathD(width, height = PATH_VIEWBOX_HEIGHT) {
 }
 
 const Destinations = () => {
-  const destinationClipId = `destination-card-${useId().replace(/:/g, '')}`;
-  const destinationClipPath = `url(#${destinationClipId})`;
+  const navigate = useNavigate();
   const trackRef = useRef(null);
   const pathViewportRef = useRef(null);
   const curvePathRef = useRef(null);
@@ -88,6 +89,7 @@ const Destinations = () => {
     };
 
     const cards = container.querySelectorAll('[data-destination-card="true"]');
+    const scaleY = pathViewport.clientHeight / PATH_VIEWBOX_HEIGHT;
 
     for (let i = 0; i < cards.length; i += 1) {
       const stop = pathStopRefs.current[i];
@@ -95,7 +97,7 @@ const Destinations = () => {
       if (!stop || !card) continue;
 
       const x = card.offsetLeft + card.clientWidth / 2;
-      const y = getPathYForContentX(x);
+      const y = getPathYForContentX(x) * scaleY;
 
       stop.style.left = `${x.toFixed(2)}px`;
       stop.style.top = `${y.toFixed(2)}px`;
@@ -178,7 +180,7 @@ const Destinations = () => {
   return (
     <section
       id="destinations"
-      className="relative overflow-hidden scroll-mt-24 pt-24 pb-16 md:scroll-mt-28 md:pt-32 md:pb-24 flex flex-col justify-center transition-colors duration-400"
+      className="relative scroll-mt-24 pt-24 pb-16 md:scroll-mt-28 md:pt-32 md:pb-24 flex flex-col justify-center transition-colors duration-400"
       style={{
         background: `
           radial-gradient(120% 42% at 50% 0%, color-mix(in srgb, var(--bg-surface) 14%, transparent) 0%, transparent 70%),
@@ -188,19 +190,78 @@ const Destinations = () => {
         color: 'var(--text-body)',
       }}
     >
-      <svg
-        width="0"
-        height="0"
-        aria-hidden="true"
-        focusable="false"
-        className="absolute pointer-events-none"
-      >
-        <defs>
-          <clipPath id={destinationClipId} clipPathUnits="objectBoundingBox">
-            <path d="M 0.0745 0.1111 L 0.9255 0.0089 Q 1 0 1 0.075 L 1 0.805 Q 1 0.88 0.9255 0.8889 L 0.0745 0.9911 Q 0 1 0 0.925 L 0 0.195 Q 0 0.12 0.0745 0.1111 Z" />
-          </clipPath>
-        </defs>
-      </svg>
+      <style>{`
+        .photo-stack-card {
+          position: relative;
+          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .photo-stack-card:hover {
+          transform: translateY(-12px) scale(1.02);
+        }
+        
+        .card-bg {
+          position: absolute;
+          inset: 0;
+          border-radius: 2rem;
+          transform: skewY(-6deg);
+          z-index: 0;
+          transition: background-color 0.4s, box-shadow 0.4s;
+          background-color: var(--bg-surface);
+          box-shadow: 0 12px 28px color-mix(in srgb, var(--color-black) 10%, transparent);
+        }
+        .photo-stack-card:hover .card-bg {
+          box-shadow: 0 20px 40px color-mix(in srgb, var(--color-black) 26%, transparent);
+        }
+
+        .stack-img {
+          transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.3s ease;
+          transform-origin: bottom center;
+          width: 94%; 
+          left: 3%; 
+          border-radius: 1.25rem;
+        }
+        .stack-img:nth-child(1) { transform: rotate(-3deg); z-index: 1; }
+        .stack-img:nth-child(2) { transform: rotate(0deg); z-index: 2; }
+        .stack-img:nth-child(3) { transform: rotate(3deg); z-index: 3; }
+
+        .photo-stack-card:hover .stack-img:nth-child(1) {
+          transform: translateY(-20px) rotate(-8deg) translateX(-10px);
+          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .photo-stack-card:hover .stack-img:nth-child(2) {
+          transform: translateY(-40px) rotate(0deg) scale(1.02);
+          box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+          transition-delay: 0.03s;
+        }
+        .photo-stack-card:hover .stack-img:nth-child(3) {
+          transform: translateY(-20px) rotate(8deg) translateX(10px);
+          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+          transition-delay: 0.06s;
+        }
+
+        @media (max-width: 767px) {
+          .photo-stack-card.active {
+            transform: translateY(-12px) scale(1.02);
+          }
+          .photo-stack-card.active .card-bg {
+            box-shadow: 0 20px 40px color-mix(in srgb, var(--color-black) 26%, transparent);
+          }
+          .photo-stack-card.active .stack-img:nth-child(1) {
+            transform: translateY(-20px) rotate(-8deg) translateX(-10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+          }
+          .photo-stack-card.active .stack-img:nth-child(2) {
+            transform: translateY(-40px) rotate(0deg) scale(1.02);
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+            transition-delay: 0.03s;
+          }
+          .photo-stack-card.active .stack-img:nth-child(3) {
+            transform: translateY(-20px) rotate(8deg) translateX(10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+            transition-delay: 0.06s;
+          }
+        }
+      `}</style>
 
       <div className="mx-auto w-full max-w-[1320px] px-5 md:px-12 mb-8 md:mb-10">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
@@ -244,56 +305,77 @@ const Destinations = () => {
 
       </div>
 
-      <div ref={trackRef} className="flex gap-4 md:gap-6 px-5 md:px-12 overflow-x-auto snap-x snap-mandatory scroll-smooth [scroll-padding-inline:1.25rem] md:[scroll-padding-inline:3rem] [overscroll-behavior-x:contain] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pt-4 md:pt-5 pb-6 md:pb-8 w-full">
+      <div ref={trackRef} className="flex gap-4 md:gap-6 px-5 md:px-12 overflow-x-auto snap-x snap-mandatory scroll-smooth [scroll-padding-inline:1.25rem] md:[scroll-padding-inline:3rem] [overscroll-behavior-x:contain] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pt-16 md:pt-20 pb-20 md:pb-28 w-full">
         {DESTINATIONS.map((dest, index) => (
           <article
             key={dest.name}
             data-destination-card="true"
-            className="group relative mt-1 md:mt-0.5 h-[320px] md:h-[450px] w-[74vw] min-w-[74vw] max-w-[280px] md:w-[320px] md:min-w-[320px] md:max-w-[320px] shrink-0 cursor-pointer overflow-hidden snap-center transition-[transform,box-shadow] duration-500"
-            onClick={() => scrollToCard(index)}
+            className={`photo-stack-card group relative mt-1 md:mt-0.5 h-[360px] md:h-[450px] w-[74vw] min-w-[74vw] max-w-[280px] md:w-[320px] md:min-w-[320px] md:max-w-[320px] shrink-0 cursor-pointer flex flex-col p-4 md:p-5 snap-center outline-none ${activeIndex === index ? 'active' : ''}`}
+            onClick={() => {
+              navigate(`/destination/${dest.name.replace(/\s+/g, '-').toLowerCase()}`);
+              // Fallback scroll to ensure the card is centered if they don't navigate
+              scrollToCard(index);
+            }}
             role="button"
             tabIndex={0}
             onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
-                scrollToCard(index);
+                navigate(`/destination/${dest.name.replace(/\s+/g, '-').toLowerCase()}`);
               }
             }}
-            style={{ 
-              clipPath: destinationClipPath,
-              WebkitClipPath: destinationClipPath,
-              backgroundColor: 'var(--bg-surface)',
-              transform: activeIndex === index ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)',
-              boxShadow: activeIndex === index
-                ? '0 20px 40px color-mix(in srgb, var(--color-black) 26%, transparent)'
-                : '0 12px 28px color-mix(in srgb, var(--color-black) 14%, transparent)'
-            }}
+            style={{}}
           >
-            <img
-              src={dest.image}
-              alt={dest.name}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-            />
+            <div className="card-bg" />
+
+            {/* Premium Top-Right Navigation Indicator */}
+            <div className={`
+              absolute top-5 right-5 z-20 flex items-center justify-center 
+              w-10 h-10 rounded-full bg-[var(--bg-base)] text-[var(--text-body)] shadow-sm border border-[var(--border-subtle)]
+              transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
+              opacity-0 scale-75 -translate-y-2
+              md:group-hover:opacity-100 md:group-hover:scale-100 md:group-hover:translate-y-0 md:group-hover:bg-[var(--text-body)] md:group-hover:text-[var(--bg-base)] md:group-hover:border-transparent
+              ${activeIndex === index ? 'max-md:opacity-100 max-md:scale-100 max-md:translate-y-0 max-md:bg-[var(--text-body)] max-md:text-[var(--bg-base)] max-md:border-transparent max-md:shadow-xl shadow-black/10' : ''}
+            `}>
+              <ArrowUpRight size={18} className="transition-transform duration-500 group-hover:scale-110" />
+            </div>
             
-            <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/18 to-black/88 pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-[35%] bg-gradient-to-b from-black/25 to-transparent pointer-events-none" />
-            
-            <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-7 pb-10 md:pb-13 z-10 gap-4 md:gap-5">
-              <span className="text-gold tracking-[0.24em] uppercase text-xs md:text-sm transform translate-y-4 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100" style={{ opacity: activeIndex === index ? 1 : undefined, transform: activeIndex === index ? 'translateY(0)' : undefined }}>
-                {dest.subtitle}
-              </span>
-              <h3 className="text-white text-xl md:text-2xl font-semibold transform transition-transform duration-500 ease-out group-hover:-translate-y-2" style={{ transform: activeIndex === index ? 'translateY(-4px)' : undefined }}>
-                {dest.name}
-              </h3>
+            <div className="z-10 mt-6 px-3 flex flex-col justify-between items-start gap-3">
+              <div>
+                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-gold">
+                  {dest.subtitle}
+                </p>
+                <h2 className="mt-1 text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-primary">
+                  {dest.name}
+                </h2>
+              </div>
+            </div>
+
+            <div className="z-10 relative mt-auto h-[55%] md:h-[60%] w-full mb-2 md:mb-5">
+              {(dest.images || []).slice(0, 3).map((imgUrl, imgIndex) => (
+                <img 
+                  key={`${dest.name}-${imgIndex}`}
+                  src={getDeliveredImageUrl(imgUrl, { width: 960, quality: 72, format: 'webp' })} 
+                  alt={`${dest.name} ${imgIndex + 1}`} 
+                  loading="lazy" 
+                  decoding="async" 
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    if (target.dataset.fallbackApplied === '1') return;
+                    target.dataset.fallbackApplied = '1';
+                    target.src = imgUrl;
+                  }}
+                  className="stack-img absolute bottom-0 h-full border-[3px] md:border-[4px] object-cover" 
+                  style={{ borderColor: 'var(--bg-base)' }} 
+                />
+              ))}
             </div>
           </article>
         ))}
       </div>
 
       <div className="w-full mt-0 md:mt-1 overflow-hidden md:hidden">
-        <div ref={pathViewportRef} className="relative h-24 overflow-hidden px-0 py-0 md:h-40 md:py-2">
+        <div ref={pathViewportRef} className="relative h-[120px] overflow-hidden px-0 py-0">
           <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-[var(--path-dim)] to-transparent opacity-80" />
           <div className="pointer-events-none absolute left-0 right-0 top-[56%] h-20 -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(79,127,240,0.16)_0%,transparent_55%)] opacity-70 blur-2xl" />
 
@@ -302,44 +384,45 @@ const Destinations = () => {
               viewBox={`0 0 ${railWidth} ${PATH_VIEWBOX_HEIGHT}`}
               preserveAspectRatio="none"
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 h-full w-full"
+              className="pointer-events-none absolute inset-0 h-full w-full drop-shadow-sm"
             >
               <defs>
                 <linearGradient id="destination-path-glow" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(79, 127, 240, 0.03)" />
-                  <stop offset="24%" stopColor="rgba(79, 127, 240, 0.28)" />
-                  <stop offset="50%" stopColor="rgba(79, 127, 240, 0.92)" />
-                  <stop offset="76%" stopColor="rgba(79, 127, 240, 0.28)" />
+                  <stop offset="30%" stopColor="rgba(79, 127, 240, 0.4)" />
+                  <stop offset="50%" stopColor="rgba(79, 127, 240, 1)" />
+                  <stop offset="70%" stopColor="rgba(79, 127, 240, 0.4)" />
                   <stop offset="100%" stopColor="rgba(79, 127, 240, 0.03)" />
                 </linearGradient>
-                <linearGradient id="destination-path-fade" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(79, 127, 240, 0.14)" />
-                  <stop offset="50%" stopColor="rgba(79, 127, 240, 0.92)" />
-                  <stop offset="100%" stopColor="rgba(79, 127, 240, 0.14)" />
-                </linearGradient>
               </defs>
+
+              {/* Road Base */}
               <path
                 ref={curvePathRef}
                 d={pathD}
                 fill="none"
-                stroke="rgba(79, 127, 240, 0.08)"
-                strokeWidth="5"
+                stroke="#0f0f0f"
+                strokeWidth="10"
                 strokeLinecap="round"
-                className="md:stroke-[8]"
+                className="opacity-90 md:stroke-[12]"
               />
+              {/* Dashed Center Route */}
+              <path
+                d={pathD}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="1.5"
+                strokeDasharray="6 8"
+                strokeLinecap="round"
+                className="opacity-[0.85]"
+              />
+              {/* Subtle Glowing Pulse over dashes */}
               <path
                 d={pathD}
                 fill="none"
                 stroke="url(#destination-path-glow)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <path
-                d={pathD}
-                fill="none"
-                stroke="url(#destination-path-fade)"
-                strokeOpacity="0.32"
-                strokeWidth="1"
+                strokeWidth="2.5"
+                strokeDasharray="6 8"
                 strokeLinecap="round"
               />
             </svg>
