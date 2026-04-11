@@ -41,18 +41,17 @@ const RAW_MEDIA = [
   "https://images.unsplash.com/photo-1704392768299-cbc3cae79817?w=1600&q=90&fit=crop",
   
   // === KASHMIR ===
-  "https://images.unsplash.com/photo-1566837945700-30057527ade0?w=1600&q=90&fit=crop",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Dal_Lake_Hazratbal_Srinagar.jpg/960px-Dal_Lake_Hazratbal_Srinagar.jpg",
 
   // === LADAKH ===
-  "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1600&q=90&fit=crop",
   "https://images.unsplash.com/photo-1530331130276-f0a905c819c2?w=1600&q=90&fit=crop",
 
   // === NORTHEAST INDIA ===
   "https://images.unsplash.com/photo-1759906356131-9a36dbba796c?w=1600&q=90&fit=crop",
 
   // === KERALA ===
-  "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=90&fit=crop",
-  "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=90&fit=crop"
+  "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=90&fit=crop"
+  
 ];
 
 const toMediaEntry = (rawUrl) => {

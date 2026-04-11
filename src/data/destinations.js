@@ -2,8 +2,8 @@ export const DESTINATIONS = [
   {
     name: 'Rajasthan',
     images: [
-      'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=600&q=80',
+      'https://plus.unsplash.com/premium_photo-1697730399235-bcca956cc6d7?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://plus.unsplash.com/premium_photo-1661953630194-4bef71f0440d?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80'
     ],
     subtitle: 'Royal Heritage',
@@ -13,7 +13,7 @@ export const DESTINATIONS = [
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kullu_Valley_from_Rohtang_Pass%2C_India.jpg/960px-Kullu_Valley_from_Rohtang_Pass%2C_India.jpg',
       'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Manali_City.jpg/960px-Manali_City.jpg',
-      'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=600&q=80'
+      'https://images.unsplash.com/photo-1521354719423-661a3204204f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     ],
     subtitle: 'Mountain Grandeur',
   },
@@ -67,7 +67,7 @@ export const DESTINATIONS = [
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Beauty_of_Kaziranga_National_Park.jpg/960px-Beauty_of_Kaziranga_National_Park.jpg',
       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Munnar_Overview.jpg/960px-Munnar_Overview.jpg',
-      'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=600&q=80'
+      'https://images.unsplash.com/photo-1759738104613-5eafde92c12f?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     ],
     subtitle: 'Red River & Blue Hills',
   },
@@ -84,8 +84,8 @@ export const DESTINATIONS = [
     name: 'Arunachal Pradesh',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/TawangMonastery-ArunachalPradesh-1.jpg/960px-TawangMonastery-ArunachalPradesh-1.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Sela_Pass.JPG/960px-Sela_Pass.JPG',
-      'https://images.unsplash.com/photo-1524230572899-a752b3835840?auto=format&fit=crop&w=600&q=80'
+      'https://images.unsplash.com/photo-1672399444836-3f2d667ded8e?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://media.istockphoto.com/id/1266961415/photo/colorful-gateway-with-buddhist-prayer-flags-in-himalayas-tawang-india.jpg?s=2048x2048&w=is&k=20&c=8J6kczIsx5wTGRuHcjvHpMKi8HOI6x9eBLYVaEWyvDk='
     ],
     subtitle: 'Dawn-Lit Mountains',
   },

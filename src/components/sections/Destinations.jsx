@@ -26,6 +26,10 @@ const Destinations = () => {
   const pathStopRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [railWidth, setRailWidth] = useState(1200);
+  const [scrollControls, setScrollControls] = useState({
+    canScrollPrev: false,
+    canScrollNext: DESTINATIONS.length > 1,
+  });
 
   const cardCount = DESTINATIONS.length;
   const pathStops = useMemo(
@@ -39,6 +43,52 @@ const Destinations = () => {
 
   const pathD = useMemo(() => buildPathD(railWidth, PATH_VIEWBOX_HEIGHT), [railWidth]);
 
+  const getCardScrollLeft = useCallback((container, card) => {
+    if (!container || !card) return 0;
+    const centeredLeft = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+    const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth);
+    return Math.min(Math.max(0, centeredLeft), maxScrollLeft);
+  }, []);
+
+  const getClosestVisibleCardIndex = useCallback(() => {
+    const container = trackRef.current;
+    if (!container) return -1;
+
+    const cards = container.querySelectorAll('[data-destination-card="true"]');
+    if (!cards.length) return -1;
+
+    const viewportCenter = container.scrollLeft + container.clientWidth / 2;
+    let closestIndex = 0;
+    let smallestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(cardCenter - viewportCenter);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  }, []);
+
+  const updateScrollControls = useCallback(() => {
+    const container = trackRef.current;
+    if (!container) return;
+
+    const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth);
+    const canScrollPrev = container.scrollLeft > 4;
+    const canScrollNext = container.scrollLeft < maxScrollLeft - 4;
+
+    setScrollControls((prev) => {
+      if (prev.canScrollPrev === canScrollPrev && prev.canScrollNext === canScrollNext) {
+        return prev;
+      }
+      return { canScrollPrev, canScrollNext };
+    });
+  }, []);
+
   const scrollByCard = useCallback((direction) => {
     const container = trackRef.current;
     if (!container) return;
@@ -46,12 +96,15 @@ const Destinations = () => {
     const cards = container.querySelectorAll('[data-destination-card="true"]');
     if (!cards.length) return;
 
-    const nextIndex = Math.max(0, Math.min(cardCount - 1, activeIndex + direction));
+    const currentIndex = getClosestVisibleCardIndex();
+    const baseIndex = currentIndex >= 0 ? currentIndex : activeIndex;
+    const nextIndex = Math.max(0, Math.min(cardCount - 1, baseIndex + direction));
     const nextCard = cards[nextIndex];
     if (!nextCard) return;
 
-    container.scrollTo({ left: nextCard.offsetLeft - 20, behavior: 'smooth' });
-  }, [activeIndex, cardCount]);
+    setActiveIndex(nextIndex);
+    container.scrollTo({ left: getCardScrollLeft(container, nextCard), behavior: 'smooth' });
+  }, [activeIndex, cardCount, getCardScrollLeft, getClosestVisibleCardIndex]);
 
   const scrollToCard = useCallback((index) => {
     const container = trackRef.current;
@@ -61,8 +114,9 @@ const Destinations = () => {
     const card = cards[index];
     if (!card) return;
 
-    container.scrollTo({ left: card.offsetLeft - 20, behavior: 'smooth' });
-  }, []);
+    setActiveIndex(index);
+    container.scrollTo({ left: getCardScrollLeft(container, card), behavior: 'smooth' });
+  }, [getCardScrollLeft]);
 
   const updatePathMarkers = useCallback(() => {
     const container = trackRef.current;
@@ -118,6 +172,7 @@ const Destinations = () => {
       if (rafId) window.cancelAnimationFrame(rafId);
       rafId = window.requestAnimationFrame(() => {
         if (pathViewport) pathViewport.scrollLeft = container.scrollLeft;
+        updateScrollControls();
       });
     };
 
@@ -156,6 +211,7 @@ const Destinations = () => {
       setRailWidth(Math.max(container.scrollWidth, container.clientWidth));
       updatePathMarkers();
       if (pathViewport) pathViewport.scrollLeft = container.scrollLeft;
+      updateScrollControls();
     };
 
     container.addEventListener('scroll', onScroll, { passive: true });
@@ -163,6 +219,7 @@ const Destinations = () => {
 
     setRailWidth(Math.max(container.scrollWidth, container.clientWidth));
     updatePathMarkers();
+    updateScrollControls();
     onScroll();
 
     return () => {
@@ -171,7 +228,7 @@ const Destinations = () => {
       observer.disconnect();
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [updatePathMarkers]);
+  }, [updatePathMarkers, updateScrollControls]);
 
   useEffect(() => {
     updatePathMarkers();
@@ -279,7 +336,8 @@ const Destinations = () => {
               type="button"
               aria-label="Scroll destinations left"
               onClick={() => scrollByCard(-1)}
-              className="h-11 w-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/70"
+              disabled={!scrollControls.canScrollPrev}
+              className="h-11 w-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/70 disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:border-[var(--border-subtle)]"
               style={{
                 borderColor: 'var(--border-subtle)',
                 backgroundColor: 'color-mix(in srgb, var(--bg-surface) 86%, transparent)',
@@ -292,7 +350,8 @@ const Destinations = () => {
               type="button"
               aria-label="Scroll destinations right"
               onClick={() => scrollByCard(1)}
-              className="h-11 w-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/70"
+              disabled={!scrollControls.canScrollNext}
+              className="h-11 w-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/70 disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:border-[var(--border-subtle)]"
               style={{
                 borderColor: 'var(--border-subtle)',
                 backgroundColor: 'color-mix(in srgb, var(--bg-surface) 86%, transparent)',
@@ -483,7 +542,8 @@ const Destinations = () => {
           type="button"
           aria-label="Previous destination"
           onClick={() => scrollByCard(-1)}
-          className="h-10 px-4 rounded-full border text-sm tracking-wide uppercase flex items-center gap-2"
+          disabled={!scrollControls.canScrollPrev}
+          className="h-10 px-4 rounded-full border text-sm tracking-wide uppercase flex items-center gap-2 disabled:opacity-45 disabled:cursor-not-allowed"
           style={{ borderColor: 'var(--border-subtle)' }}
         >
           <ArrowLeft size={16} />
@@ -494,7 +554,8 @@ const Destinations = () => {
           type="button"
           aria-label="Next destination"
           onClick={() => scrollByCard(1)}
-          className="h-10 px-4 rounded-full border text-sm tracking-wide uppercase flex items-center gap-2"
+          disabled={!scrollControls.canScrollNext}
+          className="h-10 px-4 rounded-full border text-sm tracking-wide uppercase flex items-center gap-2 disabled:opacity-45 disabled:cursor-not-allowed"
           style={{ borderColor: 'var(--border-subtle)' }}
         >
           Next
